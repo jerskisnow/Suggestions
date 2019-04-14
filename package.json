@@ -1,0 +1,29 @@
+{
+  "name": "suggestions",
+  "version": "1.0.0",
+  "description": "Official Suggestions DiscordBot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jerskisnow/Suggestions.git"
+  },
+  "keywords": [
+    "discordbot"
+  ],
+  "author": "jerskisnow",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jerskisnow/Suggestions/issues"
+  },
+  "homepage": "https://github.com/jerskisnow/Suggestions#readme",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "dotenv": "^7.0.0",
+    "enmap": "^4.8.4",
+    "moment": "^2.24.0",
+    "mysql": "^2.16.0"
+  }
+}
