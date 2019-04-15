@@ -1,3 +1,4 @@
+const utf8 = require('utf8');
 const utils = require('../utils');
 
 module.exports = (client, message) => {
@@ -34,7 +35,7 @@ module.exports = (client, message) => {
 		if (!error && result.length !== 0 && result[0].prefix !== null) {
 
 			// Change the prefix variable to the actual server prefix
-			prefix = result[0].prefix;
+			prefix = utf8.decode(result[0].prefix);
 		}
 
 		// Check if the message contains the prefix
