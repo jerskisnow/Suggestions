@@ -10,7 +10,7 @@ const allMessages = {
   exampleTitle: "Bekijk dit voorbeeld:",
   suggestionExample: "<Prefix><Command> een gloednieuwe meme channel!",
 	approveExample: "<Prefix><Command> 1 Goed Idee!",
-	approveExample: "<Prefix><Command> 1 Slecht Idee!",
+	rejectExample: "<Prefix><Command> 1 Slecht Idee!",
   newSuggestionTitle: "Suggestie van <User>",
   newSuggestionDescription: "**Beschrijving:** <Description>\n\n**Status:** <Status>",
   newSuggestionFooter: "Suggestie ID: <SuggestionID>",
@@ -22,7 +22,12 @@ const allMessages = {
 	invalidSuggestions: "Geef een geldig suggestie id in!",
 	alreadyApproved: "Die suggestie is al goedgekeurd!",
 	alreadyRejected: "Die suggestie is al afgekeurd!",
-  missingArguments: "Vul alle benodigde argumenten in!"
+  missingArguments: "Vul alle benodigde argumenten in!",
+	usageTitle: "Suggestions - Gebruikswijze",
+	configUsage: "<Prefix><Command> [Opties] [Waardes]",
+	optionsTitle: "Configuration - Opties",
+	updatedConfigurationTitle: "Suggestions - Configuratie Update",
+	updatedPrefix: "De prefix is succesvol veranderd naar `<Prefix>`"
 }
 
 module.exports = allMessages;

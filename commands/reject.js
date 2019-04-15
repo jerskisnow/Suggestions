@@ -3,6 +3,15 @@ const path = require('path');
 
 exports.run = async (client, message, language, prefix, args) => {
 
+  if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.channel.send({
+    embed: new RichEmbed()
+      .setAuthor(language.errorTitle, client.user.avatarURL)
+      .setColor(process.env.EMBED_COLOR)
+      .setDescription(language.noPermission)
+      .setTimestamp()
+      .setFooter(process.env.EMBED_FOOTER)
+  });
+
   if (args.length < 2) return message.channel.send({
     embed: new RichEmbed()
       .setAuthor(language.errorTitle, client.user.avatarURL)

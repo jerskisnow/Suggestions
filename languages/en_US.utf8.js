@@ -20,7 +20,7 @@ const allMessages = {
   exampleTitle: "Checkout this example:",
   suggestionExample: "<Prefix><Command> a brand new meme channel!",
 	approveExample: "<Prefix><Command> 1 Good Idea!",
-	approveExample: "<Prefix><Command> 1 Bad Idea!",
+	rejectExample: "<Prefix><Command> 1 Bad Idea!",
   newSuggestionTitle: "Suggestion from <User>",
   newSuggestionDescription: "**Description:** <Description>\n\n**Status:** <Status>",
   newSuggestionFooter: "Suggestion ID: <SuggestionID>",
@@ -32,7 +32,13 @@ const allMessages = {
 	invalidSuggestions: "Please enter a valid suggestion id!",
 	alreadyApproved: "That suggestion is already approved!",
 	alreadyRejected: "That suggestions is already rejected!",
-  missingArguments: "You have to fill in all the arguments!"
+  missingArguments: "You have to fill in all the arguments!",
+	incorrectArguments: "You have to fill in the correct arguments!",
+	usageTitle: "Suggestions - Usage",
+	configUsage: "<Prefix><Command> [Options] [Values]",
+	optionsTitle: "Configuration - Options",
+	updatedConfigurationTitle: "Suggestions - Configuration Update",
+	updatedPrefix: "Succesfully updated the prefix to `<Prefix>`"
 }
 
 module.exports = allMessages;
