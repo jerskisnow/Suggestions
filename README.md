@@ -1,2 +1,2 @@
 # Suggestions
-The Official Suggestions DiscordBot!
+The Official Suggestions DiscordBot by jerskisnow!

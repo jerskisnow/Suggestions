@@ -1,21 +1,28 @@
 /*
 
-Thank you for translating our messages!
-
-NOTE:
-  1. You only have to change the thing betwene the ""!
-  2. Don't change the variables like <Ping> for example!
-  3. Don't add other things
-  4. Be serious, so don't write stupid things! (We are going to check that ofc).
-  5. Read ALL the comments, the text above all the consts for example.
-  6. \n means that the text after this will be on a new line.
-  
-  Questions? Contact jerskisnow#8214
+Dutch, translated by jerskisnow#8214
 
 */
 
 const allMessages = {
-	noPermission: "Je hebt geen permissie om die command uit te voeren!"
+	noPermission: "Je hebt geen permissie om die command uit te voeren!",
+  errorTitle: "Suggestions - Error",
+  exampleTitle: "Bekijk dit voorbeeld:",
+  suggestionExample: "<Prefix><Command> een gloednieuwe meme channel!",
+	approveExample: "<Prefix><Command> 1 Goed Idee!",
+	approveExample: "<Prefix><Command> 1 Slecht Idee!",
+  newSuggestionTitle: "Suggestie van <User>",
+  newSuggestionDescription: "**Beschrijving:** <Description>\n\n**Status:** <Status>",
+  newSuggestionFooter: "Suggestie ID: <SuggestionID>",
+	approvedTitle: "Goedkeuring Suggestie!",
+	approvedDescription: "Jouw suggestie in <GuildName> is goedgekeurd!\n\n**Reden:** <Reason>",
+	rejectedTitle: "Afkeuring Suggestie!",
+	rejectedDescription: "Jouw suggestie in <GuildName> is afgekeurd!\n\n**Reden:** <Reason>",
+  invalidChannel: "Configureer eerst een channel voor de suggesties!",
+	invalidSuggestions: "Geef een geldig suggestie id in!",
+	alreadyApproved: "Die suggestie is al goedgekeurd!",
+	alreadyRejected: "Die suggestie is al afgekeurd!",
+  missingArguments: "Vul alle benodigde argumenten in!"
 }
 
 module.exports = allMessages;

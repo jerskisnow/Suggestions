@@ -23,12 +23,13 @@ Suggestion:
 	- message
 	- description
 	- status
+  - author
 	- guild
 */
 tableExists("suggestions", (bool) => {
 	if (!bool)
 	{
-		con.query("CREATE TABLE suggestions (id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, message VARCHAR(60) NOT NULL, description TEXT NOT NULL, status VARCHAR(60) NOT NULL, guild VARCHAR(60) NOT NULL)");
+		con.query("CREATE TABLE suggestions (id INT AUTO_INCREMENT PRIMARY KEY NOT NULL, message VARCHAR(60) NOT NULL, description TEXT NOT NULL, status VARCHAR(60) NOT NULL, author VARCHAR(60), guild VARCHAR(60) NOT NULL)");
 		console.log(" - Suggestions Table has been created!");
 	}
 	else
