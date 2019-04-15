@@ -1,7 +1,7 @@
 const { RichEmbed } = require('discord.js');
 const path = require('path');
 
-exports.run = (client, message, language, prefix, args) => {
+exports.run = async (client, message, language, prefix, args) => {
 
   if (args.length < 2) return message.channel.send({
     embed: new RichEmbed()
