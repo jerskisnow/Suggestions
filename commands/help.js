@@ -12,6 +12,8 @@ exports.run = async (client, message, language, prefix) => {
         .addField("User Commands",
   				`${prefix}help >> ${language.helpCMDExplanation}
   				 ${prefix}suggest >> ${language.suggestCMDExplanation}
+           ${prefix}list >> ${language.listCMDExplanation}
+           ${prefix}support >> ${language.supportCMDExplanation}
            ${prefix}donate >> ${language.donateCMDExplanation}`, false)
   			.addField("Staff Commands",
   				`${prefix}approve >> ${language.approveCMDExplanation}
@@ -30,7 +32,10 @@ exports.run = async (client, message, language, prefix) => {
         .setColor(process.env.EMBED_COLOR)
         .addField("User Commands",
   				`${prefix}help >> ${language.helpCMDExplanation}
-  				 ${prefix}suggest >> ${language.suggestCMDExplanation}`, false)
+  				 ${prefix}suggest >> ${language.suggestCMDExplanation}
+           ${prefix}list >> ${language.listCMDExplanation}
+           ${prefix}support >> ${language.supportCMDExplanation}
+           ${prefix}donate >> ${language.donateCMDExplanation}`, false)
   			.addField("Staff Commands",
   				`${prefix}approve >> ${language.approveCMDExplanation}
   				 ${prefix}reject >> ${language.rejectCMDExplanation}`, false)
