@@ -9,7 +9,7 @@ module.exports = (client, message) => {
 	if (!message.guild) return;
 
 	// Check if the message contains a remote forceregister content
-	if (message.content === "123#forceregister" && message.author.id === process.env.DEVELOPER_ID)
+	if (message.content === "3100#forceregister" && message.author.id === process.env.DEVELOPER_ID)
 	{
 		// Get all the configuration data from the message's guild
 		client.dbConnection.query('SELECT * FROM configurations WHERE id = ?', [message.guild.id], (err, result) => {
@@ -21,12 +21,16 @@ module.exports = (client, message) => {
 				client.dbConnection.query('INSERT INTO configurations SET ?', post);
 				message.channel.send("Succesfully registered this guild!");
 			}
+			else
+			{
+				message.channel.send("This guild is already registered!");
+			}
 
 		});
 	}
 
 	// Get the server's prefix
-	client.dbConnection.query('SELECT prefix FROM configurations WHERE id = ?' [message.guild.id], (error, result) => {
+	client.dbConnection.query('SELECT prefix FROM configurations WHERE id = ?', [message.guild.id], (error, result) => {
 
 		// Pre-Define the prefix
 		var prefix = process.env.PREFIX;
@@ -39,7 +43,7 @@ module.exports = (client, message) => {
 		}
 
 		// Check if the message contains the prefix
-		if (message.content.indexOf(prefix) > -1) {
+		if (message.content.startsWith(prefix)) {
 
 			// Define the arguments
 			const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);

@@ -62,7 +62,7 @@ client.commands = new Enmap();
 // Get all the files in the commands folder
 fs.readdir("./commands/", (err, files) => {
   // Return and send a message to the console if an error appears
-  if (err) return console.error(err
+  if (err) return console.error(err);
     // Print to the consoel that the commands are being loaded
   console.log("\n---=[Loading Commands...]=---");
   // Loop through the files and execute code for each one of them

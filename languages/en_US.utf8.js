@@ -15,6 +15,7 @@ NOTE:
 */
 
 const allMessages = {
+	// Initial Commit (Version 1.0.0)
 	noPermission: "You are not permitted to execute that command!",
   errorTitle: "Suggestions - Error",
   exampleTitle: "Checkout this example:",
@@ -26,10 +27,15 @@ const allMessages = {
   newSuggestionFooter: "Suggestion ID: <SuggestionID>",
 	approvedTitle: "Suggestion Approval!",
 	approvedDescription: "Your suggestions in <GuildName> has been approved!\n\n**Reason:** <Reason>",
+	approvedSuggestionTitle: "Suggestions - Suggestion Approved",
+	approvedSuggestion: "Succesfull approved the suggestion with the id of `<SuggestionID>`!",
 	rejectedTitle: "Suggestion Rejection!",
 	rejectedDescription: "Your suggestions in <GuildName> has been rejected!\n\n**Reason:** <Reason>",
+	rejectedSuggestionTitle: "Suggestions - Suggestion Rejected",
+	rejectedSuggestion: "Succesfully rejected the suggestion with the id of `<SuggestionID>`!",
   invalidChannel: "Please setup a valid suggestion channel!",
 	invalidSuggestions: "Please enter a valid suggestion id!",
+	invalidLanguage: "Please choose between: `<Languages>`",
 	alreadyApproved: "That suggestion is already approved!",
 	alreadyRejected: "That suggestions is already rejected!",
   missingArguments: "You have to fill in all the arguments!",
@@ -38,7 +44,27 @@ const allMessages = {
 	configUsage: "<Prefix><Command> [Options] [Values]",
 	optionsTitle: "Configuration - Options",
 	updatedConfigurationTitle: "Suggestions - Configuration Update",
-	updatedPrefix: "Succesfully updated the prefix to `<Prefix>`"
+	updatedPrefix: "Succesfully updated the prefix to `<Prefix>`",
+  updatedChannel: "Succesfully updated the channel to `<ChannelName> (<ChannelID>)`",
+	updatedLanguage: "Succesfully updated the language to `<Language>`",
+	privateMessages: "Check your private messages!",
+	helpTitle: "Suggestions - Help Message",
+	helpCMDExplanation: "Receive the help message!",
+	suggestCMDExplanation: "Create a suggestion for the server!",
+	approveCMDExplanation: "Approve a suggestion!",
+	rejectCMDExplanation: "Reject a suggestion!",
+	configCMDExplanation: "Configure the bot!",
+	donateCMDExplanation: "Receive information about donating!",
+	comingSoonTitle: "Suggestions - Coming Soon",
+	comingSoon: "This option will be available soon!",
+	suggestionListTitle: "Suggestions - Suggestion List",
+	suggestionListDescription: "You can view all the active/open suggestion right below!",
+	suggestionListingDescription: "**Description:** <Description>\n**ID:** <SuggestionID>\n**Link:** [Click here](<SuggestionURL>)",
+	donateTitle: "Suggestions - Donate",
+	donateDescription: "Don't feel obligated to donate! It isn't a requirement but it helps us to maintenance our projects including Suggestions.\n\nIf you decided to donate contact `jerskisnow#8214` if you want to receive a premium rank on the official `CodedSnow` discord server ([Click here](https://discord.gg/3SYg3M5))! When you received the premium rank you'll get some extra perks and you'll be thanked gratefully!",
+	paymentMethodsTitle: "Payment Methods",
+	supportTitle: "Suggestions - Support",
+	supportDescription: "You can join our official server to gain support by clicking [here](https://discord.gg/3SYg3M5)!"
 }
 
 module.exports = allMessages;

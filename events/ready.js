@@ -22,7 +22,7 @@ module.exports = (client) => {
 		client.user.setActivity(activities_list[index], {
 			type: 'WATCHING'
 		});
-		
+
 	}
 
 }

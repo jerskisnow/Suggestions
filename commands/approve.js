@@ -57,10 +57,10 @@ exports.run = async (client, message, language, prefix, args) => {
       });
 
       let sChannel = client.channels.get(res[0].channel);
-      let sAuthor = client.users.get(res[0].author);
+      let sAuthor = client.users.get(result[0].author);
       let sDesc = result[0].description;
 
-      const msg = await sChannel.fetchMessage(result[0].channel);
+      const msg = await sChannel.fetchMessage(result[0].message);
 
       await msg.edit({
         embed: new RichEmbed()
@@ -71,7 +71,7 @@ exports.run = async (client, message, language, prefix, args) => {
 					.setFooter(language.newSuggestionFooter.replace(/<SuggestionID>/g, sID))
       });
 
-      client.dbConnection.query('UPDATE suggestions SET status = ? WHERE id = ?', ['Approved', sID]);
+      await client.dbConnection.query('UPDATE suggestions SET status = ? WHERE id = ?', ['Approved', sID]);
 
       let aReason = args.slice(1).join(" ");
 
@@ -81,12 +81,21 @@ exports.run = async (client, message, language, prefix, args) => {
           embed: new RichEmbed()
             .setAuthor(language.approvedTitle, client.user.avatarURL)
             .setColor(process.env.EMBED_COLOR)
-            .setDescription(language.approvedDescription.replace(/<GuildName>/g, message.guild.name).replace(/<Reason>/g, aReason)))
+            .setDescription(language.approvedDescription.replace(/<GuildName>/g, message.guild.name).replace(/<Reason>/g, aReason))
             .setTimestamp()
             .setFooter(process.env.EMBED_FOOTER)
         });
       }
-      catch (err) { // throw err; }
+      catch (err) { /* throw err; */ }
+
+      message.channel.send({
+        embed: new RichEmbed()
+          .setAuthor(language.approvedSuggestionTitle, client.user.avatarURL)
+          .setColor(process.env.EMBED_COLOR)
+          .setDescription(language.approvedSuggestion.replace(/<SuggestionID>/g, sID))
+          .setTimestamp()
+          .setFooter(process.env.EMBED_FOOTER)
+      });
 
     });
 

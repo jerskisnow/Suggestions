@@ -37,8 +37,8 @@ exports.run = async (client, message, language, prefix, args) => {
 
 		// Get the id form the suggestion with the highest id
 		client.dbConnection.query('SELECT id FROM suggestions ORDER BY id DESC LIMIT 1', async (err, rawID) => {
-			// Pre-Define sID
-			var sID = "Invalid";
+			// Pre-Define sID, set to 1 because if there aren't any suggestions registered it have to return the number 1, since that's the number for the first registered suggestions
+			var sID = "1";
 			// Check if the data is valid
 			if (!err && rawID.length !== 0 && rawID[0].id !== null)
 			{
@@ -64,6 +64,7 @@ exports.run = async (client, message, language, prefix, args) => {
 			var post = {
 				message: sMessage.id,
 				description: sDesc,
+				author: message.author.id,
 				status: "Open",
 				guild: message.guild.id
 			};
