@@ -35,7 +35,7 @@ module.exports = (client, guild) => {
 	setTimeout(sendEmbed, 5000);
 
 	function sendEmbed() {
-		let logChannel = client.channels.get(process.env.CHANNELS_GUILDLOG);
+		let logChannel = client.channels.get(process.env.CHANNELS_LOG);
 		if (!logChannel) return;
 
 		logChannel.send({

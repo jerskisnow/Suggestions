@@ -7,9 +7,9 @@ class utils
 	}
 
 	static stripChannelInput(channelInput)
-  {
-    return channelInput.replace('<', '').replace('#', '').replace('>', '');
-  }
+    {
+    	return channelInput.replace('<', '').replace('#', '').replace('>', '');
+    }
 
 }
 

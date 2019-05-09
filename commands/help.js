@@ -14,6 +14,7 @@ exports.run = async (client, message, language, prefix) => {
   				 ${prefix}suggest >> ${language.suggestCMDExplanation}
            ${prefix}list >> ${language.listCMDExplanation}
            ${prefix}support >> ${language.supportCMDExplanation}
+           ${prefix}invite >> ${language.inviteCMDExplanation}
            ${prefix}donate >> ${language.donateCMDExplanation}`, false)
   			.addField("Staff Commands",
   				`${prefix}approve >> ${language.approveCMDExplanation}
@@ -35,6 +36,7 @@ exports.run = async (client, message, language, prefix) => {
   				 ${prefix}suggest >> ${language.suggestCMDExplanation}
            ${prefix}list >> ${language.listCMDExplanation}
            ${prefix}support >> ${language.supportCMDExplanation}
+           ${prefix}invite >> ${language.inviteCMDExplanation}
            ${prefix}donate >> ${language.donateCMDExplanation}`, false)
   			.addField("Staff Commands",
   				`${prefix}approve >> ${language.approveCMDExplanation}

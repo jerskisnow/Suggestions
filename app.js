@@ -63,7 +63,7 @@ client.commands = new Enmap();
 fs.readdir("./commands/", (err, files) => {
   // Return and send a message to the console if an error appears
   if (err) return console.error(err);
-    // Print to the consoel that the commands are being loaded
+  // Print to the consoel that the commands are being loaded
   console.log("\n---=[Loading Commands...]=---");
   // Loop through the files and execute code for each one of them
   files.forEach(file => {
@@ -77,6 +77,26 @@ fs.readdir("./commands/", (err, files) => {
     console.log(` - ${commandName} has been loaded!`);
     // Finally add the name of the command and the command's properties to the commmands enmap
     client.commands.set(commandName, props);
+  });
+});
+
+// Get all the files in the apis folder
+fs.readdir('./apis/', (err, files) => {
+  // Return and send a message to the console if an error appears
+  if (err) return console.error(err);
+  // Print to the consoel that the commands are being loaded
+  console.log("\n---=[Loading Apis...]=---");
+  files.forEach(file => {
+    // Return if a file doesn't have the extention .js
+    if (!file.endsWith(".js")) return;
+    // Defines the command file
+    let apiFile = require(`./apis/${file}`);
+    // Defines the command name
+    let apiName = file.split(".")[0];
+    // Print to the console that the command has been loaded
+    console.log(` - ${apiName} has been loaded!`);
+    // Finally run the api file
+    apiFile.run(client);
   });
 });
 
