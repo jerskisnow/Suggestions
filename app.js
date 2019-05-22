@@ -19,6 +19,8 @@ var con = mysql.createConnection({
   database: process.env.DB_DATABASE,
 });
 
+var isDatabaseConnected = false;
+
 // Connecting to the database
 con.connect(err => {
   // Check for any errors
@@ -30,6 +32,7 @@ con.connect(err => {
   // If there aren't any errors execute the code within the else statement's brackets
   else
   {
+    isDatabaseConnected = true;
     console.log("\nConnected to the database!");
   }
 });
@@ -102,3 +105,5 @@ fs.readdir('./apis/', (err, files) => {
 
 // Finally log into the discord client
 client.login(process.env.TOKEN);
+
+module.exports.isDatabaseConnected = isDatabaseConnected;

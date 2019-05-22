@@ -6,13 +6,14 @@ Hi, first of all thanks for viewing this page! Suggestions is a discordbot that 
 ### Commands:
 1. **$help** >> Receive the help message!
 2. **$suggest** >> Create a suggestion for the server!
-3. **$list** >> View the `Open` suggestions!
+3. **$list** >> View all `Open` suggestions!
 4. **$approve** >> Approve a suggestion!
 5. **$reject** >> Reject a suggestion!
 6. **$config** >> Configure the bot!
 7. **$support** >> Receive the support message!
 8. **$invite** >> Receive the invite details!
-9. **$donate** >> Receive information about donating!
+9. **$uptime** >> Receive the uptime message!
+10. **$donate** >> Receive information about donating!
 
 # Coming Soon
 1. An possibility to make the bot Automatically `approve`/`reject` a suggestions after a configurable amount of up- or downvotes.

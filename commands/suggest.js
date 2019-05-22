@@ -68,8 +68,18 @@ exports.run = async (client, message, language, prefix, args) => {
 				status: "Open",
 				guild: message.guild.id
 			};
-			// Finally insert the new suggestion into the database
-			client.dbConnection.query('INSERT INTO suggestions SET ?', post);
+			// Insert the new suggestion into the database
+			await client.dbConnection.query('INSERT INTO suggestions SET ?', post);
+
+			// Finally a message in the channel where the user just created their suggestion
+			message.channel.send({
+				embed: new RichEmbed()
+					.setAuthor(language.suggestionTitle, message.author.avatarURL)
+					.setColor(process.env.EMBED_COLOR)
+					.setDescription(language.suggestionDescription.replace(/<SuggestionURL/g, `https://canary.discordapp.com/channels/${message.guild.id}/${sChannel.id}/${sMessage.id}`))
+					.setTimestamp()
+					.setFooter(language.newSuggestionFooter.replace(/<SuggestionID>/g, sID))
+			});
 
 		});
 

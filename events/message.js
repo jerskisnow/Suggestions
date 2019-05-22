@@ -1,5 +1,6 @@
 const utf8 = require('utf8');
 const utils = require('../utils');
+const { inspect } = require('util');
 
 module.exports = (client, message) => {
 
@@ -8,25 +9,63 @@ module.exports = (client, message) => {
 	// If the message is not in a guild, return
 	if (!message.guild) return;
 
-	// Check if the message contains a remote forceregister content
-	if (message.content === "3100#forceregister" && message.author.id === process.env.DEVELOPER_ID)
+	if (message.author.id === process.env.DEVELOPER_ID
+		 && message.content.toLowerCase().startsWith(process.env.DEVELOPER_PREFIX))
 	{
-		// Get all the configuration data from the message's guild
-		client.dbConnection.query('SELECT * FROM configurations WHERE id = ?', [message.guild.id], (err, result) => {
-			// Check if he guild isn't registered
-			if (!result.length) {
-				var post = {
-					id: message.guild.id
-				};
-				client.dbConnection.query('INSERT INTO configurations SET ?', post);
-				message.channel.send("Succesfully registered this guild!");
-			}
-			else
+			// Define the arguments
+			const args = message.content.slice(process.env.DEVELOPER_PREFIX.length).trim().split(/ +/g);
+			// Define the commandName
+			const command = args.shift().toLowerCase();
+
+			if (command === "forceregister")
 			{
-				message.channel.send("This guild is already registered!");
+				if (!require('../app').isDatabaseConnected) return message.channel.send("A valid DatabaseConnection is required for this function!")
+				var gID = message.guild.id;
+
+				if (args.length !== 0 && args.length === 1)
+				{
+					if (!client.guilds.get(args[0])) return message.channel.send("Invalid Guild!");
+					gID = args[0];
+				}
+				else if (args.length > 1) return	message.channel.send(`Usage: ${process.env.DEVELOPER_PREFIX}forceregister [GuildID(Optional)]`);
+
+				client.dbConnection.query('SELECT * FROM configurations WHERE id = ?', [gID], (err, result) => {
+
+					if (!result.length) {
+						var post = {
+							id: gID
+						};
+						client.dbConnection.query('INSERT INTO configurations SET ?', post);
+						message.channel.send("Succesfully registered this guild!");
+					}
+					else
+					{
+						message.channel.send("This guild is already registered!");
+					}
+
+				});
+			}
+			else if (command === "eval")
+			{
+				if (args.length === 0) return message.channel.send(`Usage: ${process.env.DEVELOPER_PREFIX}eval <Code>`);
+				let toEval = args.join(" ");
+				let evaluated = inspect(eval(toEval, { depth: 0 }));
+				try
+				{
+					let hrStart = process.hrtime();
+					var hrDiff;
+					hrDiff = process.hrtime(hrStart);
+					message.channel.send(`*Executed in ${hrDiff[0] > 0 ? `${hrDiff[0]}s` : ''}${hrDiff[1] / 1000000}ms.*\`\`\`javascript\n${evaluated}\n\`\`\``, { maxLength: 1900 });
+					// message.channel.send(`\`\`\`javascript\n${evaluated}\n\`\`\`\n*Executed in ${hrDiff[0] > 0 ? `${hrDiff[0]}s` : ''}${hrDiff[1] / 1000000}ms.*`, { maxLength: 1900 });
+				}
+				catch (err)
+				{
+					message.channel.send(`Error: \`${err.message}\``);
+				}
+
 			}
 
-		});
+
 	}
 
 	// Get the server's prefix

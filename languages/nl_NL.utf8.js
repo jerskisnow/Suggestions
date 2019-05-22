@@ -15,6 +15,8 @@ const allMessages = {
 	newSuggestionTitle: "Suggestie van <User>",
 	newSuggestionDescription: "**Beschrijving:** <Description>\n\n**Status:** <Status>",
 	newSuggestionFooter: "Suggestie ID: <SuggestionID>",
+	suggestionTitle: "Suggestions - Suggestie",
+	suggestionDescription: "Jouw suggestie is succesvol aangemaakt! ([Klik hier](<SuggestionURL>))",
 	approvedTitle: "Goedkeuring Suggestie!",
 	approvedDescription: "Jouw suggestie in <GuildName> is goedgekeurd!\n\n**Reden:** <Reason>",
 	approvedSuggestionTitle: "Suggestions - Suggestie goedgekeurd",
@@ -34,7 +36,7 @@ const allMessages = {
 	optionsTitle: "Configuration - Opties",
 	updatedConfigurationTitle: "Suggestions - Configuratie Update",
 	updatedPrefix: "De prefix is succesvol veranderd naar `<Prefix>`",
-	updatedChannel: "De channel is succesvol veranderd naar `<ChannelName> (<ChannelID>)`",
+	updatedChannel: "De channel is succesvol veranderd naar `<ChannelName>` (<#<ChannelID>>)`",
 	updatedLanguage: "De taal van de bot is succesvol veranderd naar `<Language>`",
 	privateMessages: "Bekijk jouw prive berichten!",
 	helpTitle: "Suggestions - Hulp Bericht",
@@ -58,7 +60,11 @@ const allMessages = {
 	supportTitle: "Suggestions - Ondersteuning",
 	supportDescription: "Je kan onze officiële discord joinen om ondersteuning te ontvangen door [hier](https://discord.gg/3SYg3M5) te klikken!",
 	inviteTitle: "Suggestions - Uitnodigen",
-	inviteDescription: "You can Suggestions uitnodigen voor jouw server door [hier](https://discordapp.com/oauth2/authorize?client_id=566616056165302282&scope=bot&permissions=8) te klikken!"
+	inviteDescription: "You can Suggestions uitnodigen voor jouw server door [hier](https://discordapp.com/oauth2/authorize?client_id=566616056165302282&scope=bot&permissions=8) te klikken!",
+	// The Performance Update (Version 1.1.0)
+	uptimeTitle: "Suggestions - Bedrijfstijd",
+	uptimeDescription: "Ik ben online geweest voor <Time>!",
+	uptimeCMDExplanation: "Ontvang het bedrijfstijd bericht!"
 }
 
 module.exports = allMessages;

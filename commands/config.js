@@ -1,6 +1,7 @@
 const { RichEmbed } = require('discord.js');
 const path = require('path');
 const utf8 = require('utf8');
+const utils = require('../utils');
 
 exports.run = async (client, message, language, prefix, args) => {
 
@@ -90,7 +91,7 @@ exports.run = async (client, message, language, prefix, args) => {
       embed: new RichEmbed()
         .setAuthor(language.updatedConfigurationTitle, client.user.avatarURL)
         .setColor(process.env.EMBED_COLOR)
-        .setDescription(language.updatedChannel.replace(/<ChannelName>/g, `<#${newChannelObject.name}>`).replace(/<ChannelID>/g, `<#${newChannelObject.id}>`))
+        .setDescription(language.updatedChannel.replace(/<ChannelName>/g, newChannelObject.name).replace(/<ChannelID>/g, newChannelObject.id))
         .setTimestamp()
         .setFooter(process.env.EMBED_FOOTER)
     });

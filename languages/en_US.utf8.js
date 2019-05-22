@@ -25,6 +25,8 @@ const allMessages = {
 	newSuggestionTitle: "Suggestion from <User>",
 	newSuggestionDescription: "**Description:** <Description>\n\n**Status:** <Status>",
 	newSuggestionFooter: "Suggestion ID: <SuggestionID>",
+	suggestionTitle: "Suggestions - Suggestion",
+	suggestionDescription: "Succesfully created your suggestion! ([Click here](<SuggestionURL>))",
 	approvedTitle: "Suggestion Approval!",
 	approvedDescription: "Your suggestions in <GuildName> has been approved!\n\n**Reason:** <Reason>",
 	approvedSuggestionTitle: "Suggestions - Suggestion Approved",
@@ -45,13 +47,13 @@ const allMessages = {
 	optionsTitle: "Configuration - Options",
 	updatedConfigurationTitle: "Suggestions - Configuration Update",
 	updatedPrefix: "Succesfully updated the prefix to `<Prefix>`",
-	updatedChannel: "Succesfully updated the channel to `<ChannelName> (<ChannelID>)`",
+	updatedChannel: "Succesfully updated the channel to `<ChannelName>` (<#<ChannelID>>)",
 	updatedLanguage: "Succesfully updated the language to `<Language>`",
 	privateMessages: "Check your private messages!",
 	helpTitle: "Suggestions - Help Message",
 	helpCMDExplanation: "Receive the help message!",
 	suggestCMDExplanation: "Create a suggestion for the server!",
-	listCMDExplanation: "View the Open suggestions!",
+	listCMDExplanation: "View all Open suggestions!",
 	approveCMDExplanation: "Approve a suggestion!",
 	rejectCMDExplanation: "Reject a suggestion!",
 	configCMDExplanation: "Configure the bot!",
@@ -69,7 +71,11 @@ const allMessages = {
 	supportTitle: "Suggestions - Support",
 	supportDescription: "You can join our official server to gain support by clicking [here](https://discord.gg/3SYg3M5)!",
 	inviteTitle: "Suggestions - Invite",
-	inviteDescription: "You can invite Suggestions to your discord server by clicking [here](https://discordapp.com/oauth2/authorize?client_id=566616056165302282&scope=bot&permissions=8)!"
+	inviteDescription: "You can invite Suggestions to your discord server by clicking [here](https://discordapp.com/oauth2/authorize?client_id=566616056165302282&scope=bot&permissions=8)!",
+	// The Performance Update (Version 1.1.0)
+	uptimeTitle: "Suggestions - Uptime",
+	uptimeDescription: "I've been online for <Time>!",
+	uptimeCMDExplanation: "Receive the uptime message!"
 }
 
 module.exports = allMessages;
