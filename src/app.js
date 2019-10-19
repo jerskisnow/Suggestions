@@ -1,8 +1,8 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
-dotenv.config({ 
-	path: path.resolve(process.cwd(), "../.env")
+dotenv.config({
+    path: path.resolve(process.cwd(), "../.env")
 });
 
 // Some imports, nothing special
@@ -27,64 +27,62 @@ console.log(cliColors.FgCyan + `\n ██████╗ ██████╗ �
 // Run the anonymous 'Main' function
 (async () => {
 
-  // Create a connection to the database
-  await mysql.createConnection();
+    // Create a connection to the database
+    await mysql.createConnection();
 
-  // ...
+    // ...
 
 })();
 
 readdir("./listeners/", (err, files) => {
-  if (err) throw err;
+    if (err) throw err;
 
-  console.log(cliColors.FgBlue + "\n---=[Loading Events...]=---" + cliColors.Reset);
+    console.log(cliColors.FgBlue + "\n---=[Loading Events...]=---" + cliColors.Reset);
 
-  files.forEach((file) => {
-    const lFile = require(`./listeners/${file}`);
-    const lName = file.split(".")[0];
+    files.forEach((file) => {
+        const lFile = require(`./listeners/${file}`);
+        const lName = file.split(".")[0];
 
-    console.log(cliColors.FgCyan + ` >> ${lName} has been loaded!` + cliColors.Reset);
+        console.log(cliColors.FgCyan + ` >> ${lName} has been loaded!` + cliColors.Reset);
 
-    client.on(lName, lFile.bind(null, client));
-  });
+        client.on(lName, lFile.bind(null, client));
+    });
 
 });
 
 readdir("./commands/", (err, files) => {
-  if (err) throw err;
+    if (err) throw err;
 
-  console.log(cliColors.FgBlue + "\n---=[Loading Commands...]=---" + cliColors.Reset);
+    console.log(cliColors.FgBlue + "\n---=[Loading Commands...]=---" + cliColors.Reset);
 
-  files.forEach((file) => {
-    if (!file.endsWith(".js")) return;
+    files.forEach((file) => {
+        if (!file.endsWith(".js")) return;
 
-    const cmdInstance = require(`./commands/${file}`);
-    const cmdName = file.split(".")[0];
+        const cmdInstance = require(`./commands/${file}`);
+        const cmdName = file.split(".")[0];
 
-    console.log(cliColors.FgCyan + ` >> ${cmdName} has been loaded!` + cliColors.Reset);
+        console.log(cliColors.FgCyan + ` >> ${cmdName} has been loaded!` + cliColors.Reset);
 
-    cmdMap.set(cmdName, cmdInstance.default);
-  });
-  
+        cmdMap.set(cmdName, cmdInstance.default);
+    });
+
 });
 
 readdir("./apis/", (err, files) => {
-  if (err) throw err;
-  
-  console.log(cliColors.FgBlue + "\n---=[Loading Apis...]=---" + cliColors.Reset);
+    if (err) throw err;
 
-  files.forEach((file) => {
+    console.log(cliColors.FgBlue + "\n---=[Loading Apis...]=---" + cliColors.Reset);
 
-    if (!file.endsWith(".js")) return;
+    files.forEach((file) => {
+        if (!file.endsWith(".js")) return;
 
-    const apiInstance = require(`./apis/${file}`);
-    const apiname = file.split(".")[0];
+        const apiInstance = require(`./apis/${file}`);
+        const apiName = file.split(".")[0];
 
-    console.log(cliColors.FgCyan + ` >> ${apiName} has been loaded!` + cliColors.Reset);
+        console.log(cliColors.FgCyan + ` >> ${apiName} has been loaded!` + cliColors.Reset);
 
-    apiInstance.default(client);
-
-  });
+        apiInstance.default(client);
+    });
 
 });
 
