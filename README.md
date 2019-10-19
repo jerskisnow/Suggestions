@@ -1,20 +1,32 @@
 # Suggestions
 
-Hi, first of all thanks for viewing this page! Suggestions is a discordbot that handles community made suggestions. People in your discord server can use the `suggest` command to suggest their ideas, other people can vote up or down. People with the `MANAGE_MESSAGES` permission are allowed to Approve or Reject people their ideas. But there are also other features (see featurelist below) and a lot of upcoming features! This project will be actively updated!
+Hi, first of all, thanks for viewing this page! Suggestions is a discord bot that handles community made suggestions. People in your discord server can use the `suggest` command to suggest their ideas, other people can vote up or down. People with the `MANAGE_MESSAGES` permission are allowed to Approve or Reject people their ideas. But there are also other features (see the feature list below) and a lot of upcoming features! This project will be actively updated!
 
 # Features
 ### Commands:
-1. **$help** >> Receive the help message!
-2. **$suggest** >> Create a suggestion for the server!
-3. **$list** >> View all `Open` suggestions!
-4. **$approve** >> Approve a suggestion!
-5. **$reject** >> Reject a suggestion!
-6. **$config** >> Configure the bot!
-7. **$support** >> Receive the support message!
-8. **$invite** >> Receive the invite details!
-9. **$uptime** >> Receive the uptime message!
-10. **$donate** >> Receive information about donating!
+1. **$approve** >> Approve a suggestion.
+2. **$config** >> Configure the bot.
+3. **$donate** >> Receive information about donating.
+4. **$help** >> Receive the help message.
+5. **$invite** >> Receive the invite message.
+6. **$list** >> View all `open` suggestions.
+7. **$reject** >> Reject a suggestion.
+8. **$reportbug** >> Report a bug.
+9. **$suggest** >> Propose a suggestions.
+10. **$uptime** >> Receive the uptime message.
+11. **$vote** >> Receive the vote message.
 
-# Coming Soon
-1. An possibility to make the bot Automatically `approve`/`reject` a suggestions after a configurable amount of up- or downvotes.
-2. An configurable option to remove `rejected`/`approved` suggestions!
+# Contributing
+### Translation:
+We are always looking for people to translate our bot. If you want to translate the messages for the bot or if you want to edit someone's translation please go to en_US.utf8.js and read the instructions. The next step is to fork the bot and create a pull request with your new/edited file in it.
+
+### Code:
+Feel free to contribute, not much to say here yet. If you want to add a new feature, create a pull request. If you feel like you want to improve some code that is currently being used, go ahead create a pull request. Anyways keep in mind that you use ESLint to lint your code and make sure your coding style matches the current one. Also, try to keep the formatting the same. One last thing, don't forget to write some documentation using comments in your code. Especially for functions. To get the project up and running follow these steps:
+```
+1. Run: git clone https://github.com/jerskisnow/Suggestions.git
+2. Run: cd Suggestions
+3. Create a .env file and copy the layout of .env.example
+4. Fill in all the fields in your new .env file
+5. Run: yarn install
+6. Have Fun!
+```
