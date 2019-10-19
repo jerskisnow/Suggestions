@@ -1,5 +1,5 @@
 {
-  "name": "Suggestions",
+  "name": "suggestions",
   "version": "2.0.0",
   "description": "Official Suggestions Discordbot",
   "main": "src/app.js",

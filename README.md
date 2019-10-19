@@ -1,6 +1,6 @@
 # Suggestions
 
-Hi, first of all, thanks for viewing this page! Suggestions is a discord bot that handles community made suggestions. People in your discord server can use the `suggest` command to suggest their ideas, other people can vote up or down. People with the `MANAGE_MESSAGES` permission are allowed to Approve or Reject people their ideas. But there are also other features (see the feature list below) and a lot of upcoming features! This project will be actively updated!
+Hi, first of all, thanks for viewing this page! Suggestions is a discord bot that handles community made suggestions. People in your discord server can use the `suggest` command to suggest their ideas, other people can vote up or down. People with the `MANAGE_MESSAGES` permission are allowed to Approve or Reject people their ideas. But there are also other features (see the feature list below) and a lot of upcoming features! This project will be actively updated! In order to see our todolist, check our [Trello](https://trello.com/b/3y6nWOdZ/suggestions)
 
 # Features
 ### Commands:
