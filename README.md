@@ -1,5 +1,7 @@
 # Suggestions
 
+## PLEASE SEE THE DEV BRANCH FOR VERISON 2.0.0, ALL CONTRIBUTERS SHOULD MAKE PULL REQUESTS FOR THE DEV BRANCH AND NOT THIS ONE!!!
+
 Hi, first of all thanks for viewing this page! Suggestions is a discordbot that handles community made suggestions. People in your discord server can use the `suggest` command to suggest their ideas, other people can vote up or down. People with the `MANAGE_MESSAGES` permission are allowed to Approve or Reject people their ideas. But there are also other features (see featurelist below) and a lot of upcoming features! This project will be actively updated!
 
 # Features
