@@ -31,7 +31,7 @@ export default async (client, message, language, prefix, args) => {
         // Define the suggestion description
         const sDesc = args.slice(0).join(" ");
         // Define the suggestion channel
-        const sChannel = client.channels.get(res[0]);
+        const sChannel = client.channels.get(res[0].channel);
 
         // Retrieve the highest id from the suggestions table which is within the database
         await dbConnection.query("SELECT id FROM suggestions ORDER BY id DESC LIMIT 1", async (err, res) => {
@@ -75,7 +75,7 @@ export default async (client, message, language, prefix, args) => {
             // Send a message in the channel where the suggestion command was used
             message.channel.send({
                 embed: new RichEmbed()
-                    .setAuthor(language.suggestionTitle, message.author.avatarURL)
+                    .setAuthor(language.suggestTitle, client.user.avatarURL)
                     .setColor(process.env.EMBED_COLOR)
                     .setDescription(language.suggestSuccess.replace(/<SuggestionURL>/g, `https://canary.discordapp.com/channels/${message.guild.id}/${sChannel.id}/${sMessage.id}`))
                     .setTimestamp()

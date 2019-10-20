@@ -5,6 +5,7 @@ import cliColors from '../structures/CLIColors';
 let dbConnection = null;
 
 export default class MySQL {
+
     createConnection() {
         const con = mysql.createConnection({
             host: process.env.DB_HOST,
@@ -22,7 +23,7 @@ export default class MySQL {
                     return this.registerConnection();
                 else return console.log(err);
 
-            console.log("\nConnected to the database!");
+            console.log(cliColors.FgCyan + "\nConnected to the database!" + cliColors.Reset);
         });
 
         dbConnection = con;
@@ -38,7 +39,6 @@ export default class MySQL {
 
         await con.connect((err) => {
             if (err) return console.log(err);
-            console.log("\nConnected to the database!");
         });
 
         await con.query("CREATE DATABASE " + process.env.DB_DATABASE);
@@ -48,6 +48,7 @@ export default class MySQL {
 
         dbConnection = con;
     }
+
 }
 
 export { dbConnection };

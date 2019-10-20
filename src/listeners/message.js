@@ -1,6 +1,7 @@
 import { dbConnection } from '../structures/MySQL';
 import cmdMap from '../structures/CMDMap';
 import Utils from '../structures/Utils';
+import utf8 from 'utf8';
 
 const utils = new Utils();
 
