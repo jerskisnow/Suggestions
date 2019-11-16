@@ -2,9 +2,6 @@ import cliColors from '../structures/CLIColors';
 
 module.exports = (client) => {
 
-    // Pre-Define the activities list for the client's activity
-    const activities_list = ["Suggestions", client.guilds.size + " Servers", client.users.size + " Users"];
-
     // First set the activitie to 'Watching Suggestions'
     client.user.setActivity("Suggestions", {
         type: "WATCHING",
@@ -18,6 +15,8 @@ module.exports = (client) => {
 
     // Update status function
     async function updateStatus() {
+        // Define the activities list for the client's activity
+        const activities_list = ["Suggestions", client.guilds.size + " Servers", client.users.size + " Users"];
         // calculate an index number fr the activities list array
         const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
         // Finally change the set the activity status

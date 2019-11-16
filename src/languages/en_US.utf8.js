@@ -69,6 +69,16 @@ export default {
     configLanguageMissingArguments: "Please enter a valid language-code!",
     configLanguageExample: "<Prefix>config langauge en_US",
     configLanguageInvalidLanguage: "Please enter a valid Language!\n\n**Language List:** <LanguageList>",
-    configLanguageSuccessDescription: "Successfully changed the language to `<NewLanguageCode>`"
+    configLanguageSuccessDescription: "Successfully changed the language to `<NewLanguageCode>`",
+
+    donateTitle: "Suggestions - Donate",
+    donateDescription: "Don't feel obligated to donate! It isn't a requirement but it helps us to maintenance our projects including Suggestions.\n\nIf you decided to donate contact `jerskisnow#8214` if you want to receive a premium rank on the official `CodedSnow` discord server ([Click here](<ServerURL>))! When you received the premium rank you'll get some extra perks and you'll be thanked gratefully!",
+    donatePaymentmethodsTitle: "Payment Methods",
+
+    listNoSuggestionsFoundDescription: "There aren't any open Suggestions at the moment.",
+    listTitle: "Suggestions - List",
+    listDescription: "You can view all the active/open suggestion right below!",
+    listSuggestionTitle: "Suggestion from <User>",
+    listSuggestionDescription: "**Description:** <Description>\n**ID:** <SuggestionID>\n**Link:** [Click here](<SuggestionURL>)",
 
 }

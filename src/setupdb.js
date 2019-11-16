@@ -40,7 +40,7 @@ export default (dbConnection) => {
      */
     tableExists("configurations", (bool) => {
         if (!bool) {
-            dbConnection.query("CREATE TABLE configurations (id VARCHAR(60) PRIMARY KEY NOT NULL, prefix VARCHAR(60), channel VARCHAR(60), language VARCHAR(60))");
+            dbConnection.query("CREATE TABLE configurations (id VARCHAR(60) PRIMARY KEY NOT NULL, prefix VARCHAR(60), channel VARCHAR(60), language VARCHAR(60), autoapprove INT, autoreject INT, autoremove_approved INT, autoremove_rejected INT)");
             console.log(cliColors.FgCyan + " >> Configurations Table has been created!" + cliColors.Reset);
         } else {
             console.log(cliColors.FgYellow + " >> Configurations Table already exists!" + cliColors.Reset);

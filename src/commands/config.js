@@ -21,7 +21,7 @@ export default async (client, message, language, prefix, args) => {
     $config autoapprove <Amount of Reactions> --> -1 to disable
     $config autoreject <Amount of Reactions> --> -1 to disable
     $config autoremove <Approved/Rejected> <TimeInSeconds> --> -1 for no deletion
-    $config ~
+    $config ~ --> return the help message
      */
 
     if (!args.length) return; // TODO: This
