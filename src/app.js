@@ -5,7 +5,7 @@ dotenv.config({
     path: path.resolve(process.cwd(), "../.env")
 });
 
-// Some imports, nothing special
+// Some imports, nothing special here
 import { readdir } from 'fs';
 import { Client } from 'discord.js';
 import MySQL from './structures/MySQL';
