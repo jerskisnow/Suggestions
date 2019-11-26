@@ -144,12 +144,36 @@ export default async (client, message, language, prefix, args) => {
 
             break;
         case "autoapprove":
+            message.channel.send({
+                embed: new RichEmbed()
+                    .setAuthor(language.comingSoonTitle, client.user.avatarURL)
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.comingSoonDescription)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
             // TODO: This
             break;
         case "autoreject":
+            message.channel.send({
+                embed: new RichEmbed()
+                    .setAuthor(language.comingSoonTitle, client.user.avatarURL)
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.comingSoonDescription)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
             // TODO: This
             break;
         case "autoremove":
+            message.channel.send({
+                embed: new RichEmbed()
+                    .setAuthor(language.comingSoonTitle, client.user.avatarURL)
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.comingSoonDescription)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
             // TODO: This
             break;
         default:

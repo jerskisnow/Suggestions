@@ -6,6 +6,8 @@ export default {
     insufficientPermissions: "You don't have permission to use that command! (<Permission> is required)",
     errorTitle: "Suggestions - Error",
     exampleTitle: "Example",
+    comingSoonTitle: "Suggestions - Coming Soon!",
+    comingSoonDescription: "This option will be available soon!",
 
     /*
     Actual Suggestion Part
