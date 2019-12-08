@@ -8,6 +8,8 @@ export default (client, message, language) => {
             .setAuthor(language.voteTitle, client.user.avatarURL)
             .setColor(process.env.EMBED_COLOR)
             .setDescription(language.voteDescription.replace(/<VoteUrl>/g, process.env.LINKS_VOTE))
+            .setTimestamp()
+            .setFooter(process.env.EMBED_FOOTER)
     });
 
 }

@@ -8,6 +8,8 @@ export default {
     exampleTitle: "Example",
     comingSoonTitle: "Suggestions - Coming Soon!",
     comingSoonDescription: "This option will be available soon!",
+    checkPrivateMessages: "Please check your private messages.",
+    cannotSendPrivateMessages: "I cannot send you a private message, so I'll send it here instead.",
 
     /*
     Actual Suggestion Part
@@ -82,5 +84,18 @@ export default {
     listDescription: "You can view all the active/open suggestion right below!",
     listSuggestionTitle: "Suggestion from <User>",
     listSuggestionDescription: "**Description:** <Description>\n**ID:** <SuggestionID>\n**Link:** [Click here](<SuggestionURL>)",
+
+    helpTitle: "Suggestions - Help",
+    helpExplanationApprove: "Approve a suggestion (MANAGE_MESSAGES required)",
+    helpExplanationConfig: "Configure suggestions (ADMINISTRATOR required)",
+    helpExplanationDonate: "Receive information about donating",
+    helpExplanationHelp: "Receive this message",
+    helpExplanationInvite: "Receive the invite links",
+    helpExplanationList: "See a list of all `active` suggestions",
+    helpExplanationReject: "Reject a suggestion (MANAGE_MESSAGES required)",
+    helpExplanationReportbug: "Report a bug to the developers",
+    helpExplanationSuggest: "Suggest an idea",
+    helpExplanationUptime: "See the uptime of Suggestions",
+    helpExplanationVote: "Receive the vote link"
 
 }

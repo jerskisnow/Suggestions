@@ -24,6 +24,12 @@ module.exports = (client, message) => {
             prefix = utf8.decode(result[0].prefix);
         }
 
+        // I know, not the smoothest way to go but hé feel free to improve it
+        if (process.env.DEV_MODE) {
+            if (message.channel.id !== process.env.DEV_CHANNEL) return;
+            prefix = "?";
+        }
+
         // Check if the message contains the prefix
         if (message.content.startsWith(prefix)) {
 

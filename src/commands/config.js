@@ -24,7 +24,14 @@ export default async (client, message, language, prefix, args) => {
     $config ~ --> return the help message
      */
 
-    if (!args.length) return; // TODO: This
+    if (!args.length) return message.channel.send({
+        embed: new RichEmbed()
+            .setAuthor(language.configTitle, client.user.avatarURL)
+            .setColor(process.env.EMBED_COLOR)
+            .setDescription(`${prefix}config prefix <NewPrefix>\n\n${prefix}config channel <NewChannel>\n\n${prefix}config language <NewLanguage>\n\n${prefix}config autoapprove <Amount of Reactions>\n**NOTE:** -1 to disable\n\n${prefix}config autoreject <Amount of Reactions>\n**NOTE:** -1 to disable`)
+            .setTimestamp()
+            .setFooter(process.env.EMBED_FOOTER)
+    });
 
     switch (args[0].toLowerCase()) {
         case "prefix":
@@ -177,7 +184,23 @@ export default async (client, message, language, prefix, args) => {
             // TODO: This
             break;
         default:
-            return message.channel.send("help message for config command"); // TODO: This
+                /*
+    $config prefix <NewPrefix>
+    $config channel <NewChannel>
+    $config language <NewLanguage>
+    $config autoapprove <Amount of Reactions> --> -1 to disable
+    $config autoreject <Amount of Reactions> --> -1 to disable
+    $config autoremove <Approved/Rejected> <TimeInSeconds> --> -1 for no deletion
+    $config ~ --> return the help message
+     */
+            return message.channel.send({
+                embed: new RichEmbed()
+                    .setAuthor(language.configTitle, client.user.avatarURL)
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(`${prefix}config prefix <NewPrefix>\n${prefix}config channel <NewChannel>\n${prefix}config language <NewLanguage>\n${prefix}config autoapprove <Amount of Reactions>\n   **NOTE:**-1 to disable\n${prefix}config autoreject <Amount of Reactions>\n   **NOTE:** -1 to disable`)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
     }
 
 }

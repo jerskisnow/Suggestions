@@ -30,3 +30,11 @@ Feel free to contribute, not much to say here yet. If you want to add a new feat
 5. Run: yarn install
 6. Have Fun!
 ```
+
+### Reminders (Dw, some are quite obvious):
+ - Use '?' as prefix when using DEV_MODE.
+ - Some command won't work properly without a database connection.
+ - Test your changes before creating a pull request.
+ - Use the language files for all non-admin commands.
+ - Keep the same variable names in different language files.
+ - Questions? Feel free to contact us!
