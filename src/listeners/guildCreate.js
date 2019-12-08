@@ -52,13 +52,13 @@ module.exports = async (client, guild) => {
             .setTitle("Suggestions - New Guild")
             .addField(
                 "GuildInfo",
-                `**Name:** ${guild.name}\n**ID:** ${guild.id}\nMembercount: ${guild.memberCount}\n**Region:** ${guild.region}\nInvite: ${inviteCode}`,
+                `**Name:** ${guild.name}\n**ID:** ${guild.id}\n**Membercount:** ${guild.memberCount}\n**Region:** ${guild.region}\n**Invite:** ${inviteCode}`,
                 false
             )
             .addField("OwnerInfo", `**Name:** ${guild.owner.user.tag}\n**ID:** ${guild.ownerID}`, false)
             .addField(
                 "Other Information",
-                `Suggestions is now in \`${client.guilds.size}\` guilds and those contain \`${client.users.size}\` members and \`${client.channels.size}\` channels!`,
+                `Suggestions is now in \`${client.guilds.size}\` guilds and those contain \`${client.users.size}\` members and \`${client.channels.size}\` channels.`,
                 false
             )
             .setTimestamp()
