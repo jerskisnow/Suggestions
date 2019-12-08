@@ -184,15 +184,6 @@ export default async (client, message, language, prefix, args) => {
             // TODO: This
             break;
         default:
-                /*
-    $config prefix <NewPrefix>
-    $config channel <NewChannel>
-    $config language <NewLanguage>
-    $config autoapprove <Amount of Reactions> --> -1 to disable
-    $config autoreject <Amount of Reactions> --> -1 to disable
-    $config autoremove <Approved/Rejected> <TimeInSeconds> --> -1 for no deletion
-    $config ~ --> return the help message
-     */
             return message.channel.send({
                 embed: new RichEmbed()
                     .setAuthor(language.configTitle, client.user.avatarURL)
