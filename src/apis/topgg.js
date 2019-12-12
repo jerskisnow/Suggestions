@@ -28,7 +28,7 @@ export default async (client) => {
     });
 
     setInterval(() => {
-        topgg.post.postStats(client.guilds.size, client.shard.id, client.shards.total)
+        topgg.postStats(client.guilds.size, client.shard.id, client.shards.total)
     }, 1800000)
 
 }
