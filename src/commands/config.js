@@ -1,6 +1,7 @@
 import { RichEmbed } from 'discord.js';
 import { dbConnection } from '../structures/MySQL';
 import languageList from '../structures/Languages';
+import utf8 from 'utf8';
 
 export default async (client, message, language, prefix, args) => {
 
