@@ -17,17 +17,12 @@ module.exports = (client, message) => {
 
         // Define the default prefix
         let prefix = process.env.COMMAND_PREFIX;
-
-        // If there aren't any errors and if the prefix is not null
-        if (!error && result.length !== 0 && result[0].prefix !== null) {
-            // Change the prefix variable to the actual server prefix
-            prefix = utf8.decode(result[0].prefix);
-        }
-
-        // I know, not the smoothest way to go but hé feel free to improve it
-        if (process.env.DEV_MODE) {
-            if (message.channel.id !== process.env.DEV_CHANNEL) return;
-            prefix = "?";
+        
+        if (!error) {
+            if (!result.length)
+                dbConnection.query("INSERT INTO configurations SET ?", { id: message.guild.id });
+            else if (result[0].prefix !== null)
+                prefix = utf8.decode(result[0].prefix);
         }
 
         // Check if the message contains the prefix

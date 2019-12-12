@@ -56,7 +56,7 @@ export default {
     rejectInvalidSuggestion: "Can't reject that suggestion since it doesn't exist!",
     rejectSuggestionAlreadyRejected: "That suggestion is already rejected",
     rejectAuthorTitle: "Suggestion Rejection",
-    rejectAuthorDescription: "Your suggestions in <GuildName> has been rejected!\n\nDescription: <Description>\n\n**Reason:** <Reason>",
+    rejectAuthorDescription: "Your suggestions in <GuildName> has been rejected!\n\n**Description:** <Description>\n\n**Reason:** <Reason>",
     rejectTitle: "Suggestions - Reject",
     rejectDescription: "Succesfull rejected the suggestion with the id of `<SuggestionID>`!",
 
@@ -70,9 +70,9 @@ export default {
     configChannelExample: "<Prefix>config channel #suggestion-channel",
     configChannelSuccessDescription: "Successfully changed the channel to `<#<NewChannelID>>`",
 
-    configLanguageMissingArguments: "Please enter a valid language-code!",
+    configLanguageIncorrectArguments: "Please fill in all the required arguments and make sure to use a valid language-code, like the example below.",
     configLanguageExample: "<Prefix>config langauge en_US",
-    configLanguageInvalidLanguage: "Please enter a valid Language!\n\n**Language List:** <LanguageList>",
+    configLanguageListTitle: "Available Languages",
     configLanguageSuccessDescription: "Successfully changed the language to `<NewLanguageCode>`",
 
     donateTitle: "Suggestions - Donate",

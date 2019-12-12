@@ -19,7 +19,7 @@ export default async (client, message, language, prefix, args) => {
     await dbConnection.query("SELECT channel FROM configurations WHERE id = ?", message.guild.id, async (err, res) => {
 
         // Check for errors, validatibility and channel existance. Whenever one of them fails, return a message
-        if (err || !res.length || res[0].channel === null || !client.channels.get(res[0].channel)) return message.channel.send({
+        if (err || !res.length || res[0].channel === null || !message.guild.channels.some(chn => chn.id === res[0].channel)) return message.channel.send({
             embed: new RichEmbed()
                 .setAuthor(language.errorTitle, client.user.avatarURL)
                 .setColor(process.env.EMBED_COLOR)

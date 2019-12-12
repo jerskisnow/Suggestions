@@ -1,6 +1,6 @@
 import { RichEmbed } from 'discord.js';
 import { dbConnection } from '../structures/MySQL';
-import { readdir } from 'fs';
+import languageList from '../structures/Languages';
 
 export default async (client, message, language, prefix, args) => {
 
@@ -80,9 +80,21 @@ export default async (client, message, language, prefix, args) => {
             let newChannelObject;
 
             if (args[1].indexOf('<#') > -1 || !isNaN(args[1]))
-                newChannelObject = client.channels.get(parseInt(args[1]));
+                newChannelObject = message.guild.channels.get(args[1].replace("<#", "").replace(">", ""));
             else
-                newChannelObject = client.channels.find(chn => chn.name === args[1]);
+                newChannelObject = message.guild.channels.find(chn => chn.name === args[1]);
+
+            if (!newChannelObject) return message.channel.send({
+                embed: new RichEmbed()
+                    .setAuthor(language.errorTitle, client.user.avatarURL)
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.configChannelMissingArguments)
+                    .addField(language.exampleTitle, language.configChannelExample
+                        .replace(/<Prefix>/g, prefix)
+                    )
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
 
             await dbConnection.query("UPDATE configurations SET channel = ? WHERE id = ?", [newChannelObject.id, message.guild.id]);
 
@@ -100,38 +112,22 @@ export default async (client, message, language, prefix, args) => {
             break;
         case "language":
 
-            if (args.length !== 2) return message.channel.send({
+            const list = await languageList();
+
+            const newList = new Array();
+
+            for (const language of list)
+            newList.push(language.split(".utf8.")[0])
+
+            if (args.length !== 2 || !newList.includes(args[1])) return message.channel.send({
                 embed: new RichEmbed()
                     .setAuthor(language.errorTitle, client.user.avatarURL)
                     .setColor(process.env.EMBED_COLOR)
-                    .setDescription(language.configLanguageMissingArguments)
+                    .setDescription(language.configLanguageIncorrectArguments)
                     .addField(language.exampleTitle, language.configLanguageExample
                         .replace(/<Prefix>/g, prefix)
                     )
-                    .setTimestamp()
-                    .setFooter(process.env.EMBED_FOOTER)
-            });
-
-            const languageList = new Array();
-
-            await readdir("./languages/", (err, files) => {
-                if (err) throw err;
-
-                files.forEach((file) => {
-                    if (!file.endsWith(".js")) return;
-
-                    languageList.push(file.split(".utf8.")[0]);
-                });
-
-            });
-
-            if (!languageList.includes(args[1])) return message.channel.send({
-                embed: new RichEmbed()
-                    .setAuthor(language.errorTitle, client.user.avatarURL)
-                    .setColor(process.env.EMBED_COLOR)
-                    .setDescription(language.configLanguageInvalidLanguage
-                        .replace(/<LanguageList>/g, languageList.join(", "))
-                    )
+                    .addField(language.configLanguageListTitle, newList.join(", "))
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
             });
