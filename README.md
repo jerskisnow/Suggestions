@@ -1,6 +1,6 @@
 # Suggestions
 
-Hi, first of all, thanks for viewing this page! Suggestions is a discord bot that handles community made suggestions. People in your discord server can use the `suggest` command to suggest their ideas, other people can vote up or down. People with the `MANAGE_MESSAGES` permission are allowed to Approve or Reject people their ideas. But there are also other features (see the feature list below) and a lot of upcoming features! This project will be actively updated.
+Hi, first of all, thanks for viewing this page! Suggestions is a discord bot that handles community made suggestions. People in your discord server can use the `suggest` command to suggest their ideas, other people can vote up or down. People with the `MANAGE_MESSAGES` permission are allowed to Approve or Reject suggestions.
 
 # Features
 ### Commands:
@@ -17,16 +17,16 @@ Hi, first of all, thanks for viewing this page! Suggestions is a discord bot tha
 11. **$vote** >> Receive the vote message.
 
 # Links
-[Patreon](https://www.patreon.com/user/overview)
+[Patreon](https://www.patreon.com/join/codedsnow?)
 [Discord](https://discord.gg/3SYg3M5)
 [Trello](https://trello.com/b/3y6nWOdZ/suggestions)
 [TopGG](https://top.gg/bot/566616056165302282)
 
 # Contributing
-### Translation:
+### Translators:
 We are always looking for people to translate our bot. If you want to translate the messages for the bot or if you want to edit someone's translation please go to en_US.utf8.js and read the instructions. The next step is to fork the bot and create a pull request with your new/edited file in it.
 
-### Code:
+### Developers:
 Feel free to contribute, not much to say here yet. If you want to add a new feature, create a pull request. If you feel like you want to improve some code that is currently being used, go ahead create a pull request. Anyways keep in mind that you use ESLint to lint your code and make sure your coding style matches the current one. Also, try to keep the formatting the same. One last thing, don't forget to write some documentation using comments in your code. Especially for functions. To get the project up and running follow these steps:
 ```
 1. Run: git clone https://github.com/jerskisnow/Suggestions.git
