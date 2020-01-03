@@ -32,7 +32,7 @@ export default {
 
     suggestMissingArguments: "Please enter a suggestion to suggest!",
     suggestExample: "<Prefix>suggest A brand new programming channel!",
-    suggestInvalidChannel: "Please setup a valid `suggestion channel` using the config command!",
+    suggestInvalidChannel: "Please setup a valid `suggestion channel` using the config command.",
     suggestTitle: "Suggestions - Suggest",
     suggestSuccess: "Succesfully created your suggestion! ([Click here](<SuggestionURL>))",
 
@@ -40,14 +40,14 @@ export default {
     voteDescription: "You can vote for us by clicking [here](<VoteURL>)",
 
     inviteTitle: "Suggestions - Invite",
-    inviteDescription: "**BotInvite:** <BotURL>\n**SupportServer:** <ServerURL>",
+    inviteDescription: "**BotInvite:** <BotURL>\n**Support Server:** <ServerURL>",
 
     approveMissingArguments: "Please enter at least a suggestion id to approve a suggestion!",
     approveExample: "<Prefix>approve 1 Yeah cool idea mate!",
     approveInvalidSuggestion: "Can't approve that suggestion since it doesn't exist!",
     approveSuggestionAlreadyApproved: "That suggestion is already approved!",
     approveAuthorTitle: "Suggestion Approval",
-    approveAuthorDescription: "Your suggestions in `<GuildName>` has been approved!\n\n**Description:** <Description>\n\n**Reason:** <Reason>",
+    approveAuthorDescription: "Your suggestions in `<GuildName>` has been approved.\n\n**Description:** <Description>\n\n**Reason:** <Reason>",
     approveTitle: "Suggestions - Approve",
     approveDescription: "Succesfull approved the suggestion with the id of `<SuggestionID>`!",
 
@@ -56,7 +56,7 @@ export default {
     rejectInvalidSuggestion: "Can't reject that suggestion since it doesn't exist!",
     rejectSuggestionAlreadyRejected: "That suggestion is already rejected",
     rejectAuthorTitle: "Suggestion Rejection",
-    rejectAuthorDescription: "Your suggestions in <GuildName> has been rejected!\n\n**Description:** <Description>\n\n**Reason:** <Reason>",
+    rejectAuthorDescription: "Your suggestions in <GuildName> has been rejected.\n\n**Description:** <Description>\n\n**Reason:** <Reason>",
     rejectTitle: "Suggestions - Reject",
     rejectDescription: "Succesfull rejected the suggestion with the id of `<SuggestionID>`!",
 
@@ -66,7 +66,7 @@ export default {
     configPrefixExample: "<Prefix>config prefix ?",
     configPrefixSuccessDescription: "Successfully changed the prefix to `<NewPrefix>`",
 
-    configChannelMissingArguments: "Please enter a valid channel!!",
+    configChannelMissingArguments: "Please enter a valid channel!",
     configChannelExample: "<Prefix>config channel #suggestion-channel",
     configChannelSuccessDescription: "Successfully changed the channel to `<#<NewChannelID>>`",
 
@@ -79,7 +79,7 @@ export default {
     donateDescription: "Don't feel obligated to donate! It isn't a requirement but it helps us to maintenance our projects including Suggestions.\n\nIf you decided to donate contact `jerskisnow#8214` if you want to receive a premium rank on the official `CodedSnow` discord server ([Click here](<ServerURL>))! When you received the premium rank you'll get some extra perks and you'll be thanked gratefully!",
     donatePaymentmethodsTitle: "Payment Methods",
 
-    listNoSuggestionsFoundDescription: "There aren't any open Suggestions at the moment.",
+    listNoSuggestionsFoundDescription: "There aren't any open suggesties at the moment.",
     listTitle: "Suggestions - List",
     listDescription: "You can view all the active/open suggestion right below!",
     listSuggestionTitle: "Suggestion from <User>",
@@ -87,7 +87,7 @@ export default {
 
     helpTitle: "Suggestions - Help",
     helpExplanationApprove: "Approve a suggestion (MANAGE_MESSAGES required)",
-    helpExplanationConfig: "Configure suggestions (ADMINISTRATOR required)",
+    helpExplanationConfig: "Configure Suggestions (ADMINISTRATOR required)",
     helpExplanationDonate: "Receive information about donating",
     helpExplanationHelp: "Receive this message",
     helpExplanationInvite: "Receive the invite links",
