@@ -21,10 +21,13 @@ export default (client, message, language, prefix, args) => {
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER);
 
+            // TODO: Set max suggestion on a page 9 / 10
             for (var i = 0; i < sResult.length; i++) {
+                const user = message.guild.members.get(sResult[i].author) ? message.guild.members.get(sResult[i].author).user.tag : "User Left";
+
                 listEmbed.addField(
-                    language.listSuggestionTitle.replace(/<User>/g, client.users.get(sResult[i].author).tag),
-                    language.suggestionListingDescription
+                    language.listSuggestionTitle.replace(/<User>/g, user),
+                    language.listSuggestionDescription
                     .replace(/<Description>/g, sResult[i].description)
                     .replace(/<SuggestionID>/g, sResult[i].id)
                     .replace(/<SuggestionURL>/g, `https://canary.discordapp.com/channels/${sResult[i].guild}/${cResult[0].channel}/${sResult[i].message}`),
