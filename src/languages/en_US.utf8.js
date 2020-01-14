@@ -71,7 +71,7 @@ export default {
     configChannelSuccessDescription: "Successfully changed the channel to `<#<NewChannelID>>`",
 
     configLanguageIncorrectArguments: "Please fill in all the required arguments and make sure to use a valid language-code, like the example below.",
-    configLanguageExample: "<Prefix>config langauge en_US",
+    configLanguageExample: "<Prefix>config language en_US",
     configLanguageListTitle: "Available Languages",
     configLanguageSuccessDescription: "Successfully changed the language to `<NewLanguageCode>`",
 

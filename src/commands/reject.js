@@ -67,6 +67,8 @@ export default (client, message, language, prefix, args) => {
 
             const sChannel = client.channels.get(res[0].channel);
 
+            await dbConnection.query("UPDATE suggestions SET status = ? WHERE id = ?", ['Rejected', sID]);
+
             const msg = await sChannel.fetchMessage(sMessageID);
 
             await msg.edit({
@@ -80,8 +82,6 @@ export default (client, message, language, prefix, args) => {
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
             });
-
-            await dbConnection.query("UPDATE suggestions SET status = ? WHERE id = ?", ['Rejected', sID]);
 
             try {
                 sAuthor.send({
