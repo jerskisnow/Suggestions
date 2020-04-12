@@ -1,28 +1,30 @@
 {
   "name": "suggestions",
-  "version": "2.1.5",
-  "description": "Official Suggestions Discordbot",
-  "main": "src/app.js",
-  "scripts": {
-    "build": "babel src -d lib --copy-files",
-    "dev": "babel src -d lib --copy-files && cd lib/ && node app.js"
-  },
-  "repository": "https://github.com/jerskisnow/Suggestions.git",
+  "version": "3.0.0",
+  "description": "Official Suggestions DiscordBot",
+  "main": "lib/app.js",
   "author": "jerskisnow",
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "@babel/plugin-transform-arrow-functions": "^7.2.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.6.0",
-    "@babel/plugin-transform-shorthand-properties": "^7.2.0"
-  },
+  "license": "GPL-3.0",
   "dependencies": {
-    "dblapi.js": "^2.3.0",
-    "discord.js": "^11.5.1",
+    "dblapi.js": "^2.4.0",
+    "discord.js": "^12.1.1",
     "dotenv": "^8.2.0",
-    "moment": "^2.24.0",
-    "mysql": "^2.17.1",
+    "memory-cache": "^0.2.0",
+    "pg": "^7.18.2",
     "utf8": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/memory-cache": "^0.2.1",
+    "@types/node": "^13.7.7",
+    "@types/pg": "^7.14.1",
+    "@types/utf8": "^2.1.6",
+    "@types/ws": "^7.2.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
+    "prod": "tsc && cd lib/ && node index.js"
   }
 }

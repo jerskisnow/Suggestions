@@ -1,0 +1,2 @@
+Add a functionality to remove guilds who were removed when the bot was online from the database.
+Have the command aliases in the help message as well.
