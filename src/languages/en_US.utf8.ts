@@ -77,6 +77,18 @@ export default {
                 invalidNumber: "That is not a valid number.",
                 numberIsTooLow: "The number should be -1 or higher.",
                 updated: "The amount of required negative reactions for auto rejection is now ``<Number>``."
+            },
+            deleteApproved: {
+                description: "Please enter either **on** or **off**...",
+                missingInput: "You forgot to enter either on or off.",
+                invalidNumber: "You can only choose between **on** and **off**.",
+                updated: "Approved suggestions will now be deleted automatically."
+            },
+            deleteRejected: {
+                description: "Please enter either **on** or **off**...",
+                missingInput: "You forgot to enter either on or off.",
+                invalidNumber: "You can only choose between **on** and **off**.",
+                updated: "Rejected suggestions will now be deleted automatically."
             }
         },
         suggest: {
