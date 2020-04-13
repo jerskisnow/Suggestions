@@ -7,7 +7,7 @@ export default class VoteCommand implements ICommand {
         return ['bugreport'];
     }
 
-    async run(client: Client, message: Message, language: any, args: string[]) {
+    async run(client: Client, message: Message, _language: any, args: string[]) {
 
         await message.delete({
             timeout: 125
