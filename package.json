@@ -2,7 +2,7 @@
   "name": "suggestions",
   "version": "3.0.0",
   "description": "Official Suggestions DiscordBot",
-  "main": "lib/app.js",
+  "main": "lib/index.js",
   "author": "jerskisnow",
   "license": "GPL-3.0",
   "dependencies": {

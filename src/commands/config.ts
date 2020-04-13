@@ -79,7 +79,7 @@ export default class ConfigCommand implements ICommand {
     }
 
     help() {
-        return "Configure the bot for your server.";
+        return "Configure the bot.";
     }
 
 }
