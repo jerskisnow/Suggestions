@@ -2,10 +2,13 @@ import { cmdMap, aliasMap } from '../structures/CMDMap';
 import Utils from '../structures/Utils';
 import { Client, Message } from 'discord.js';
 import cache from 'memory-cache';
+import botStatus from '../structures/BotStatus';
 
 const utils = new Utils();
 
 export default async (client: Client, message: Message) => {
+
+    if (!botStatus.isRunning()) return;
 
     // If the author is a bot, return
     if (message.author.bot) return;
@@ -50,4 +53,4 @@ export default async (client: Client, message: Message) => {
 
     // ...
 
-};
+}

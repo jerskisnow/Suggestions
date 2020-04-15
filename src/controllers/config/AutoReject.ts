@@ -103,7 +103,7 @@ export default async(client: Client, message: Message, language: any, msg: Messa
 
 	await pgClient.connect();
 
-	await pgClient.query('UPDATE servers SET auto_reject = $1::number WHERE id = $2::text', [newAmount, message.guild.id]);
+	await pgClient.query('UPDATE servers SET auto_reject = $1::int WHERE id = $2::text', [newAmount, message.guild.id]);
 
 	await pgClient.end();
 

@@ -16,4 +16,5 @@ export default async(msg: Message) => {
 	await pgClient.query('UPDATE suggestions SET status = $1::text WHERE message = $2::text', ['Deleted', msg.id]);
 
 	await pgClient.end();
+
 }

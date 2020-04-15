@@ -28,10 +28,6 @@ export default class ConfigCommand implements ICommand {
 
     async run(client: Client, message: Message, language: any) {
 
-        await message.delete({
-            timeout: 125
-        });
-
         if (!message.member.permissions.has("ADMINISTRATOR")) return message.channel.send({
             embed: new MessageEmbed()
                 .setAuthor(language.errorTitle, client.user.avatarURL())

@@ -100,14 +100,21 @@ export default {
         },
         approve: {
             title: "Suggestions - Approve",
-            authorMessage: "**Suggestion Approved**\nCongratulations, the suggestion you made in <Server> has been approved!"
+            descriptionRequired: "Please fill in an valid suggestion id.",
+            invlidInput: "You filled in an invalid suggestion id.",
+            noSuggestionsFound: "I couldn't find any approvable suggestions."
         },
         reject: {
             title: "Suggestions - Reject",
-            authorMessage: "**Suggestion Approved**\nCongratulations, the suggestion you made in <Server> has been rejected!"
+            descriptionRequired: "Please fill in an valid suggestion id.",
+            invlidInput: "You filled in an invalid suggestion id.",
+            noSuggestionsFound: "I couldn't find any rejectable suggestions."
         },
         list: {
-            title: "Suggestions - List"
+            title: "Suggestions - List",
+            noSuggestions: "There aren't any open suggestions for this guild.",
+            description: "You can view all the open suggestion right below!",
+            suggestionDescription: "**Description:** <Description>\n**ID:** <ID>\n**Link:** [Click here](<Url>)"
         },
         uptime: {
             title: "Suggestions - Uptime",

@@ -9,25 +9,28 @@ import DeleteController from './Delete';
 */
 export default async(client: Client, msg: Message, language: any) => {
 
-	const pgClient = new PostgreSQL().getClient();
-
-	await pgClient.connect();
-
-	const res = await pgClient.query('SELECT id, context, author FROM suggestions WHERE message = $1::text', [msg.id]);
-	// if (!res.rows[0].length) return;
-
 	if (cache.get(msg.guild.id).delete_approved) {
 		DeleteController(msg);
 	} else {
-		const shard_result = await client.shard.broadcastEval(`this.users.cache.get(${res.rows[0].author})`);
-		const user = shard_result[0];
+
+		const pgClient = new PostgreSQL().getClient();
+
+		await pgClient.connect();
+
+		const res = await pgClient.query('SELECT id, context, author FROM suggestions WHERE message = $1::text', [msg.id]);
+
+		// const shard_result = await client.shard.broadcastEval(`this.users.cache.get('${res.rows[0].author}')`);
+		// const user = shard_result[0];
+		const user = msg.guild.members.cache.get(res.rows[0].author);
 
 		let title = "User Left ~ Suggestions";
 		let picture = client.user.avatarURL();
 
 		if (user !== null) {
-			title = user.tag;
-			picture = user.avatarURL();
+			// title = user.tag;
+			// picture = user.avatarURL;
+			title = user.user.tag;
+			picture = user.user.avatarURL();
 		}
 
 		await msg.edit({
@@ -43,25 +46,10 @@ export default async(client: Client, msg: Message, language: any) => {
 				.setFooter(process.env.EMBED_FOOTER)
 		});
 
-		try {
-			user.send({
-				embed: new MessageEmbed()
-					.setAuthor(language.commands.approve.title, client.user.avatarURL())
-					.setColor(process.env.EMBED_COLOR)
-					.setDescription(language.commands.approve.authorMessage
-						.replace(/<Server>/g, msg.guild.name)
-					)
-					.setTimestamp()
-					.setFooter(process.env.EMBED_FOOTER)
-			});
-		} catch (err) {
-			// throw err;
-		}
+		await pgClient.query('UPDATE suggestions SET status = $1::text WHERE message = $2::text', ['Approved', msg.id]);
+
+		await pgClient.end();
 
 	}
-
-	await pgClient.query('UPDATE suggestions SET status = $1::text WHERE message = $2::text', ['Approved', msg.id]);
-
-	await pgClient.end();
 
 }

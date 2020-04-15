@@ -9,10 +9,6 @@ export default class VoteCommand implements ICommand {
 
     async run(client: Client, message: Message, language: any) {
 
-        await message.delete({
-            timeout: 125
-        });
-
         message.channel.send({
             embed: new MessageEmbed()
                 .setAuthor(language.commands.vote.title, client.user.avatarURL())

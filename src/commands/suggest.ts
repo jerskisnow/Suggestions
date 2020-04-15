@@ -12,10 +12,6 @@ export default class SuggestCommand implements ICommand {
     }
 
     async run(client: Client, message: Message, language: any, args: string[]) {
-        
-        await message.delete({
-            timeout: 125
-        });
 
         const pgClient = new PostgreSQL().getClient();
 
@@ -47,12 +43,12 @@ export default class SuggestCommand implements ICommand {
 
         const result = await pgClient.query('SELECT id FROM suggestions ORDER BY id DESC LIMIT 1');
         let id = 1;
-        if (result.rows[0].length)
+        if (result.rows.length)
             id += result.rows[0].id;
 
         const msg = await channel.send({
             embed: new MessageEmbed()
-                .setAuthor(language.suggestions.title, client.user.avatarURL())
+                .setAuthor(message.author.tag, message.author.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
                 .setDescription(language.commands.suggest.description
                     .replace(/<Description>/g, desc)
@@ -68,7 +64,7 @@ export default class SuggestCommand implements ICommand {
 
         message.channel.send({
             embed: new MessageEmbed()
-                .setAuthor(message.author.tag, message.author.avatarURL())
+                .setAuthor(language.commands.suggest.title, client.user.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
                 .setDescription(language.commands.suggest.sent
                     .replace(/<Url>/g, `https://canary.discordapp.com/channels/${message.guild.id}/${channel.id}/${msg.id}`)
@@ -77,7 +73,7 @@ export default class SuggestCommand implements ICommand {
                 .setFooter(process.env.EMBED_FOOTER)
         });
 
-        await pgClient.query('INSERT INTO suggestions (id, context, author, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::text)', [id, desc, message.author.id, channel.id, msg.id, 'Open']);
+        await pgClient.query('INSERT INTO suggestions (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::text)', [desc, message.author.id, message.guild.id, channel.id, msg.id, 'Open']);
 
         await pgClient.end();
     }

@@ -5,6 +5,7 @@ import cliColors from '../structures/CLIColors';
 import utf8 from 'utf8';
 import Utils from '../structures/Utils';
 import DBL from 'dblapi.js';
+import botStatus from '../structures/BotStatus';
 
 import ApproveController from '../controllers/assessments/Approve';
 import RejectController from '../controllers/assessments/Approve';
@@ -12,6 +13,9 @@ import RejectController from '../controllers/assessments/Approve';
 const utils: Utils = new Utils();
 
 export default async (client: Client) => {
+
+    console.log(cliColors.FgBlue + "\n---=[Caching...]=---" + cliColors.Reset);
+
     const pgClient = new PostgreSQL().getClient();
 
     await pgClient.connect();
@@ -37,6 +41,8 @@ export default async (client: Client) => {
         }
     }
 
+    console.log(cliColors.FgCyan + "Loaded all already stored server data into the cache." + cliColors.Reset);
+
     const uncachedServers: Collection<string, Guild> = client.guilds.cache.filter(server => cache.get(server.id) === null);
 
     for (let key of Array.from(uncachedServers.keys())) {
@@ -56,7 +62,9 @@ export default async (client: Client) => {
 
     }
 
-    const res = await pgClient.query('SELECT channel, message FROM suggestions');
+    console.log(cliColors.FgCyan + "Saved the unsaved server to the database and loaded them into the cache." + cliColors.Reset);
+
+    const res = await pgClient.query('SELECT channel, message FROM suggestions WHERE status = $1::text', ['Open']);
     if (res.rows.length) {
         for (let i = 0; i < res.rows.length; i++) {
             const channel = client.channels.cache.get(res.rows[i].channel) as TextChannel;
@@ -76,6 +84,12 @@ export default async (client: Client) => {
 
     await pgClient.end();
 
+    console.log(cliColors.FgCyan + "Caching finished." + cliColors.Reset);
+
+    botStatus.setRunning(true);
+
+    console.log(cliColors.FgBlue + "\n---=[Loading Apis...]=---" + cliColors.Reset);
+
     // Api part
     const dbl = new DBL(process.env.APIS_DBL_TOKEN, client);
     setInterval(async () => {
@@ -87,7 +101,8 @@ export default async (client: Client) => {
             client.shard.count
         );
     }, 1800000);
+    console.log(cliColors.FgCyan + "Loaded the " + cliColors.FgYellow + "DBL (Top.GG)" + cliColors.FgCyan + " api." + cliColors.Reset);
 
-    console.log(cliColors.FgBlue + "\n---=[Succesfully enabled the bot!]=---" + cliColors.Reset);
+    console.log(cliColors.FgBlue + "\n---=[Succesfully enabled the bot]=---" + cliColors.Reset);
 
 }
