@@ -7,19 +7,40 @@ export default class VoteCommand implements ICommand {
         return ['bugreport'];
     }
 
-    async run(client: Client, message: Message, _language: any, args: string[]) {
+    async run(client: Client, message: Message, language: any, args: string[]) {
 
-        const channel_result = await client.shard.broadcastEval(`this.channels.cache.get('${process.env.CHANNELS_BUG_REPORTS}')`);
-        const chn = channel_result[0];
-
-        chn.send({
+        if (!args.length) return message.channel.send({
             embed: new MessageEmbed()
+                .setAuthor(language.errorTitle, client.user.avatarURL())
+                .setColor(process.env.EMBED_COLOR)
+                .setDescription(language.commands.reportbug.descriptionRequired)
+                .setTimestamp()
+                .setFooter(process.env.EMBED_FOOTER)
+        });
+
+        message.channel.send({
+            embed: new MessageEmbed()
+                .setAuthor(language.commands.reportBug.title, client.user.avatarURL())
+                .setColor(process.env.EMBED_COLOR)
+                .setDescription(language.commands.reportbug.sent)
+                .setTimestamp()
+                .setFooter(process.env.EMBED_FOOTER)
+        })
+
+        const stringEmbed = JSON.stringify(
+            new MessageEmbed()
                 .setAuthor(message.author.tag, message.author.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
                 .setDescription(args.join(" "))
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
-        });
+        ).replace(/'/g, "\'");
+
+        client.shard.broadcastEval(`
+            const channel = this.channels.cache.get('${process.env.CHANNELS_BUG_REPORTS}');
+            const embed = JSON.parse('${stringEmbed}');
+            channel.send({ embed: embed });
+        `);
 
     }
 

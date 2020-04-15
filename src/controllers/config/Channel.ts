@@ -114,7 +114,4 @@ export default async (client: Client, message: Message, language: any, msg: Mess
         delete_rejected: currentCache.delete_rejected
     });
 
-    msg.delete({
-        timeout: 5000
-    });
 }

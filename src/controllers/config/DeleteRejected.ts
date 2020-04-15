@@ -105,8 +105,4 @@ export default async(client: Client, message: Message, language: any, msg: Messa
 		delete_rejected: inputResult
 	});
 
-	msg.delete({
-		timeout: 5000
-	});
-
 }

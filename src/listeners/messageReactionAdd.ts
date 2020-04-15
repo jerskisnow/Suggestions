@@ -23,22 +23,13 @@ export default async (client: Client, reaction: MessageReaction) => {
 
 	const currentCache = cache.get(reaction.message.guild.id);
 
-	const autoApprove: number = currentCache.auto_approve;
-	const autoReject: number = currentCache.auto_reject;
-
 	const positiveCount = reaction.message.reactions.cache.filter(reaction => reaction.emoji.name === "✅").size - 1;
 	const negativeCount = reaction.message.reactions.cache.filter(reaction => reaction.emoji.name === "❎").size - 1;
 
-	if (autoApprove > -1) {
-		if (autoApprove === positiveCount) {
-			ApproveController(client, reaction.message as Message, utils.languageCodeToObject(currentCache.language))
-		}
-	}
+	if (currentCache.auto_approve === positiveCount)
+		ApproveController(client, reaction.message as Message, utils.languageCodeToObject(currentCache.language));
 
-	if (autoReject > -1) {
-		if (autoReject === negativeCount) {
-			RejectController(client, reaction.message as Message, utils.languageCodeToObject(currentCache.language));
-		}
-	}
+	if (currentCache.auto_reject === negativeCount)
+		RejectController(client, reaction.message as Message, utils.languageCodeToObject(currentCache.language));
 
 }

@@ -113,7 +113,7 @@ export default {
         list: {
             title: "Suggestions - List",
             noSuggestions: "There aren't any open suggestions for this guild.",
-            description: "You can view all the open suggestion right below!",
+            description: "You can view all the open suggestion right below.",
             suggestionDescription: "**Description:** <Description>\n**ID:** <ID>\n**Link:** [Click here](<Url>)"
         },
         uptime: {
@@ -130,6 +130,11 @@ export default {
         },
         vote: {
             title: "Suggestions - Vote"
+        },
+        reportbug: {
+            title: "Suggestions - Reportbug",
+            descriptionRequired: "Please give a description of the bug you found.",
+            sent: "Your bugreport is on its way to the developers of the bot.\n\n*Thanks for submitting!*"
         }
     },
 

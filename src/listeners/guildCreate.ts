@@ -61,9 +61,6 @@ export default async (client: Client, guild: Guild) => {
             inviteCode = "failed_to_resolve_invite";
     }
 
-    const channel_result = await client.shard.broadcastEval(`this.channels.cache.get('${process.env.CHANNELS_LOGS}')`);
-    const chn = channel_result[0];
-
     const guilds_result = await client.shard.fetchClientValues('guilds.cache.size');
     const users_result = await client.shard.fetchClientValues('users.cache.size');
     const channels_result = await client.shard.fetchClientValues('channels.cache.size');
@@ -72,9 +69,8 @@ export default async (client: Client, guild: Guild) => {
     const userCount = users_result.reduce((prev, count) => prev + count, 0);
     const channelCount = channels_result.reduce((prev, count) => prev + count, 0);
 
-    // Send the 'New Guild' message
-    chn.send({
-        embed: new MessageEmbed()
+    const stringEmbed = JSON.stringify(
+        new MessageEmbed()
             .setColor(process.env.EMBED_COLOR)
             .setTitle("Suggestions - New Guild")
             .addField(
@@ -90,6 +86,12 @@ export default async (client: Client, guild: Guild) => {
             )
             .setTimestamp()
             .setFooter(process.env.EMBED_FOOTER)
-    });
+    ).replace(/'/g, "\'");
+
+    client.shard.broadcastEval(`
+        const channel = this.channels.cache.get('${process.env.CHANNELS_LOGS}');
+        const embed = JSON.parse('${stringEmbed}');
+        channel.send({ embed: embed });
+    `);
 
 }
