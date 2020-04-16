@@ -14,7 +14,7 @@ export default class ListCommand implements ICommand {
 
         await pgClient.connect();
 
-        const res = await pgClient.query('SELECT channel id, context, author, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::text', [message.guild.id, 'Open']);
+        const res = await pgClient.query('SELECT id, context, author, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::text', [message.guild.id, 'Open']);
 
         pgClient.end();
 
@@ -38,6 +38,8 @@ export default class ListCommand implements ICommand {
             const user = message.guild.members.cache.get(res.rows[i].author) ?
                 message.guild.members.cache.get(res.rows[i].author).user.tag :
                 "User Left ~ Suggestions";
+
+            console.log(res.rows[i])
 
             listEmbed.addField(user,
                 language.commands.list.suggestionDescription

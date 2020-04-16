@@ -3,8 +3,6 @@ import PostgreSQL from '../../structures/PostgreSQL';
 import cache from 'memory-cache';
 import Utils from '../../structures/Utils';
 
-const utils: Utils = new Utils();
-
 /**
  * The prefix controller function handles the prefix part
  * @param {Client}  client   The client supplied by discord
@@ -105,7 +103,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
     const currentCache = cache.get(message.guild.id);
 
     cache.put(message.guild.id, {
-        prefix: currentCache.channel,
+        prefix: currentCache.prefix,
         language: currentCache.language,
         channel: newChannelObject.id,
         auto_approve: currentCache.auto_approve,
