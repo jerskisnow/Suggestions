@@ -75,10 +75,10 @@ export default async (client: Client, guild: Guild) => {
             .setTitle("Suggestions - New Guild")
             .addField(
                 "GuildInfo",
-                `**Name:** ${guild.name}\n**ID:** ${guild.id}\n**Membercount:** ${guild.memberCount}\n**Region:** ${guild.region}\n**Invite:** ${inviteCode}`,
+                `**Name:** ${guild.name}'\n'**ID:** ${guild.id}'\n'**Membercount:** ${guild.memberCount}'\n'**Region:** ${guild.region}'\n'**Invite:** ${inviteCode}`,
                 false
             )
-            .addField("OwnerInfo", `**Name:** ${guild.owner.user.tag}\n**ID:** ${guild.ownerID}`, false)
+            .addField("OwnerInfo", `**Name:** ${guild.owner.user.tag}'\n'**ID:** ${guild.ownerID}`, false)
             .addField(
                 "Other Information",
                 `Suggestions is now in \`${guildCount}\` guilds and those contain \`${userCount}\` members and \`${channelCount}\` channels.`,

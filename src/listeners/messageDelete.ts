@@ -13,9 +13,8 @@ export default async (message: Message) => {
 	await pgClient.connect();
 
 	const res = await pgClient.query('SELECT * FROM suggestions WHERE message = $1::text', [message.id]);
-	if (res.rows.length) {
+	if (res.rows.length)
 		DeleteController(message);
-	}
 
 	await pgClient.end();
 }

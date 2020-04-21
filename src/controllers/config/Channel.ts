@@ -1,7 +1,6 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 import PostgreSQL from '../../structures/PostgreSQL';
 import cache from 'memory-cache';
-import Utils from '../../structures/Utils';
 
 /**
  * The prefix controller function handles the prefix part

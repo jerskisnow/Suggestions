@@ -16,7 +16,7 @@ export default async(client: Client, message: Message, language: any, msg: Messa
 		embed: new MessageEmbed()
 		.setAuthor(language.commands.config.title, client.user.avatarURL())
 		.setColor(process.env.EMBED_COLOR)
-		.setDescription(language.commands.config.auto.description)
+		.setDescription(language.commands.config.autoReject.description)
 		.setTimestamp()
 		.setFooter(process.env.EMBED_FOOTER)
 	});

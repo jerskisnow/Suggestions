@@ -65,24 +65,34 @@ export default async (client: Client) => {
     console.log(cliColors.FgCyan + "Saved the unsaved server to the database and loaded them into the cache." + cliColors.Reset);
 
     const res = await pgClient.query('SELECT channel, message FROM suggestions WHERE status = $1::text', ['Open']);
+
+    await pgClient.end();
+
     if (res.rows.length) {
         for (let i = 0; i < res.rows.length; i++) {
             const channel = client.channels.cache.get(res.rows[i].channel) as TextChannel;
-            const message = await channel.messages.fetch(res.rows[i].message);
 
-            const currentCache = cache.get(channel.guild.id);
+            // Temporary fix below in fact unneccesary fix below, but sometimes when a problem occurred in another component this makes sure that there won't show any errors for that problem
+            let message;
+            try {
+                message = await channel.messages.fetch(res.rows[i].message);
+            } catch (err) {
+                // throw err;
+                message = null;
+            }
+            if (message) {
+                const currentCache = cache.get(channel.guild.id);
 
-            const reactionAmount = message.reactions.cache.size - 1;
+                const reactionAmount = message.reactions.cache.size - 1;
 
-            if (currentCache.auto_approve >= reactionAmount)
-                ApproveController(client, message, utils.languageCodeToObject(currentCache.language));
+                if (currentCache.auto_approve >= reactionAmount)
+                    ApproveController(client, message, utils.languageCodeToObject(currentCache.language));
 
-            if (currentCache.auto_reject >= reactionAmount)
-                RejectController(client, message, utils.languageCodeToObject(currentCache.language));
+                if (currentCache.auto_reject >= reactionAmount)
+                    RejectController(client, message, utils.languageCodeToObject(currentCache.language));
+            }
         }
     }
-
-    await pgClient.end();
 
     console.log(cliColors.FgCyan + "Caching finished." + cliColors.Reset);
 

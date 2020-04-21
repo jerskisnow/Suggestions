@@ -20,7 +20,7 @@ export default class VoteCommand implements ICommand {
 
         message.channel.send({
             embed: new MessageEmbed()
-                .setAuthor(language.commands.reportBug.title, client.user.avatarURL())
+                .setAuthor(language.commands.reportbug.title, client.user.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
                 .setDescription(language.commands.reportbug.sent)
                 .setTimestamp()
