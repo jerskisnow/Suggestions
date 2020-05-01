@@ -1,7 +1,4 @@
 node_modules/
-lib/
-
 .env
-
-# Webstorm
-.idea
+lib/
+.vs/

@@ -1,8 +1,0 @@
-{
-  "plugins": [
-    "@babel/plugin-transform-modules-commonjs",
-    "@babel/plugin-transform-shorthand-properties",
-    "@babel/plugin-transform-arrow-functions"
-  ],
-  "comments": false
-}
