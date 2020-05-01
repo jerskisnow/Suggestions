@@ -39,14 +39,14 @@ export default async (client: Client) => {
                 delete_rejected: result.rows[i].delete_rejected
             });
         }
+        console.log(cliColors.FgCyan + "Loaded all already stored server data into the cache." + cliColors.Reset);
     }
-
-    console.log(cliColors.FgCyan + "Loaded all already stored server data into the cache." + cliColors.Reset);
 
     const uncachedServers: Collection<string, Guild> = client.guilds.cache.filter(server => cache.get(server.id) === null);
 
     for (let key of Array.from(uncachedServers.keys())) {
         const serverId = uncachedServers.get(key).id;
+        console.log(cliColors.FgCyan + "Creating a new server in the database and cache with id: " + cliColors.FgYellow + serverId + cliColors.FgCyan + "." + cliColors.Reset);
 
         await pgClient.query('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [serverId, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE]);
 
@@ -96,8 +96,6 @@ export default async (client: Client) => {
 
     console.log(cliColors.FgCyan + "Caching finished." + cliColors.Reset);
 
-    botStatus.setRunning(true);
-
     console.log(cliColors.FgBlue + "\n---=[Loading Apis...]=---" + cliColors.Reset);
 
     // Api part
@@ -114,5 +112,7 @@ export default async (client: Client) => {
     console.log(cliColors.FgCyan + "Loaded the " + cliColors.FgYellow + "DBL (Top.GG)" + cliColors.FgCyan + " api." + cliColors.Reset);
 
     console.log(cliColors.FgBlue + "\n---=[Succesfully enabled the bot]=---" + cliColors.Reset);
+
+    botStatus.setRunning(true);
 
 }

@@ -41,6 +41,8 @@ export default class ApproveCommand implements ICommand {
 
             const res = await pgClient.query('SELECT message, channel FROM suggestions WHERE NOT status = $1::text', ['Deleted']);
 
+            await pgClient.end();
+
             if (!res.rows.length) {
                 message.channel.send({
                     embed: new MessageEmbed()
@@ -50,8 +52,6 @@ export default class ApproveCommand implements ICommand {
                         .setTimestamp()
                         .setFooter(process.env.EMBED_FOOTER)
                 });
-
-                await pgClient.end();
 
                 return;
             }

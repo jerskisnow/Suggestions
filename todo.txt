@@ -1,5 +1,0 @@
-Add a functionality to remove guilds who were removed when the bot was online from the database.
-Have the command aliases in the help message as well.
-Add the current option for the configuration options, so that it shows the current option in the configuration message (before user input)
-Fix error spam on startup when cache is not fully stored yet.
-Fix a fallback cache or an option to fetch from the database if the cache failed

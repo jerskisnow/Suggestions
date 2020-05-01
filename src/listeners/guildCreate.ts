@@ -7,11 +7,12 @@ export default async (client: Client, guild: Guild) => {
 
     if (!botStatus.isRunning()) return;
 
-    const pgClient = new PostgreSQL().getClient();
-
-    await pgClient.connect();
-
     if (cache.get(guild.id) === null) {
+        console.log('creating cache')
+
+        const pgClient = new PostgreSQL().getClient();
+
+        await pgClient.connect();
 
         await pgClient.query('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE]);
 
@@ -23,9 +24,11 @@ export default async (client: Client, guild: Guild) => {
             delete_approved: null as any,
             delete_rejected: null as any
         });
+
+        await pgClient.end();
     }
 
-    await pgClient.end();
+    console.log('cache exists')
 
     // Predefine the invite code
     let inviteCode;
@@ -69,29 +72,26 @@ export default async (client: Client, guild: Guild) => {
     const userCount = users_result.reduce((prev, count) => prev + count, 0);
     const channelCount = channels_result.reduce((prev, count) => prev + count, 0);
 
-    const stringEmbed = JSON.stringify(
-        new MessageEmbed()
-            .setColor(process.env.EMBED_COLOR)
-            .setTitle("Suggestions - New Guild")
-            .addField(
-                "GuildInfo",
-                `**Name:** ${guild.name}'\n'**ID:** ${guild.id}'\n'**Membercount:** ${guild.memberCount}'\n'**Region:** ${guild.region}'\n'**Invite:** ${inviteCode}`,
-                false
-            )
-            .addField("OwnerInfo", `**Name:** ${guild.owner.user.tag}'\n'**ID:** ${guild.ownerID}`, false)
-            .addField(
-                "Other Information",
-                `Suggestions is now in \`${guildCount}\` guilds and those contain \`${userCount}\` members and \`${channelCount}\` channels.`,
-                false
-            )
-            .setTimestamp()
-            .setFooter(process.env.EMBED_FOOTER)
-    ).replace(/'/g, "\'");
+    const embed: MessageEmbed = new MessageEmbed()
+        .setColor(process.env.EMBED_COLOR)
+        .setTitle("Suggestions - New Guild")
+        .addField(
+            "GuildInfo",
+            `**Name:** ${guild.name}'\n'**ID:** ${guild.id}'\n'**Membercount:** ${guild.memberCount}'\n'**Region:** ${guild.region}'\n'**Invite:** ${inviteCode}`,
+            false
+        )
+        .addField("OwnerInfo", `**Name:** ${guild.owner.user.tag}'\n'**ID:** ${guild.ownerID}`, false)
+        .addField(
+            "Other Information",
+            `Suggestions is now in \`${guildCount}\` guilds and those contain \`${userCount}\` members and \`${channelCount}\` channels.`,
+            false
+        )
+        .setTimestamp()
+        .setFooter(process.env.EMBED_FOOTER);
 
     client.shard.broadcastEval(`
         const channel = this.channels.cache.get('${process.env.CHANNELS_LOGS}');
-        const embed = JSON.parse('${stringEmbed}');
-        channel.send({ embed: embed });
+        channel.send({ embed: ${embed.toJSON()} });
     `);
 
 }
