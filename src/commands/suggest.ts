@@ -3,7 +3,7 @@
  */
 import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
-import PostgreSQL from '../structures/PostgreSQL';
+import pgPool from '../structures/PostgreSQL';
 
 export default class SuggestCommand implements ICommand {
 
@@ -13,9 +13,7 @@ export default class SuggestCommand implements ICommand {
 
     async run(client: Client, message: Message, language: any, args: string[]) {
 
-        const pgClient = new PostgreSQL().getClient();
-
-        await pgClient.connect();
+        const pgClient = await pgPool.connect();
 
         const res = await pgClient.query('SELECT channel FROM servers WHERE id = $1::text', [message.guild.id]);
         if (res.rows.length === 0) return;
@@ -75,7 +73,7 @@ export default class SuggestCommand implements ICommand {
 
         await pgClient.query('INSERT INTO suggestions (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::text)', [desc, message.author.id, message.guild.id, channel.id, msg.id, 'Open']);
 
-        await pgClient.end();
+        await pgClient.release();
     }
 
     help() {

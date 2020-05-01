@@ -1,6 +1,7 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
-import PostgreSQL from '../../structures/PostgreSQL';
 import cache from 'memory-cache';
+
+import pgPool from '../../structures/PostgreSQL';
 
 /**
  * The prefix controller function handles the prefix part
@@ -91,13 +92,13 @@ export default async (client: Client, message: Message, language: any, msg: Mess
             .setFooter(process.env.EMBED_FOOTER)
     });
 
-    const pgClient = new PostgreSQL().getClient();
+    const pgClient = await pgPool.connect();
 
-    await pgClient.connect();
-
-    await pgClient.query('UPDATE servers SET channel = $1::text WHERE id = $2::text', [newChannelObject.id, message.guild.id]);
-
-    await pgClient.end();
+    try {
+        await pgClient.query('UPDATE servers SET channel = $1::text WHERE id = $2::text', [newChannelObject.id, message.guild.id]);
+    } finally {
+        pgClient.release();
+    }
 
     const currentCache = cache.get(message.guild.id);
 

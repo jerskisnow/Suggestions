@@ -1,6 +1,6 @@
 import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
-import PostgreSQL from '../structures/PostgreSQL';
+import pgPool from '../structures/PostgreSQL';
 
 import RejectController from '../controllers/assessments/Reject';
 
@@ -34,17 +34,19 @@ export default class RejectCommand implements ICommand {
                 .setFooter(process.env.EMBED_FOOTER)
         });
 
-        const pgClient = new PostgreSQL().getClient();
-
-        await pgClient.connect();
+        const pgClient = await pgPool.connect();
 
         if (args[0].toLowerCase() === "all") {
 
-            const res = await pgClient.query('SELECT message, channel FROM suggestions WHERE NOT status = $1::text', ['Deleted']);
+            let result;
 
-            await pgClient.end();
+            try {
+                result = await pgClient.query('SELECT message, channel FROM suggestions WHERE NOT status = $1::text', ['Deleted']);
+            } finally {
+                pgClient.release();
+            }
 
-            if (!res.rows.length) {
+            if (!result.rows.length) {
                 message.channel.send({
                     embed: new MessageEmbed()
                         .setAuthor(language.errorTitle, client.user.avatarURL())
@@ -57,9 +59,9 @@ export default class RejectCommand implements ICommand {
                 return;
             }
 
-            for (let i = 0; i < res.rows.length; i++) {
-                const chn: TextChannel = message.guild.channels.cache.get(res.rows[i].channel) as TextChannel;
-                const msg = await chn.messages.fetch(res.rows[i].message, false);
+            for (let i = 0; i < result.rows.length; i++) {
+                const chn: TextChannel = message.guild.channels.cache.get(result.rows[i].channel) as TextChannel;
+                const msg = await chn.messages.fetch(result.rows[i].message, false);
 
                 RejectController(client, msg, language);
             }
@@ -67,14 +69,8 @@ export default class RejectCommand implements ICommand {
         } else {
 
             const sID = parseInt(args[0]);
-            // let reason = "No reason provided";
-            //
-            // if (args.length > 1)
-            //     reason = args.splice(1).join(" ");
 
-            const res = await pgClient.query('SELECT message, channel FROM suggestions WHERE id = $1::int', [sID]);
-
-            if (!res.rows.length) {
+            if (isNaN(sID)) {
                 message.channel.send({
                     embed: new MessageEmbed()
                         .setAuthor(language.errorTitle, client.user.avatarURL())
@@ -84,18 +80,46 @@ export default class RejectCommand implements ICommand {
                         .setFooter(process.env.EMBED_FOOTER)
                 });
 
-                await pgClient.end();
+                await pgClient.release();
 
                 return;
             }
+            // let reason = "No reason provided";
+            //
+            // if (args.length > 1)
+            //     reason = args.splice(1).join(" ");
 
-            const chn: TextChannel = message.guild.channels.cache.get(res.rows[0].channel) as TextChannel;
-            const msg = await chn.messages.fetch(res.rows[0].message, false);
+            let result;
+
+            try {
+                result = await pgClient.query('SELECT message, channel FROM suggestions WHERE id = $1::int', [sID]);
+            } finally {
+                pgClient.release();
+            }
+
+            if (!result.rows.length) return message.channel.send({
+                embed: new MessageEmbed()
+                    .setAuthor(language.errorTitle, client.user.avatarURL())
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.commands.reject.invalidInput)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
+
+            const chn: TextChannel = message.guild.channels.cache.get(result.rows[0].channel) as TextChannel;
+            const msg = await chn.messages.fetch(result.rows[0].message, false);
 
             RejectController(client, msg, language);
         }
 
-        await pgClient.end();
+        message.channel.send({
+            embed: new MessageEmbed()
+                .setAuthor(language.commands.reject.title, client.user.avatarURL())
+                .setColor(process.env.EMBED_COLOR)
+                .setDescription(language.commands.reject.rejected)
+                .setTimestamp()
+                .setFooter(process.env.EMBED_FOOTER)
+        });
 
     }
 

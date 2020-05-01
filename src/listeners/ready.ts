@@ -1,5 +1,5 @@
 import { Client, Guild, Collection, TextChannel } from 'discord.js';
-import PostgreSQL from '../structures/PostgreSQL';
+import pgPool from '../structures/PostgreSQL';
 import cache from 'memory-cache';
 import cliColors from '../structures/CLIColors';
 import utf8 from 'utf8';
@@ -16,27 +16,23 @@ export default async (client: Client) => {
 
     console.log(cliColors.FgBlue + "\n---=[Caching...]=---" + cliColors.Reset);
 
-    const pgClient = new PostgreSQL().getClient();
+    const pgClient = await pgPool.connect();
 
-    await pgClient.connect();
-
-    // TODO: See todo.txt line: 1
-
-    const result = await pgClient.query('SELECT * FROM servers');
+    let server_data = await pgClient.query('SELECT * FROM servers');
 
     /*
      * Memory Management
      */
-    if (result.rows.length) {
-        for (let i = 0; i < result.rows.length; i++) {
-            cache.put(result.rows[i].id, {
-                prefix: utf8.decode(result.rows[i].prefix),
-                language: result.rows[i].language,
-                channel: result.rows[i].channel,
-                auto_approve: result.rows[i].auto_approve,
-                auto_reject: result.rows[i].auto_reject,
-                delete_approved: result.rows[i].delete_approved,
-                delete_rejected: result.rows[i].delete_rejected
+    if (server_data.rows.length) {
+        for (let i = 0; i < server_data.rows.length; i++) {
+            cache.put(server_data.rows[i].id, {
+                prefix: utf8.decode(server_data.rows[i].prefix),
+                language: server_data.rows[i].language,
+                channel: server_data.rows[i].channel,
+                auto_approve: server_data.rows[i].auto_approve,
+                auto_reject: server_data.rows[i].auto_reject,
+                delete_approved: server_data.rows[i].delete_approved,
+                delete_rejected: server_data.rows[i].delete_rejected
             });
         }
         console.log(cliColors.FgCyan + "Loaded all already stored server data into the cache." + cliColors.Reset);
@@ -66,7 +62,7 @@ export default async (client: Client) => {
 
     const res = await pgClient.query('SELECT channel, message FROM suggestions WHERE status = $1::text', ['Open']);
 
-    await pgClient.end();
+    await pgClient.release();
 
     if (res.rows.length) {
         for (let i = 0; i < res.rows.length; i++) {

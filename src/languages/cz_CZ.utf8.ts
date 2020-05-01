@@ -101,14 +101,16 @@ export default {
         approve: {
             title: "Suggestions - Schválit návrh",
             descriptionRequired: "Vyplň prosím platné ID návrhu.",
-            invlidInput: "Zadal jsi neplatné ID návrhu.",
-            noSuggestionsFound: "Nemohl jsem najít žádné schválitelné návrhy."
+            invalidInput: "Zadal jsi neplatné ID návrhu.",
+            noSuggestionsFound: "Nemohl jsem najít žádné schválitelné návrhy.",
+            approved: "I've successfully completed the approval. (Not Translated Yet)"
         },
         reject: {
             title: "Suggestions - Odmítnout návrh",
             descriptionRequired: "Vyplň prosím platné ID návrhu.",
-            invlidInput: "Zadal jsi neplatné ID návrhu.",
-            noSuggestionsFound: "Nemohl jsem najít žádné schválitelné návrhy."
+            invalidInput: "Zadal jsi neplatné ID návrhu.",
+            noSuggestionsFound: "Nemohl jsem najít žádné schválitelné návrhy.",
+            rejected: "I've successfully completed the rejection. (Not Translated Yet)"
         },
         list: {
             title: "Suggestions - List",

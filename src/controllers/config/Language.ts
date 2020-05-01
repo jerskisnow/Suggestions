@@ -1,8 +1,8 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
-import languageList from '../../structures/Languages';
-
-import PostgreSQL from '../../structures/PostgreSQL';
 import cache from 'memory-cache';
+
+import pgPool from '../../structures/PostgreSQL';
+import languageList from '../../structures/Languages';
 
 /**
  * The language controller function handles the language part
@@ -97,13 +97,13 @@ export default async(client: Client, message: Message, language: any, msg: Messa
         .setFooter(process.env.EMBED_FOOTER)
     });
 
-    const pgClient = new PostgreSQL().getClient();
+    const pgClient = await pgPool.connect();
 
-    await pgClient.connect();
-
-    await pgClient.query('UPDATE servers SET language = $1::text WHERE id = $2::text', [newLanguage, message.guild.id]);
-
-    await pgClient.end();
+    try {
+        await pgClient.query('UPDATE servers SET language = $1::text WHERE id = $2::text', [newLanguage, message.guild.id]);
+    } finally {
+        pgClient.release();
+    }
 
     const currentCache = cache.get(message.guild.id);
 

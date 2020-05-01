@@ -3,7 +3,7 @@ import Utils from '../structures/Utils';
 import { Client, Message } from 'discord.js';
 import cache from 'memory-cache';
 import botStatus from '../structures/BotStatus';
-import PostgreSQL from '../structures/PostgreSQL';
+import pgPool from '../structures/PostgreSQL';
 
 const utils = new Utils();
 
@@ -19,11 +19,13 @@ export default async (client: Client, message: Message) => {
     let prefix: string = process.env.COMMAND_PREFIX;
 
     if (cache.get(message.guild.id) === null) {
-        const pgClient = new PostgreSQL().getClient();
+        const pgClient = await pgPool.connect();
 
-        await pgClient.connect();
-
-        await pgClient.query('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [message.guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE]);
+        try {
+            await pgClient.query('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [message.guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE]);
+        } finally {
+            pgClient.release();
+        }
 
         cache.put(message.guild.id, {
             prefix: process.env.COMMAND_PREFIX,
@@ -34,7 +36,6 @@ export default async (client: Client, message: Message) => {
             delete_rejected: null as any
         });
 
-        await pgClient.end();
     } else {
         prefix = cache.get(message.guild.id).prefix;
     }

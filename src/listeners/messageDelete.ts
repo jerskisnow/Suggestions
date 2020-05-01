@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import PostgreSQL from '../structures/PostgreSQL';
+import pgPool from '../structures/PostgreSQL';
 import botStatus from '../structures/BotStatus';
 
 import DeleteController from '../controllers/assessments/Delete';
@@ -8,13 +8,17 @@ export default async (message: Message) => {
 
 	if (!botStatus.isRunning()) return;
 
-	const pgClient = new PostgreSQL().getClient();
+	const pgClient = await pgPool.connect();
 
-	await pgClient.connect();
+	let res;
 
-	const res = await pgClient.query('SELECT * FROM suggestions WHERE message = $1::text', [message.id]);
+	try {
+		res = await pgClient.query('SELECT * FROM suggestions WHERE message = $1::text', [message.id]);
+	} finally {
+		pgClient.release();
+	}
+
 	if (res.rows.length)
 		DeleteController(message);
 
-	await pgClient.end();
 }

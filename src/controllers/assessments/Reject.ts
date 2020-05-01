@@ -1,5 +1,5 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
-import PostgreSQL from '../../structures/PostgreSQL';
+import pgPool from '../../structures/PostgreSQL';
 import cache from 'memory-cache';
 
 import DeleteController from './Delete';
@@ -13,9 +13,7 @@ export default async(client: Client, msg: Message, language: any) => {
 		DeleteController(msg);
 	} else {
 
-		const pgClient = new PostgreSQL().getClient();
-
-		await pgClient.connect();
+		const pgClient = await pgPool.connect();
 
 		const res = await pgClient.query('SELECT id, context, author FROM suggestions WHERE message = $1::text', [msg.id]);
 
@@ -48,7 +46,7 @@ export default async(client: Client, msg: Message, language: any) => {
 
 		await pgClient.query('UPDATE suggestions SET status = $1::text WHERE message = $2::text', ['Rejected', msg.id]);
 
-		await pgClient.end();
+		await pgClient.release();
 
 	}
 

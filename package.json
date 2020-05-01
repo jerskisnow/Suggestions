@@ -24,7 +24,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
-    "prod": "tsc && cd lib/ && node index.js"
+    "dev": "tsc && cd lib/ && node index.js",
+    "prod": "cd lib/ && node index.js"
   }
 }

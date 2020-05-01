@@ -1,30 +1,11 @@
-import { Client } from 'pg';
+import { Pool } from 'pg';
 
-export default class PostgreSQL {
+const pool: Pool = new Pool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    port: parseInt(process.env.DB_PORT)
+});
 
-	// The client variable
-	private client: Client;
-
-	/**
-	 * The constructor creates a new client on instantiation
-	 * Use the getClient() function in order to get access to the client
-	 */
-	constructor() {
-		this.client = new Client({
-			user: process.env.DB_USERNAME,
-			host: process.env.DB_HOST,
-			database: process.env.DB_DATABASE,
-			password: process.env.DB_PASSWORD,
-			port: parseInt(process.env.DB_PORT)
-		});
-	}
-
-	/**
-	 * Get the postgreSQL client
-	 * @return {string} the actual client
-	 */
-	public getClient(): Client {
-		return this.client;
-	}
-
-}
+export default pool;

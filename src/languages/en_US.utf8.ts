@@ -101,14 +101,16 @@ export default {
         approve: {
             title: "Suggestions - Approve",
             descriptionRequired: "Please fill in an valid suggestion id.",
-            invlidInput: "You filled in an invalid suggestion id.",
-            noSuggestionsFound: "I couldn't find any approvable suggestions."
+            invalidInput: "You filled in an invalid suggestion id.",
+            noSuggestionsFound: "I couldn't find any approvable suggestions.",
+            approved: "I've successfully completed the approval."
         },
         reject: {
             title: "Suggestions - Reject",
             descriptionRequired: "Please fill in an valid suggestion id.",
-            invlidInput: "You filled in an invalid suggestion id.",
-            noSuggestionsFound: "I couldn't find any rejectable suggestions."
+            invalidInput: "You filled in an invalid suggestion id.",
+            noSuggestionsFound: "I couldn't find any rejectable suggestions.",
+            rejected: "I've successfully completed the rejection."
         },
         list: {
             title: "Suggestions - List",

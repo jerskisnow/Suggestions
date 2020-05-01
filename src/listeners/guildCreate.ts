@@ -1,5 +1,5 @@
 import { Client, Guild, MessageEmbed } from 'discord.js';
-import PostgreSQL from '../structures/PostgreSQL';
+import pgPool from '../structures/PostgreSQL';
 import cache from 'memory-cache';
 import botStatus from '../structures/BotStatus';
 
@@ -8,13 +8,13 @@ export default async (client: Client, guild: Guild) => {
     if (!botStatus.isRunning()) return;
 
     if (cache.get(guild.id) === null) {
-        console.log('creating cache')
+        const pgClient = await pgPool.connect();
 
-        const pgClient = new PostgreSQL().getClient();
-
-        await pgClient.connect();
-
-        await pgClient.query('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE]);
+        try {
+            await pgClient.query('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE]);
+        } finally {
+            pgClient.release();
+        }
 
         cache.put(guild.id, {
             prefix: process.env.COMMAND_PREFIX,
@@ -25,10 +25,7 @@ export default async (client: Client, guild: Guild) => {
             delete_rejected: null as any
         });
 
-        await pgClient.end();
     }
-
-    console.log('cache exists')
 
     // Predefine the invite code
     let inviteCode;
@@ -77,10 +74,10 @@ export default async (client: Client, guild: Guild) => {
         .setTitle("Suggestions - New Guild")
         .addField(
             "GuildInfo",
-            `**Name:** ${guild.name}'\n'**ID:** ${guild.id}'\n'**Membercount:** ${guild.memberCount}'\n'**Region:** ${guild.region}'\n'**Invite:** ${inviteCode}`,
+            `**Name:** ${guild.name}\n**ID:** ${guild.id}\n**Membercount:** ${guild.memberCount}\n**Region:** ${guild.region}\n**Invite:** ${inviteCode}`,
             false
         )
-        .addField("OwnerInfo", `**Name:** ${guild.owner.user.tag}'\n'**ID:** ${guild.ownerID}`, false)
+        .addField("OwnerInfo", `**Name:** ${guild.owner.user.tag}\n**ID:** ${guild.ownerID}`, false)
         .addField(
             "Other Information",
             `Suggestions is now in \`${guildCount}\` guilds and those contain \`${userCount}\` members and \`${channelCount}\` channels.`,
@@ -91,7 +88,7 @@ export default async (client: Client, guild: Guild) => {
 
     client.shard.broadcastEval(`
         const channel = this.channels.cache.get('${process.env.CHANNELS_LOGS}');
-        channel.send({ embed: ${embed.toJSON()} });
+        channel.send({ embed: ${JSON.stringify(embed)} });
     `);
 
 }
