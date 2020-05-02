@@ -17,6 +17,9 @@ export default async(client: Client, msg: Message, language: any) => {
 
 		const res = await pgClient.query('SELECT id, context, author FROM suggestions WHERE message = $1::text', [msg.id]);
 
+		if (!res.rows.length)
+			return;
+
 		// const shard_result = await client.shard.broadcastEval(`this.users.cache.get('${res.rows[0].author}')`);
 		// const user = shard_result[0];
 		const user = msg.guild.members.cache.get(res.rows[0].author);
