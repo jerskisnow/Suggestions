@@ -1,9 +1,10 @@
 import { cmdMap, aliasMap } from '../structures/CMDMap';
 import Utils from '../structures/Utils';
 import { Client, Message } from 'discord.js';
-import cache from 'memory-cache';
 import botStatus from '../structures/BotStatus';
+
 import pgPool from '../structures/PostgreSQL';
+import { guildExists, getGuildSetting, cacheGuild } from '../structures/CacheManager';
 
 const utils = new Utils();
 
@@ -16,28 +17,15 @@ export default async (client: Client, message: Message) => {
     // If the message is not in a guild, return
     if (!message.guild) return;
 
-    let prefix: string = process.env.COMMAND_PREFIX;
+    let prefix = getGuildSetting(message.guild.id, 'prefix');
 
-    if (cache.get(message.guild.id) === null) {
-        const pgClient = await pgPool.connect();
+    if (prefix === null) {
+        if (!guildExists(message.guild.id)) {
+            await cacheGuild(message.guild.id);
 
-        try {
-            await pgClient.query('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [message.guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE]);
-        } finally {
-            pgClient.release();
+            // Define it once again
+            prefix = getGuildSetting(message.guild.id, 'prefix');
         }
-
-        cache.put(message.guild.id, {
-            prefix: process.env.COMMAND_PREFIX,
-            language: process.env.DEFAULT_LANGUAGE,
-            auto_approve: null as any,
-            auto_reject: null as any,
-            delete_approved: null as any,
-            delete_rejected: null as any
-        });
-
-    } else {
-        prefix = cache.get(message.guild.id).prefix;
     }
 
     // Check if the message contains the prefix
@@ -52,7 +40,7 @@ export default async (client: Client, message: Message) => {
         // Define the commandName
         const command = args.shift().toLowerCase();
 
-        const languageCode = cache.get(message.guild.id).language;
+        const languageCode = getGuildSetting(message.guild.id, 'language');
         const language: Object = utils.languageCodeToObject(languageCode);
 
         // Define the command instance

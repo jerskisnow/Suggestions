@@ -62,7 +62,7 @@ export default {
                 description: "Prosím zadej nový kanál...",
                 missingInput: "Zapomněl jsi napsat nový kanál.",
                 invalidChannel: "Zadali jsi neplatný kanál.",
-                updated: "Kanál byl aktualizován na `<#<ChannelID>>`."
+                updated: "Kanál byl aktualizován na <#<ChannelID>>."
             },
             autoApprove: {
                 description: "Zadejte požadovaný počet pozitivních reakcí, aby se návrh schválil ...\n\n*Zadej -1 pro deaktivaci*",

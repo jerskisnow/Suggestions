@@ -61,9 +61,11 @@ export default class RejectCommand implements ICommand {
 
             for (let i = 0; i < result.rows.length; i++) {
                 const chn: TextChannel = message.guild.channels.cache.get(result.rows[i].channel) as TextChannel;
-                const msg = await chn.messages.fetch(result.rows[i].message, false);
+                if (chn) {
+                    const msg = await chn.messages.fetch(result.rows[i].message, false);
 
-                RejectController(client, msg, language);
+                    RejectController(client, msg, language);
+                }
             }
 
         } else {

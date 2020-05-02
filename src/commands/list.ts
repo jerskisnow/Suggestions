@@ -15,7 +15,7 @@ export default class ListCommand implements ICommand {
         let result;
 
         try {
-            result = await pgClient.query('SELECT id, context, author, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::text', [message.guild.id, 'Open']);
+            result = await pgClient.query('SELECT id, context, author, guild, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::text', [message.guild.id, 'Open']);
         } finally {
             pgClient.release();
         }
@@ -45,7 +45,7 @@ export default class ListCommand implements ICommand {
                 language.commands.list.suggestionDescription
                     .replace(/<Description>/g, result.rows[i].context)
                     .replace(/<ID>/g, result.rows[i].id)
-                    .replace(/<Url>/g, `https://canary.discordapp.com/channels/${result.rows[i].guild}/${result.rows[0].channel}/${result.rows[i].message}`),
+                    .replace(/<Url>/g, `https://canary.discordapp.com/channels/${result.rows[i].guild}/${result.rows[i].channel}/${result.rows[i].message}`),
                 false);
         }
 

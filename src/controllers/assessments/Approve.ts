@@ -1,28 +1,31 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
+
 import pgPool from '../../structures/PostgreSQL';
-import cache from 'memory-cache';
+import { getGuildSetting } from '../../structures/CacheManager';
 
 import DeleteController from './Delete';
 
 /*
  msg -> The suggestion message
 */
-export default async(client: Client, msg: Message, language: any) => {
+export default async (client: Client, msg: Message, language: any) => {
 
-	if (cache.get(msg.guild.id).delete_approved) {
+	const pgClient = await pgPool.connect();
+
+	const result = await pgClient.query('SELECT id, context, author, status FROM suggestions WHERE message = $1::text', [msg.id]);
+
+	if (!result.rows.length || result.rows[0].status !== 'Open') {
+		pgClient.release();
+		return;
+    }
+
+	if (getGuildSetting(msg.guild.id, 'delete_approved')) {
 		DeleteController(msg);
 	} else {
 
-		const pgClient = await pgPool.connect();
-
-		const res = await pgClient.query('SELECT id, context, author FROM suggestions WHERE message = $1::text', [msg.id]);
-
-		if (!res.rows.length)
-			return;
-
 		// const shard_result = await client.shard.broadcastEval(`this.users.cache.get('${res.rows[0].author}')`);
 		// const user = shard_result[0];
-		const user = msg.guild.members.cache.get(res.rows[0].author);
+		const user = msg.guild.members.cache.get(result.rows[0].author);
 
 		let title = "User Left ~ Suggestions";
 		let picture = client.user.avatarURL();
@@ -39,9 +42,9 @@ export default async(client: Client, msg: Message, language: any) => {
 				.setAuthor(title, picture)
 				.setColor(process.env.APPROVED_EMBED_COLOR)
 				.setDescription(language.commands.suggest.description
-					.replace(/<Description>/g, res.rows[0].context)
+					.replace(/<Description>/g, result.rows[0].context)
 					.replace(/<Status>/g, language.suggestions.approved)
-					.replace(/<ID>/g, res.rows[0].id)
+					.replace(/<ID>/g, result.rows[0].id)
 				)
 				.setTimestamp()
 				.setFooter(process.env.EMBED_FOOTER)

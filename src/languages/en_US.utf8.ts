@@ -62,7 +62,7 @@ export default {
                 description: "Please enter a new channel...",
                 missingInput: "You forgot to enter a new channel.",
                 invalidChannel: "You entered an invalid channel.",
-                updated: "Updated the channel to `<#<ChannelID>>`."
+                updated: "Updated the channel to <#<ChannelID>>."
             },
             autoApprove: {
                 description: "Please enter the required amount of positive reactions to approve a suggestion...\n\n*Enter -1 to disable*",
