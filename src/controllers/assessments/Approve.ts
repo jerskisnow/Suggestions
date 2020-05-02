@@ -4,6 +4,7 @@ import pgPool from '../../structures/PostgreSQL';
 import { getGuildSetting } from '../../structures/CacheManager';
 
 import DeleteController from './Delete';
+import { isNullOrUndefined } from 'util';
 
 /*
  msg -> The suggestion message
@@ -15,7 +16,7 @@ export default async (client: Client, msg: Message, language: any) => {
 	const result = await pgClient.query('SELECT id, context, author, status FROM suggestions WHERE message = $1::text', [msg.id]);
 
 	if (!result.rows.length || result.rows[0].status !== 'Open') {
-		pgClient.release();
+		await pgClient.release();
 		return;
     }
 
@@ -30,7 +31,7 @@ export default async (client: Client, msg: Message, language: any) => {
 		let title = "User Left ~ Suggestions";
 		let picture = client.user.avatarURL();
 
-		if (user !== null) {
+		if (user != null) {
 			// title = user.tag;
 			// picture = user.avatarURL;
 			title = user.user.tag;
@@ -52,8 +53,8 @@ export default async (client: Client, msg: Message, language: any) => {
 
 		await pgClient.query('UPDATE suggestions SET status = $1::text WHERE message = $2::text', ['Approved', msg.id]);
 
-		await pgClient.release();
-
 	}
+
+	await pgClient.release();
 
 }

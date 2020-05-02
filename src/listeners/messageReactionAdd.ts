@@ -22,9 +22,10 @@ export default async (client: Client, reaction: MessageReaction) => {
 		}
 	}
 
-	if (reaction.count === 1) return;
-
 	if (reaction.emoji.name !== "✅" && reaction.emoji.name !== "❎")
+		return;
+
+	if (!reaction.message.reactions.cache.get("✅") || !reaction.message.reactions.cache.get("❎"))
 		return;
 
 	if (!guildExists)

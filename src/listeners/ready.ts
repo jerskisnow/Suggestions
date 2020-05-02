@@ -15,9 +15,13 @@ export default async (client: Client) => {
 
     const pgClient = await pgPool.connect();
 
-    const res = await pgClient.query('SELECT channel, message FROM suggestions WHERE status = $1::text', ['Open']);
+    let res;
 
-    await pgClient.release();
+    try {
+        res = await pgClient.query('SELECT channel, message FROM suggestions WHERE status = $1::text', ['Open']);
+    } finally {
+        pgClient.release();
+    }
 
     if (res.rows.length) {
         for (let i = 0; i < res.rows.length; i++) {
