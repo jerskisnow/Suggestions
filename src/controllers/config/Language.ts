@@ -39,7 +39,7 @@ export default async(client: Client, message: Message, language: any, msg: Messa
     const inputMessage: Message = awaitMessage.first();
 
     // Check if there wasn't any input given
-    if (inputMessage === undefined) {
+    if (inputMessage == null) {
         await msg.edit({
             embed: new MessageEmbed()
             .setAuthor(language.commands.config.title, client.user.avatarURL())
@@ -62,6 +62,24 @@ export default async(client: Client, message: Message, language: any, msg: Messa
         timeout: 125
     });
 
+
+    if (input.indexOf("_") !== 2) {
+        await msg.edit({
+            embed: new MessageEmbed()
+                .setAuthor(language.commands.config.title, client.user.avatarURL())
+                .setColor(process.env.EMBED_COLOR)
+                .setDescription(language.commands.config.language.invalidLanguage)
+                .setTimestamp()
+                .setFooter(process.env.EMBED_FOOTER)
+        });
+
+        await msg.delete({
+            timeout: 50000
+        });
+
+        return;
+    }
+
     const splittedInput: string[] = input.split('_');
 
     const newLanguage: string = splittedInput[0].toLowerCase() + "_" + splittedInput[1].toUpperCase();
@@ -72,9 +90,7 @@ export default async(client: Client, message: Message, language: any, msg: Messa
           embed: new MessageEmbed()
           .setAuthor(language.commands.config.title, client.user.avatarURL())
           .setColor(process.env.EMBED_COLOR)
-          .setDescription(language.commands.config.language.invalidLanguage
-              .replace(/<Language>/g, newLanguage)
-          )
+          .setDescription(language.commands.config.language.invalidLanguage)
           .setTimestamp()
           .setFooter(process.env.EMBED_FOOTER)
       });
