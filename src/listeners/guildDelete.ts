@@ -1,14 +1,14 @@
 import { Guild } from 'discord.js';
 import pgPool from '../structures/PostgreSQL';
-import cache from 'memory-cache';
+import { guildExists, deleteGuild } from '../structures/CacheManager';
 import botStatus from '../structures/BotStatus';
 
 export default async (guild: Guild) => {
 
     if (!botStatus.isRunning()) return;
 
-    if (cache.get(guild.id) !== null)
-        cache.del(guild.id);
+    if (guildExists)
+        deleteGuild(guild.id);
 
     const pgClient = await pgPool.connect();
 

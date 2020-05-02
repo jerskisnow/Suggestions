@@ -1,31 +1,29 @@
 import { Client, Guild, MessageEmbed } from 'discord.js';
 import pgPool from '../structures/PostgreSQL';
-import cache from 'memory-cache';
+import { cacheGuild, getCacheClass } from '../structures/CacheManager';
 import botStatus from '../structures/BotStatus';
 
 export default async (client: Client, guild: Guild) => {
 
     if (!botStatus.isRunning()) return;
 
-    if (cache.get(guild.id) === null) {
-        const pgClient = await pgPool.connect();
+    const pgClient = await pgPool.connect();
 
-        try {
-            await pgClient.query('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE]);
-        } finally {
-            pgClient.release();
-        }
-
-        cache.put(guild.id, {
-            prefix: process.env.COMMAND_PREFIX,
-            language: process.env.DEFAULT_LANGUAGE,
-            auto_approve: null as any,
-            auto_reject: null as any,
-            delete_approved: null as any,
-            delete_rejected: null as any
-        });
-
+    try {
+        await pgClient.query('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE]);
+    } finally {
+        pgClient.release();
     }
+
+    // We do it like this because otherwise we would have to create a new function to prevent the bot from connecting one extra time to the database
+    getCacheClass.put(guild.id, {
+        prefix: process.env.COMMAND_PREFIX,
+        language: process.env.DEFAULT_LANGUAGE,
+        auto_approve: -1,
+        auto_reject: -1,
+        delete_approved: false,
+        delete_rejected: false
+    });
 
     // Predefine the invite code
     let inviteCode;

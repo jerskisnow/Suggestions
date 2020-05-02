@@ -1,8 +1,8 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
-import cache from 'memory-cache';
 import utf8 from 'utf8';
 
 import pgPool from '../../structures/PostgreSQL';
+import { setGuildSetting } from '../../structures/CacheManager';
 
 /**
  * The prefix controller function handles the prefix part
@@ -75,16 +75,6 @@ export default async(client: Client, message: Message, language: any, msg: Messa
         pgClient.release();
     }
 
-    const currentCache = cache.get(message.guild.id);
-
-    cache.put(message.guild.id, {
-        prefix: newPrefix,
-        language: currentCache.language,
-        channel: currentCache.channel,
-        auto_approve: currentCache.auto_approve,
-        auto_reject: currentCache.auto_reject,
-        delete_approved: currentCache.delete_approved,
-        delete_rejected: currentCache.delete_rejected
-    });
+    setGuildSetting(message.guild.id, 'prefix', newPrefix);
     
 }

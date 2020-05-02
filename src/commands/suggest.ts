@@ -19,23 +19,35 @@ export default class SuggestCommand implements ICommand {
         if (res.rows.length === 0) return;
 
         const channel: TextChannel = message.guild.channels.cache.get(res.rows[0].channel) as TextChannel;
-        if (!channel) return message.channel.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.errorTitle, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.suggest.invalidChannel)
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        });
+        if (!channel) {
+            message.channel.send({
+                embed: new MessageEmbed()
+                    .setAuthor(language.errorTitle, client.user.avatarURL())
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.commands.suggest.invalidChannel)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
 
-        if (!args.length) return message.channel.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.errorTitle, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.suggest.descriptionRequired)
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        });
+            await pgClient.release();
+
+            return;
+        }
+
+        if (!args.length) {
+            message.channel.send({
+                embed: new MessageEmbed()
+                    .setAuthor(language.errorTitle, client.user.avatarURL())
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.commands.suggest.descriptionRequired)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
+
+            await pgClient.release();
+
+            return;
+        }
 
         const desc = args.slice(0).join(" ");
 

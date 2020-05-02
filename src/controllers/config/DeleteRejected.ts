@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
-import cache from 'memory-cache';
 
 import pgPool from '../../structures/PostgreSQL';
+import { setGuildSetting } from '../../structures/CacheManager';
 
 /**
  * The delete approved controller function handles the delete approved part
@@ -94,16 +94,6 @@ export default async(client: Client, message: Message, language: any, msg: Messa
 		pgClient.release();
 	}
 
-	const currentCache = cache.get(message.guild.id);
-
-	cache.put(message.guild.id, {
-		prefix: currentCache.prefix,
-		language: currentCache.language,
-		channel: currentCache.channel,
-		auto_approve: currentCache.auto_approve,
-		auto_reject: currentCache.auto_reject,
-		delete_approved: currentCache.delete_approved,
-		delete_rejected: inputResult
-	});
+	setGuildSetting(message.guild.id, 'delete_rejected', inputResult);
 
 }
