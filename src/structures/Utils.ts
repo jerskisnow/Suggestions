@@ -15,7 +15,17 @@ export default class Utils {
      * @return {string} Returns the channel id from the stripped channel mention
      */
     stripChannelInput(channelInput: string): string {
-        return channelInput.replace('<', '').replace('#', '').replace('>', '');
+        return channelInput.replace('<#', '').replace('>', '');
+    }
+
+    /**
+    * Reformat a language input into the valid and correctly capitilized language code
+    * @param  {string} languageInput The input to reformat
+    * @return {string} Returns the a valid laguage code
+    */
+    reformatLanguageCode(languageInput: string): string {
+        const splittedInput: string[] = languageInput.split('_');
+        return splittedInput[0].toLowerCase() + "_" + splittedInput[1].toUpperCase();
     }
 
 }

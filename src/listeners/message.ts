@@ -3,7 +3,6 @@ import Utils from '../structures/Utils';
 import { Client, Message } from 'discord.js';
 import botStatus from '../structures/BotStatus';
 
-import pgPool from '../structures/PostgreSQL';
 import { guildExists, getGuildSetting, cacheGuild } from '../structures/CacheManager';
 
 const utils = new Utils();
