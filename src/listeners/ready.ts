@@ -42,9 +42,13 @@ export default async (client: Client) => {
                 const positiveCount = message.reactions.cache.get("✅").count - 1;
                 const negativeCount = message.reactions.cache.get("❎").count - 1;
 
-                if (getGuildSetting(message.guild.id, 'auto_approve') <= positiveCount)
+                if (getGuildSetting(message.guild.id, 'auto_approve') !== null &&
+                    getGuildSetting(message.guild.id, 'auto_approve') !== -1 &&
+                    getGuildSetting(message.guild.id, 'auto_approve') <= positiveCount)
                     ApproveController(client, message, utils.languageCodeToObject(getGuildSetting(channel.guild.id, 'language')));
-                else if (getGuildSetting(message.guild.id, 'auto_reject') <= negativeCount)
+                else if (getGuildSetting(message.guild.id, 'auto_approve') !== null &&
+                    getGuildSetting(message.guild.id, 'auto_reject') !== -1 &&
+                    getGuildSetting(message.guild.id, 'auto_reject') <= negativeCount)
                     RejectController(client, message, utils.languageCodeToObject(getGuildSetting(channel.guild.id, 'language')));
             }
         }
