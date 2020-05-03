@@ -3,6 +3,9 @@ import { Client, Message, MessageEmbed } from 'discord.js';
 import pgPool from '../../structures/PostgreSQL';
 import { setGuildSetting } from '../../structures/CacheManager';
 import languageList from '../../structures/Languages';
+import Utils from '../../structures/Utils';
+
+const utils = new Utils();
 
 /**
  * The language controller function handles the language part
@@ -39,7 +42,7 @@ export default async(client: Client, message: Message, language: any, msg: Messa
     const inputMessage: Message = awaitMessage.first();
 
     // Check if there wasn't any input given
-    if (inputMessage === undefined) {
+    if (inputMessage == null) {
         await msg.edit({
             embed: new MessageEmbed()
             .setAuthor(language.commands.config.title, client.user.avatarURL())
@@ -62,29 +65,25 @@ export default async(client: Client, message: Message, language: any, msg: Messa
         timeout: 125
     });
 
-    const splittedInput: string[] = input.split('_');
 
-    const newLanguage: string = splittedInput[0].toLowerCase() + "_" + splittedInput[1].toUpperCase();
+    if (input.indexOf("_") !== 2 || !languages.includes(utils.reformatLanguageCode(input))) {
+        await msg.edit({
+            embed: new MessageEmbed()
+                .setAuthor(language.commands.config.title, client.user.avatarURL())
+                .setColor(process.env.EMBED_COLOR)
+                .setDescription(language.commands.config.language.invalidLanguage)
+                .setTimestamp()
+                .setFooter(process.env.EMBED_FOOTER)
+        });
 
-    // Check if the language exists
-    if (!languages.includes(newLanguage)) {
-      await msg.edit({
-          embed: new MessageEmbed()
-          .setAuthor(language.commands.config.title, client.user.avatarURL())
-          .setColor(process.env.EMBED_COLOR)
-          .setDescription(language.commands.config.language.invalidLanguage
-              .replace(/<Language>/g, newLanguage)
-          )
-          .setTimestamp()
-          .setFooter(process.env.EMBED_FOOTER)
-      });
+        await msg.delete({
+            timeout: 50000
+        });
 
-      await msg.delete({
-        timeout: 50000
-      });
-
-      return;
+        return;
     }
+
+    const newLanguage: string = utils.reformatLanguageCode(input);
 
     await msg.edit({
         embed: new MessageEmbed()

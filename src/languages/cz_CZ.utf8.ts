@@ -1,20 +1,6 @@
 /**
- * PLEASE MAKE SURE THAT:
- *  - You read the instruction for translation in the readme.md file.
- *  - You speak the language you want to translate to fluently, since translation programs are NOT allowed.
- *  - You now how to use git / github and how to contribute to the project.
- *  - You are on the 'dev' branch.
- *
- * FURTHER INFORMATION:
- *  - You may put the language after 'Language: '
- *  - You may put the date after 'Date: ', keep in mind that the regular format is month/day/year
- *  - You may put your name after the 'Translation by' part.
- *  - You can join our discord (https://discord.gg/3SYg3M5) if you have any questions.
- */
-
-/**
- * Language: Czech (cz)
- * Date: 04/27/2020 (MM/DD/YYYY)
+ * Language: Czech (cz_CZ)
+ * Date: 27/04/2020 (MM/DD/YYYY)
  *
  * Translation by PetyXbron
  */
@@ -55,7 +41,7 @@ export default {
                 description: "Zadej nový jazyk...",
                 availableTitle: "Dostupné jazyky",
                 missingInput: "Zapomněl jsi zadat nový jazyk.",
-                invalidLanguage: "Tento jazyk nebyl nikdy přidán.",
+                invalidLanguage: "Suggestions is not available in that language. (Not Translated Yet)",
                 updated: "Jazyk byl aktualizován na ``<Language>``."
             },
             channel: {
@@ -81,13 +67,13 @@ export default {
             deleteApproved: {
                 description: "Zadej prosím **on** nebo **off**...",
                 missingInput: "Zapomněl jsi napsat jestli se mají mazat schválené návrhy na zapnuto nebo vypnuto.",
-                invalidNumber: "Na výběr je jenom **on** a **off**.",
+                invalidInput: "Na výběr je jenom **on** a **off**.",
                 updated: "Schválené návrhy budou nyní automaticky odstraněny."
             },
             deleteRejected: {
                 description: "Zadej prosím **on** nebo **off**...",
                 missingInput: "Zapomněl jsi napsat jestli se mají mazat neschválené návrhy na zapnuto nebo vypnuto.",
-                invalidNumber: "Na výběr je jenom **on** a **off**.",
+                invalidInput: "Na výběr je jenom **on** a **off**.",
                 updated: "Odmítnuté návrhy budou nyní automaticky odstraněny."
             }
         },

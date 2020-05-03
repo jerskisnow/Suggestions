@@ -69,8 +69,12 @@ export default class ConfigCommand implements ICommand {
 
         msg.reactions.removeAll();
 
-        const controller: Function = reactions[msgReactions.first().emoji.name]
-        controller(client, message, language, msg)
+        if (msgReactions.first()) {
+            const controller: Function = reactions[msgReactions.first().emoji.name]
+            controller(client, message, language, msg)
+        }
+
+        // Probably edit the message saying the process failed
 
     }
 
