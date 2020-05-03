@@ -108,9 +108,6 @@ export default {
             title: "Suggestions - Uptime",
             description: "Ik ben online geweest voor <Days> dagen, <Hours> uren, <Minutes> minuten en <Seconds> seconden!"
         },
-        donate: {
-            title: "Suggestions - Doneer"
-        },
         help: {
             title: "Suggestions - Help",
             commandTitle: "Command Help",

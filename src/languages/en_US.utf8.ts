@@ -122,9 +122,6 @@ export default {
             title: "Suggestions - Uptime",
             description: "I've been online for <Days> days, <Hours> hours, <Minutes> minutes and <Seconds> seconds!"
         },
-        donate: {
-            title: "Suggestions - Donate"
-        },
         help: {
             title: "Suggestions - Help",
             commandTitle: "Command Help",

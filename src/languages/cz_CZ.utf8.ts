@@ -108,9 +108,6 @@ export default {
             title: "Suggestions - Uptime",
             description: "Bot je online <Days> dní, <Hours> hodin, <Minutes> minut a <Seconds> sekund!"
         },
-        donate: {
-            title: "Suggestions - Donate"
-        },
         help: {
             title: "Suggestions - Help",
             commandTitle: "Command Help",
