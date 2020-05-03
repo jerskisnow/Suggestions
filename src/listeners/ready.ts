@@ -69,6 +69,17 @@ export default async (client: Client) => {
     }, 1800000);
     console.log(cliColors.FgCyan + "Loaded the " + cliColors.FgYellow + "DBL (Top.GG)" + cliColors.FgCyan + " api." + cliColors.Reset);
 
+    setInterval(async () => {
+
+        const guilds_result = await client.shard.fetchClientValues('guilds.cache.size');
+        const guildCount = guilds_result.reduce((prev, count) => prev + count, 0);
+
+        client.user.setActivity(`${guildCount} guilds on ${client.shard.count} shards.`, {
+            type: "WATCHING"
+        });
+
+    }, 3000000);
+
     console.log(cliColors.FgBlue + "\n---=[Succesfully enabled the bot]=---" + cliColors.Reset);
 
     botStatus.setRunning(true);
