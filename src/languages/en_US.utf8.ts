@@ -55,7 +55,7 @@ export default {
                 description: "Please enter a new language...",
                 availableTitle: "Available languages",
                 missingInput: "You forgot to enter a new language.",
-                invalidLanguage: "That language does not exists.",
+                invalidLanguage: "Suggestions is not available in that language.",
                 updated: "Updated the language to ``<Language>``."
             },
             channel: {
@@ -81,13 +81,13 @@ export default {
             deleteApproved: {
                 description: "Please enter either **on** or **off**...",
                 missingInput: "You forgot to enter either on or off.",
-                invalidNumber: "You can only choose between **on** and **off**.",
+                invalidInput: "You can only choose between **on** and **off**.",
                 updated: "Approved suggestions will now be deleted automatically."
             },
             deleteRejected: {
                 description: "Please enter either **on** or **off**...",
                 missingInput: "You forgot to enter either on or off.",
-                invalidNumber: "You can only choose between **on** and **off**.",
+                invalidInput: "You can only choose between **on** and **off**.",
                 updated: "Rejected suggestions will now be deleted automatically."
             }
         },
