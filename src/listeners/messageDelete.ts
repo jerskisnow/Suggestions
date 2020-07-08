@@ -1,12 +1,9 @@
 import { Message } from 'discord.js';
 import pgPool from '../structures/PostgreSQL';
-import botStatus from '../structures/BotStatus';
 
 import DeleteController from '../controllers/assessments/Delete';
 
 export default async (message: Message) => {
-
-	if (!botStatus.isRunning()) return;
 
 	const pgClient = await pgPool.connect();
 
