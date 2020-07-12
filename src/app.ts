@@ -7,6 +7,10 @@ const client = new Client({
     partials: ['MESSAGE', 'REACTION']
 });
 
+// client.on("error", (e) => console.error(e));
+// client.on("warn", (e) => console.warn(e));
+// client.on("debug", (e) => console.info(e));
+
 readdir('./listeners/', (err, files) => {
     if (err) throw err;
 

@@ -23,7 +23,7 @@ const getGuildSetting = function (guild_id: string, guild_setting: string) {
  * Get the cached data from a guild (Deprecated)
  * @return {Object} the data of the guild or null when the guild is not cached 
  */
-const getGuild = function (guild_id: string) {
+const getGuild = function (guild_id: string): any {
     return cache.get(guild_id);
 };
 
@@ -56,13 +56,13 @@ const cacheGuild = async function (guild_id: string) {
         pgClient.release();
     }
     cache.put(guild_id, {
-        prefix: result.rows[0].prefix,
-        language: result.rows[0].language,
-        channel: result.rows[0].channel,
-        auto_approve: result.rows[0].auto_approve,
-        auto_reject: result.rows[0].auto_reject,
-        delete_approved: result.rows[0].delete_approved,
-        delete_rejected: result.rows[0].delete_rejected
+        prefix: result.rows[0].prefix, // Not null
+        language: result.rows[0].language, // Not null
+        channel: result.rows[0].channel, // Can be null
+        auto_approve: result.rows[0].auto_approve === null ? -1 : result.rows[0].auto_approve,
+        auto_reject: result.rows[0].auto_reject === null ? -1 : result.rows[0].auto_reject,
+        delete_approved: result.rows[0].delete_approved === null ? false : result.rows[0].delete_approved,
+        delete_rejected: result.rows[0].delete_rejected === null ? false : result.rows[0].delete_rejected
     });
 };
 

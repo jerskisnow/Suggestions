@@ -1,11 +1,8 @@
 import { Client, Guild, MessageEmbed } from 'discord.js';
 import pgPool from '../structures/PostgreSQL';
 import { cacheGuild, getCacheClass } from '../structures/CacheManager';
-import botStatus from '../structures/BotStatus';
 
 export default async (client: Client, guild: Guild) => {
-
-    if (!botStatus.isRunning()) return;
 
     const pgClient = await pgPool.connect();
 

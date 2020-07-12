@@ -1,7 +1,6 @@
 import { cmdMap, aliasMap } from '../structures/CMDMap';
 import Utils from '../structures/Utils';
 import { Client, Message } from 'discord.js';
-import botStatus from '../structures/BotStatus';
 
 import { guildExists, getGuildSetting, cacheGuild } from '../structures/CacheManager';
 
@@ -9,26 +8,19 @@ const utils = new Utils();
 
 export default async (client: Client, message: Message) => {
 
-    if (!botStatus.isRunning()) return;
-
     // If the author is a bot, return
     if (message.author.bot) return;
     // If the message is not in a guild, return
     if (!message.guild) return;
 
-    let prefix = getGuildSetting(message.guild.id, 'prefix');
-
-    if (prefix === null) {
-        if (!guildExists(message.guild.id)) {
-            await cacheGuild(message.guild.id);
-
-            // Define it once again
-            prefix = getGuildSetting(message.guild.id, 'prefix');
-        }
+    if (!guildExists(message.guild.id)) {
+        await cacheGuild(message.guild.id);
     }
 
+    let prefix = getGuildSetting(message.guild.id, 'prefix');
+
     // Check if the message contains the prefix
-    if (message.content.startsWith(prefix)) {
+    if (message.content.startsWith(prefix) || message.content.startsWith(`<@${client.user.id}> `)) {
 
         // Define the command arguments
         const args = message.content
@@ -38,14 +30,18 @@ export default async (client: Client, message: Message) => {
 
         // Define the commandName
         const command = args.shift().toLowerCase();
+        // Check if someone actually entered a command instead of just the prefix
+        if (command === '') return;
 
+        // Fetch the language of the guild
         const languageCode = getGuildSetting(message.guild.id, 'language');
         const language: Object = utils.languageCodeToObject(languageCode);
-
+        
         // Define the command instance
         const cmdInstance = cmdMap.get(command);
+
         // Check if the command is not undefined, if so run the command
-        if (cmdInstance !== undefined) {
+        if (cmdInstance != null) {
             cmdInstance.run(client, message, language, args);
         } else {
             // Search for a registered alias
@@ -59,7 +55,5 @@ export default async (client: Client, message: Message) => {
             secondary.run(client, message, language, args)
         }
     }
-
-    // ...
 
 }

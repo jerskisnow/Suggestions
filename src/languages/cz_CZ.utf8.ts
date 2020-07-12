@@ -1,6 +1,6 @@
 /**
- * Language: Czech (cz_CZ)
- * Date: 27/04/2020 (MM/DD/YYYY)
+ * Language: Czech (cs_CZ)
+ * Date: 6/05/2020 (MM/DD/YYYY)
  *
  * Translation by PetyXbron
  */
@@ -27,10 +27,10 @@ export default {
                 prefix: "Prefix",
                 language: "Jazyk",
                 channel: "Kanál",
-                autoApprove: "Auto schválení",
-                autoReject: "Auto odmítnutí",
+                autoApprove: "Automaticky schválit podle počtu hlasů",
+                autoReject: "Automaticky zamítnout podle počtu hlasů",
                 deleteApproved: "Automaticky mazat shvalené",
-                deleteRejected: "Automaticky mazat neschválené"
+                deleteRejected: "Automaticky mazat zamítnuté"
             },
             prefix: {
                 description: "Napiš nový prefix...",
@@ -81,22 +81,22 @@ export default {
             title: "Suggestions - Podání nápadu",
             invalidChannel: "Ujisti se, že majitel serveru správně nakonfiguroval bota.",
             descriptionRequired: "Uveď prosím popis nápadu, který chceš navrhnout.",
-            description: "**Popis:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
-            sent: "Tvůj návrh byl úspěšně vytvořen! ([Click here](<Url>))"
+            description: "**Popis:** <Description>\n\n**Stav:** <Status>\n**ID:** <ID>",
+            sent: "Tvůj návrh byl úspěšně vytvořen! ([→ Tady je tvůj návrh ←](<Url>))"
         },
         approve: {
             title: "Suggestions - Schválit návrh",
             descriptionRequired: "Vyplň prosím platné ID návrhu.",
             invalidInput: "Zadal jsi neplatné ID návrhu.",
             noSuggestionsFound: "Nemohl jsem najít žádné schválitelné návrhy.",
-            approved: "I've successfully completed the approval. (Not Translated Yet)"
+            approved: "Tento návrh byl právě schválen."
         },
         reject: {
             title: "Suggestions - Odmítnout návrh",
             descriptionRequired: "Vyplň prosím platné ID návrhu.",
-            invalidInput: "Zadal jsi neplatné ID návrhu.",
+            invalidInput: "Zadej platné ID návrhu.",
             noSuggestionsFound: "Nemohl jsem najít žádné schválitelné návrhy.",
-            rejected: "I've successfully completed the rejection. (Not Translated Yet)"
+            rejected: "Tento návrh byl právě zamítnut."
         },
         list: {
             title: "Suggestions - List",
@@ -129,9 +129,9 @@ export default {
      * Words associated with suggestions are stated below
      */
     suggestions: {
-        open: "Otevřené",
-        approved: "Schválené",
-        rejected: "Odmítnuté"
+        open: "Otevřený",
+        approved: "Schváleno",
+        rejected: "Odmítnuto"
     }
 
 }
