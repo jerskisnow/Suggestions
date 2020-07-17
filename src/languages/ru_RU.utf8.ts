@@ -14,6 +14,7 @@ export default {
      */
     insufficientPermissions: "У тебя нет прав для использования этой команды (Тебе нужно права <Permission>)",
     errorTitle: "Ошибка Предложения",
+    activeCooldown: "You cannot use that command due to an active cooldown.",
 
     /**
      * Commands part
