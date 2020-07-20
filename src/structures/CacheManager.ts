@@ -34,7 +34,7 @@ const cacheGuild = async function (guild_id: string) {
     const pgClient = await pgPool.connect();
     let result;
     try {
-        result = await pgClient.query('SELECT prefix, language, channel, auto_approve, auto_reject, delete_approved, delete_rejected FROM servers WHERE id = $1::text', [guild_id]);
+        result = await pgClient.query('SELECT prefix, language, channel, auto_approve, auto_reject, delete_approved, delete_rejected, is_premium FROM servers WHERE id = $1::text', [guild_id]);
         if (!result.rows.length) {
             console.log(cliColors.FgCyan + "Creating an offline server in the database and cache with the id of: " + cliColors.FgYellow + guild_id + cliColors.FgCyan + "." + cliColors.Reset);
             await pgClient.query('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [guild_id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE]);
@@ -47,7 +47,8 @@ const cacheGuild = async function (guild_id: string) {
                         auto_approve: -1,
                         auto_reject: -1,
                         delete_approved: false,
-                        delete_rjected: false
+                        delete_rjected: false,
+                        is_premium: false
                     }
                 ]
             }
@@ -62,7 +63,8 @@ const cacheGuild = async function (guild_id: string) {
         auto_approve: result.rows[0].auto_approve === null ? -1 : result.rows[0].auto_approve,
         auto_reject: result.rows[0].auto_reject === null ? -1 : result.rows[0].auto_reject,
         delete_approved: result.rows[0].delete_approved === null ? false : result.rows[0].delete_approved,
-        delete_rejected: result.rows[0].delete_rejected === null ? false : result.rows[0].delete_rejected
+        delete_rejected: result.rows[0].delete_rejected === null ? false : result.rows[0].delete_rejected,
+        is_premium: result.rows[0].is_premium // Not null
     });
 };
 

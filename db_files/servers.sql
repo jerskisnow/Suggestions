@@ -6,5 +6,6 @@ CREATE TABLE servers (
     auto_approve INT,
     auto_reject INT,
     delete_approved BOOLEAN,
-    delete_rejected BOOLEAN
+    delete_rejected BOOLEAN,
+    is_premium BOOLEAN NOT NULL
 );

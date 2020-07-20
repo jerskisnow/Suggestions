@@ -121,6 +121,18 @@ export default {
             title: "Suggestions - Náhlášení chyby",
             descriptionRequired: "Uveď prosím popis chyby, kterou jste našli.",
             sent: "Tvoje nahlašní bugu je na cestě developerům bota.\n\n*Děkujeme za odeslání!*"
+        },
+        premium: {
+            title: "Suggestions - Premium",
+            description: "Whenever you buy premium you'll get access to the perks below. Premium is per server and requires a one-time payment of $2.50. This will allow our developers to continue working on Suggestions and our other projects.",
+            perksTitle: "Premium Perks",
+            perksDescription: "1. Early access to beta features.\n2. Priority support.\n3. A premium rank in the CodedSnow discord server."
+        },
+        translation: {
+            title: "Suggestions - Translation",
+            description: "If you're looking for changing Suggestion's language, please use `<Prefix>config`.\n\nFor more information about contributing a language please read the field below.",
+            contributeTitle: "Contribute",
+            contributeDescription: "We are always looking for people to translate our bot. If you would like the translate the bot in a language or if you want to make changes to a language please read the instructions about translating over on our [github page](https://github.com/jerskisnow/Suggestions/tree/dev)."
         }
     },
 
