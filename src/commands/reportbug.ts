@@ -18,6 +18,8 @@ export default class VoteCommand implements ICommand {
                 .setFooter(process.env.EMBED_FOOTER)
         });
 
+        // TODO: Make an await message to ask if they want to report something about the bot, otherwise tell them they need to use the report command
+
         message.channel.send({
             embed: new MessageEmbed()
                 .setAuthor(language.commands.reportbug.title, client.user.avatarURL())
@@ -25,7 +27,7 @@ export default class VoteCommand implements ICommand {
                 .setDescription(language.commands.reportbug.sent)
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
-        })
+        });
 
         const stringEmbed = JSON.stringify(
             new MessageEmbed()
