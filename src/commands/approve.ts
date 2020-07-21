@@ -62,9 +62,12 @@ export default class ApproveCommand implements ICommand {
             for (let i = 0; i < result.rows.length; i++) {
                 const chn: TextChannel = message.guild.channels.cache.get(result.rows[i].channel) as TextChannel;
                 if (chn) {
-                    const msg = await chn.messages.fetch(result.rows[i].message, false);
-
-                    ApproveController(client, msg, language);
+                    try {
+                        const msg = await chn.messages.fetch(result.rows[i].message, false);
+                        ApproveController(client, msg, language);
+                    } catch (err) {
+                        // throw err;
+                    }
                 }
             }
 
@@ -111,9 +114,12 @@ export default class ApproveCommand implements ICommand {
 
             const chn: TextChannel = message.guild.channels.cache.get(result.rows[0].channel) as TextChannel;
             if (chn) {
-                const msg = await chn.messages.fetch(result.rows[0].message, false);
-
-                ApproveController(client, msg, language);
+                try {
+                    const msg = await chn.messages.fetch(result.rows[0].message, false);
+                    ApproveController(client, msg, language);
+                } catch (err) {
+                    // throw err;
+                }
             }
         }
 
