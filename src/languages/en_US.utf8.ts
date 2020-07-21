@@ -29,6 +29,7 @@ export default {
     insufficientPermissions: "You don't have permission to use that command! (<Permission> is required)",
     errorTitle: "Suggestions - Error",
     activeCooldown: "You cannot use that command due to an active cooldown.",
+    premiumFeature: "This command is only usable for premium servers (`<Prefix>premium`)",
 
     /**
      * Commands part

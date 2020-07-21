@@ -15,6 +15,7 @@ export default {
     insufficientPermissions: "Je hebt geen toestemming om die command te gebruiken! (<Permission> is vereist)",
     errorTitle: "Suggestions - Error",
     activeCooldown: "Je kan die command niet gebruiken vanwege een cooldown.",
+    premiumFeature: "This command is only usable for premium servers (`<Prefix>premium`)",
 
     /**
      * Commands part
