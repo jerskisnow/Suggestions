@@ -1,6 +1,5 @@
 import { Client, Guild, MessageEmbed } from 'discord.js';
 import pgPool from '../structures/PostgreSQL';
-import { cacheGuild, getCacheClass } from '../structures/CacheManager';
 
 export default async (client: Client, guild: Guild) => {
 
@@ -11,16 +10,6 @@ export default async (client: Client, guild: Guild) => {
     } finally {
         pgClient.release();
     }
-
-    // We do it like this because otherwise we would have to create a new function to prevent the bot from connecting one extra time to the database
-    getCacheClass.put(guild.id, {
-        prefix: process.env.COMMAND_PREFIX,
-        language: process.env.DEFAULT_LANGUAGE,
-        auto_approve: -1,
-        auto_reject: -1,
-        delete_approved: false,
-        delete_rejected: false
-    });
 
     // Predefine the invite code
     let inviteCode;

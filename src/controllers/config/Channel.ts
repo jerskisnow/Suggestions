@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
 import pgPool from '../../structures/PostgreSQL';
-import { setGuildSetting } from '../../structures/CacheManager';
+import { set } from '../../structures/CacheManager';
 import Utils from '../../structures/Utils';
 
 const utils: Utils = new Utils();
@@ -103,6 +103,6 @@ export default async (client: Client, message: Message, language: any, msg: Mess
         pgClient.release();
     }
 
-    setGuildSetting(message.guild.id, 'channel', newChannelObject.id);
+    await set(message.guild.id, 'channel', newChannelObject.id);
 
 }

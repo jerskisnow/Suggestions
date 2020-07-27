@@ -1,36 +1,30 @@
-import cache from 'memory-cache';
-
 import pgPool from './PostgreSQL';
 import cliColors from './CLIColors';
 
+import redisClient from './RedisClient';
+
 /**
  * Get whether a guild is cached or not (Deprecated)
- * @return {Boolean} the setting of the guild or null when the guild is not cached
+ * @return {Promise<Boolean>} the setting of the guild or null when the guild is not cached
  */
-const guildExists = function (guild_id: string): boolean {
-    return cache.get(guild_id) === null ? false : true;
+const exists = async function (guild_id: string): Promise<boolean> {
+    const result: boolean = await redisClient.existsAsync(guild_id);
+    return result;
 };
 
 /**
  * Get a cached setting from a guild
  * @return the setting of the guild or null when the guild is not cached
  */
-const getGuildSetting = function (guild_id: string, guild_setting: string) {
-    return guildExists(guild_id) ? cache.get(guild_id)[guild_setting] : null;
-};
-
-/**
- * Get the cached data from a guild (Deprecated)
- * @return {Object} the data of the guild or null when the guild is not cached 
- */
-const getGuild = function (guild_id: string): any {
-    return cache.get(guild_id);
+const get = async function (guild_id: string, guild_setting: string): Promise<string|number|boolean|null> {
+    const output = await redisClient.getAsync(guild_id);
+    return JSON.parse(output)[guild_setting];
 };
 
 /**
  * Add data from a guild into the cache
  */
-const cacheGuild = async function (guild_id: string) {
+const cache = async function (guild_id: string) {
     const pgClient = await pgPool.connect();
     let result;
     try {
@@ -56,7 +50,8 @@ const cacheGuild = async function (guild_id: string) {
     } finally {
         pgClient.release();
     }
-    cache.put(guild_id, {
+
+    const cacheObject = {
         prefix: result.rows[0].prefix, // Not null
         language: result.rows[0].language, // Not null
         channel: result.rows[0].channel, // Can be null
@@ -65,33 +60,30 @@ const cacheGuild = async function (guild_id: string) {
         delete_approved: result.rows[0].delete_approved === null ? false : result.rows[0].delete_approved,
         delete_rejected: result.rows[0].delete_rejected === null ? false : result.rows[0].delete_rejected,
         is_premium: result.rows[0].is_premium // Not null
-    });
-};
+    }
 
-/**
- * Delete the guild from the cache
- */
-const deleteGuild = function (guild_id: string): void {
-    cache.del(guild_id);
+    await redisClient.setAsync(guild_id, JSON.stringify(cacheObject));
+
+    return cacheObject;
 };
 
 /**
  * Update a specific guild setting
  */
-const setGuildSetting = function (guild_id: string, guild_setting: string, setting_value: any) {
-    const settings = getGuild(guild_id);
+const set = async function (guild_id: string, guild_setting: string, setting_value: any) {
+
+    const settingsString = await redisClient.getAsync(guild_id);
+    const settings = JSON.parse(settingsString);
+
     settings[guild_setting] = setting_value;
-    cache.put(guild_id, settings);
+    redisClient.setAsync(guild_id, settings);
+
+}
+
+const remove = async function (guild_id: string) {
+    await redisClient.removeAsync(guild_id);
 }
 
 export {
-    getGuildSetting,
-    cacheGuild,
-    deleteGuild,
-    setGuildSetting,
-    guildExists,
-
-    // Deprecations
-    getGuild,
-    cache as getCacheClass
+    exists, get, cache, set, remove
 };

@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
 import pgPool from '../../structures/PostgreSQL';
-import { getGuildSetting } from '../../structures/CacheManager';
+import { get } from '../../structures/CacheManager';
 
 import DeleteController from './Delete';
 import { isNullOrUndefined } from 'util';
@@ -18,9 +18,11 @@ export default async (client: Client, msg: Message, language: any) => {
 	if (!result.rows.length || result.rows[0].status !== 'Open') {
 		await pgClient.release();
 		return;
-    }
+	}
+	
+	const deleteApproved = await get(msg.guild.id, 'delete_approved') as boolean;
 
-	if (getGuildSetting(msg.guild.id, 'delete_approved')) {
+	if (deleteApproved) {
 		DeleteController(msg);
 	} else {
 

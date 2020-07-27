@@ -1,4 +1,4 @@
-﻿import { Client, TextChannel } from 'discord.js';
+﻿import { Client } from 'discord.js';
 import cliColors from '../structures/CLIColors';
 import DBL from 'dblapi.js';
 

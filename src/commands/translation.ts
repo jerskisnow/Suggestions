@@ -1,7 +1,7 @@
 import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed } from 'discord.js';
 
-import { getGuildSetting } from '../structures/CacheManager';
+import { get } from '../structures/CacheManager';
 
 export default class TranslationCommand implements ICommand {
 
@@ -11,11 +11,13 @@ export default class TranslationCommand implements ICommand {
 
     async run(client: Client, message: Message, language: any) {
 
+        const prefix = await get(message.guild.id, 'prefix') as string;
+
         message.channel.send({
             embed: new MessageEmbed()
                 .setAuthor(language.commands.translate.title, client.user.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.translate.description.replaceAll(/<Prefix>/g, getGuildSetting(message.guild.id, 'prefix')))
+                .setDescription(language.commands.translate.description.replaceAll(/<Prefix>/g, prefix))
                 .addField(language.commands.translate.contributeTitle, language.commands.translate.contributeDescription, false)
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)

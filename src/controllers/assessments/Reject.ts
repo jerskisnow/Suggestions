@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
 import pgPool from '../../structures/PostgreSQL';
-import { getGuildSetting } from '../../structures/CacheManager';
+import { get } from '../../structures/CacheManager';
 
 import DeleteController from './Delete';
 
@@ -19,7 +19,9 @@ export default async (client: Client, msg: Message, language: any) => {
 		return;
 	}
 
-	if (getGuildSetting(msg.guild.id, 'delete_approved')) {
+	const deleteRejected = await get(msg.guild.id, 'delete_rejected') as boolean;
+
+	if (deleteRejected) {
 		DeleteController(msg);
 	} else {
 

@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
 import pgPool from '../../structures/PostgreSQL';
-import { setGuildSetting } from '../../structures/CacheManager';
+import { set } from '../../structures/CacheManager';
 
 /**
  * The auto approve controller function handles the auto approve part
@@ -107,6 +107,6 @@ export default async(client: Client, message: Message, language: any, msg: Messa
 		pgClient.release();
 	}
 
-	setGuildSetting(message.guild.id, 'auto_approve', newAmount);
+	await set(message.guild.id, 'auto_approve', newAmount);
 
 }

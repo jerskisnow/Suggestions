@@ -2,7 +2,7 @@ import { cmdMap, aliasMap } from '../structures/CMDMap';
 import Utils from '../structures/Utils';
 import { Client, Message } from 'discord.js';
 
-import { guildExists, getGuildSetting, cacheGuild } from '../structures/CacheManager';
+import { exists, get, cache } from '../structures/CacheManager';
 
 const utils = new Utils();
 
@@ -13,11 +13,11 @@ export default async (client: Client, message: Message) => {
     // If the message is not in a guild, return
     if (!message.guild) return;
 
-    if (!guildExists(message.guild.id)) {
-        await cacheGuild(message.guild.id);
+    if (!exists(message.guild.id)) {
+        await cache(message.guild.id);
     }
 
-    let prefix = getGuildSetting(message.guild.id, 'prefix');
+    let prefix = await get(message.guild.id, 'prefix') as string;
 
     // Check if the message contains the prefix
     if (message.content.startsWith(prefix) || message.content.startsWith(`<@${client.user.id}> `)) {
@@ -34,7 +34,7 @@ export default async (client: Client, message: Message) => {
         if (command === '') return;
 
         // Fetch the language of the guild
-        const languageCode = getGuildSetting(message.guild.id, 'language');
+        const languageCode = await get(message.guild.id, 'language') as string;
         const language: Object = utils.languageCodeToObject(languageCode);
         
         // Define the command instance
