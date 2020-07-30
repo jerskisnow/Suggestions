@@ -28,7 +28,8 @@ export default {
             names: {
                 prefix: "Prefix",
                 language: "Taal",
-                channel: "Channel",
+                suggestionChannel: "Suggestion Channel",
+                reportChannel: "Report Channel",
                 autoApprove: "Auto goedkeuring",
                 autoReject: "Auto afkeuring",
                 deleteApproved: "Verwijder goedgekeurd",
@@ -46,11 +47,17 @@ export default {
                 invalidLanguage: "Suggestions is niet beschikbaar in die taal.",
                 updated: "De taal is veranderd naar ``<Language>``."
             },
-            channel: {
-                description: "Voer een nieuwe channel in...",
-                missingInput: "Je bent vergeten om een nieuwe channel in te voeren.",
-                invalidChannel: "Je hebt in ongeldige channel ingevoerd.",
-                updated: "De channel is veranderd naar <#<ChannelID>>."
+            suggestionChannel: {
+                description: "Please enter a new channel...",
+                missingInput: "You forgot to enter a new channel.",
+                invalidChannel: "You entered an invalid channel.",
+                updated: "Updated the channel to <#<ChannelID>>."
+            },
+            reportChannel: {
+                description: "Please enter a new channel...",
+                missingInput: "You forgot to enter a new channel.",
+                invalidChannel: "You entered an invalid channel.",
+                updated: "Updated the channel to <#<ChannelID>>."
             },
             autoApprove: {
                 description: "Voer de vereiste hoeveelheid positieve reacties in om een suggestie goed te keuren...\n\n*Voer -1 in om uit te schakelen*",
@@ -146,6 +153,14 @@ export default {
         open: "Open",
         approved: "Goedgekeurd",
         rejected: "Afgekeurd"
-    }
+    },
+
+    /*
+     * Reports part
+     *
+     * Words associated with reports are stated below
+     */
+    open: "Open",
+    resolved: "Resolved"
 
 }

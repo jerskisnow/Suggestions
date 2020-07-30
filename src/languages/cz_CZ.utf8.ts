@@ -28,7 +28,8 @@ export default {
             names: {
                 prefix: "Prefix",
                 language: "Jazyk",
-                channel: "Kanál",
+                suggestionChannel: "Suggestion Channel",
+                reportChannel: "Report Channel",
                 autoApprove: "Automaticky schválit podle počtu hlasů",
                 autoReject: "Automaticky zamítnout podle počtu hlasů",
                 deleteApproved: "Automaticky mazat shvalené",
@@ -46,11 +47,17 @@ export default {
                 invalidLanguage: "Suggestions is not available in that language. (Not Translated Yet)",
                 updated: "Jazyk byl aktualizován na ``<Language>``."
             },
-            channel: {
+            suggestionChannel: {
                 description: "Prosím zadej nový kanál...",
                 missingInput: "Zapomněl jsi napsat nový kanál.",
                 invalidChannel: "Zadali jsi neplatný kanál.",
                 updated: "Kanál byl aktualizován na <#<ChannelID>>."
+            },
+            reportChannel: {
+                description: "Please enter a new channel...",
+                missingInput: "You forgot to enter a new channel.",
+                invalidChannel: "You entered an invalid channel.",
+                updated: "Updated the channel to <#<ChannelID>>."
             },
             autoApprove: {
                 description: "Zadejte požadovaný počet pozitivních reakcí, aby se návrh schválil ...\n\n*Zadej -1 pro deaktivaci*",
@@ -146,6 +153,14 @@ export default {
         open: "Otevřený",
         approved: "Schváleno",
         rejected: "Odmítnuto"
-    }
+    },
+
+    /*
+     * Reports part
+     *
+     * Words associated with reports are stated below
+     */
+    open: "Open",
+    resolved: "Resolved"
 
 }

@@ -28,7 +28,8 @@ export default {
             names: {
                 prefix: "Префикс",
                 language: "Язык",
-                channel: "Канал",
+                suggestionChannel: "Suggestion Channel",
+                reportChannel: "Report Channel",
                 autoApprove: "Авто-одобрение",
                 autoReject: "Авто-отказ",
                 deleteApproved: "Удалить одобренные",
@@ -46,11 +47,17 @@ export default {
                 invalidLanguage: "В Suggestions нету такого языка.",
                 updated: "Язык обновлён на ``<Language>``."
             },
-            channel: {
-                description: "Пожалуйста, напишите канал...",
-                missingInput: "Вы забыли написать канал.",
-                invalidChannel: "Вы написали несуществующий канал.",
-                updated: "Канал обновлён на <#<ChannelID>>."
+            suggestionChannel: {
+                description: "Please enter a new channel...",
+                missingInput: "You forgot to enter a new channel.",
+                invalidChannel: "You entered an invalid channel.",
+                updated: "Updated the channel to <#<ChannelID>>."
+            },
+            reportChannel: {
+                description: "Please enter a new channel...",
+                missingInput: "You forgot to enter a new channel.",
+                invalidChannel: "You entered an invalid channel.",
+                updated: "Updated the channel to <#<ChannelID>>."
             },
             autoApprove: {
                 description: "Пожалуйста, напишите количество позитивных реакций в цифрах, для одобрения предложения...\n\n*Enter -1 to disable*",
@@ -146,6 +153,14 @@ export default {
         open: "Открыть",
         approved: "Одобрить",
         rejected: "Отказать"
-    }
+    },
+
+    /*
+     * Reports part
+     *
+     * Words associated with reports are stated below
+     */
+    open: "Open",
+    resolved: "Resolved"
 
 }

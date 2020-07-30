@@ -20,7 +20,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
         embed: new MessageEmbed()
             .setAuthor(language.commands.config.title, client.user.avatarURL())
             .setColor(process.env.EMBED_COLOR)
-            .setDescription(language.commands.config.channel.description)
+            .setDescription(language.commands.config.suggestionChannel.description)
             .setTimestamp()
             .setFooter(process.env.EMBED_FOOTER)
     });
@@ -39,7 +39,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
             embed: new MessageEmbed()
                 .setAuthor(language.commands.config.title, client.user.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.config.channel.missingInput)
+                .setDescription(language.commands.config.suggestionChannel.missingInput)
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
@@ -71,7 +71,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
             embed: new MessageEmbed()
                 .setAuthor(language.commands.config.title, client.user.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.config.channel.invalidChannel)
+                .setDescription(language.commands.config.suggestionChannel.invalidChannel)
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
@@ -88,7 +88,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
         embed: new MessageEmbed()
             .setAuthor(language.commands.config.title, client.user.avatarURL())
             .setColor(process.env.EMBED_COLOR)
-            .setDescription(language.commands.config.channel.updated
+            .setDescription(language.commands.config.suggestionChannel.updated
                 .replace(/<ChannelID>/g, newChannelObject.id)
             )
             .setTimestamp()
@@ -103,6 +103,6 @@ export default async (client: Client, message: Message, language: any, msg: Mess
         pgClient.release();
     }
 
-    await set(message.guild.id, 'channel', newChannelObject.id);
+    await set(message.guild.id, 'suggestion_channel', newChannelObject.id);
 
 }

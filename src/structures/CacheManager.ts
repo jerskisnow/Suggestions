@@ -23,12 +23,14 @@ const get = async function (guild_id: string, guild_setting: string): Promise<st
 
 /**
  * Add data from a guild into the cache
+ * 
+ * TODO: Make this dynamic once
  */
 const cache = async function (guild_id: string) {
     const pgClient = await pgPool.connect();
     let result;
     try {
-        result = await pgClient.query('SELECT prefix, language, channel, auto_approve, auto_reject, delete_approved, delete_rejected, is_premium FROM servers WHERE id = $1::text', [guild_id]);
+        result = await pgClient.query('SELECT prefix, language, suggestion_channel, report_channel, auto_approve, auto_reject, delete_approved, delete_rejected, is_premium FROM servers WHERE id = $1::text', [guild_id]);
         if (!result.rows.length) {
             console.log(cliColors.FgCyan + "Creating an offline server in the database and cache with the id of: " + cliColors.FgYellow + guild_id + cliColors.FgCyan + "." + cliColors.Reset);
             await pgClient.query('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [guild_id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE]);
@@ -37,7 +39,8 @@ const cache = async function (guild_id: string) {
                     {
                         prefix: process.env.COMMAND_PREFIX,
                         language: process.env.DEFAULT_LANGUAGE,
-                        channel: null,
+                        suggestion_channel: null,
+                        report_channel: null,
                         auto_approve: -1,
                         auto_reject: -1,
                         delete_approved: false,
@@ -54,7 +57,8 @@ const cache = async function (guild_id: string) {
     const cacheObject = {
         prefix: result.rows[0].prefix, // Not null
         language: result.rows[0].language, // Not null
-        channel: result.rows[0].channel, // Can be null
+        suggestion_channel: result.rows[0].suggestion_channel, // Can be null
+        report_channel: result.rows[0].report_channel, // Can be null
         auto_approve: result.rows[0].auto_approve === null ? -1 : result.rows[0].auto_approve,
         auto_reject: result.rows[0].auto_reject === null ? -1 : result.rows[0].auto_reject,
         delete_approved: result.rows[0].delete_approved === null ? false : result.rows[0].delete_approved,
@@ -68,7 +72,7 @@ const cache = async function (guild_id: string) {
 };
 
 /**
- * Update a specific guild setting
+ * Set a specific guild setting
  */
 const set = async function (guild_id: string, guild_setting: string, setting_value: any) {
 
@@ -80,6 +84,10 @@ const set = async function (guild_id: string, guild_setting: string, setting_val
 
 }
 
+/**
+ * Remove a specific guild
+ * @param guild_id the id of the specific guild
+ */
 const remove = async function (guild_id: string) {
     await redisClient.removeAsync(guild_id);
 }

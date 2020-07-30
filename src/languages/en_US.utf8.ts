@@ -42,7 +42,8 @@ export default {
             names: {
                 prefix: "Prefix",
                 language: "Language",
-                channel: "Channel",
+                suggestionChannel: "Suggestion Channel",
+                reportChannel: "Report Channel",
                 autoApprove: "Auto approve",
                 autoReject: "Auto reject",
                 deleteApproved: "Delete approved",
@@ -60,7 +61,13 @@ export default {
                 invalidLanguage: "Suggestions is not available in that language.",
                 updated: "Updated the language to ``<Language>``."
             },
-            channel: {
+            suggestionChannel: {
+                description: "Please enter a new channel...",
+                missingInput: "You forgot to enter a new channel.",
+                invalidChannel: "You entered an invalid channel.",
+                updated: "Updated the channel to <#<ChannelID>>."
+            },
+            reportChannel: {
                 description: "Please enter a new channel...",
                 missingInput: "You forgot to enter a new channel.",
                 invalidChannel: "You entered an invalid channel.",
@@ -160,6 +167,14 @@ export default {
         open: "Open",
         approved: "Approved",
         rejected: "Rejected"
-    }
+    },
+
+    /*
+     * Reports part
+     *
+     * Words associated with reports are stated below
+     */
+    open: "Open",
+    resolved: "Resolved"
 
 }

@@ -4,7 +4,6 @@ import pgPool from '../../structures/PostgreSQL';
 import { get } from '../../structures/CacheManager';
 
 import DeleteController from './Delete';
-import { isNullOrUndefined } from 'util';
 
 /*
  msg -> The suggestion message

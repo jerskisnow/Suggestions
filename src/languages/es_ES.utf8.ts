@@ -28,7 +28,8 @@ export default {
             names: {
                 prefix: "Prefijo",
                 language: "Lengua",
-                channel: "Canal",
+                suggestionChannel: "Suggestion Channel",
+                reportChannel: "Report Channel",
                 autoApprove: "Auto aprobar",
                 autoReject: "Auto rechazar",
                 deleteApproved: "Eliminar aprobados",
@@ -46,11 +47,17 @@ export default {
                 invalidLanguage: "Suggestions no está disponible en esa lengua.",
                 updated: "La lengua ha sido cambiada a ``<Language>``."
             },
-            channel: {
-                description: "Por favor, introduzca un nuevo canal...",
-                missingInput: "Has olvidado introducir el canal nuevo.",
-                invalidChannel: "Has introducido un canal no válido.",
-                updated: "El canal ha sido actualizado a <#<ChannelID>>."
+            suggestionChannel: {
+                description: "Please enter a new channel...",
+                missingInput: "You forgot to enter a new channel.",
+                invalidChannel: "You entered an invalid channel.",
+                updated: "Updated the channel to <#<ChannelID>>."
+            },
+            reportChannel: {
+                description: "Please enter a new channel...",
+                missingInput: "You forgot to enter a new channel.",
+                invalidChannel: "You entered an invalid channel.",
+                updated: "Updated the channel to <#<ChannelID>>."
             },
             autoApprove: {
                 description: "Por favor, introduzca cantidad necesaria de reacciones positivas para aprobar la sugerencia...\n\n*Introduzca -1 para deshabilitar*",
@@ -146,6 +153,14 @@ export default {
         open: "Abierta",
         approved: "Aprovada",
         rejected: "Rechazada"
-    }
+    },
+
+    /*
+     * Reports part
+     *
+     * Words associated with reports are stated below
+     */
+    open: "Open",
+    resolved: "Resolved"
 
 }

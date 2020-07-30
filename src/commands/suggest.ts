@@ -26,10 +26,10 @@ export default class SuggestCommand implements ICommand {
 
         const pgClient = await pgPool.connect();
 
-        const res = await pgClient.query('SELECT channel FROM servers WHERE id = $1::text', [message.guild.id]);
+        const res = await pgClient.query('SELECT suggestion_channel FROM servers WHERE id = $1::text', [message.guild.id]);
         if (res.rows.length === 0) return;
 
-        const channel: TextChannel = message.guild.channels.cache.get(res.rows[0].channel) as TextChannel;
+        const channel: TextChannel = message.guild.channels.cache.get(res.rows[0].suggestion_channel) as TextChannel;
         if (!channel) {
             message.channel.send({
                 embed: new MessageEmbed()
