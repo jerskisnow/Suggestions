@@ -93,6 +93,13 @@ export default {
             description: "**Beschrijving:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
             sent: "Uw suggestie is succesvol aangemaakt! ([Klik hier](<Url>))"
         },
+        report: {
+            title: "Suggestions - Report",
+            invalidChannel: "Please make sure that the owner of the server configured the bot properly.",
+            descriptionRequired: "Please fill in a description.",
+            description: "**Description:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
+            sent: "Your report was succesfully sent."
+        },
         approve: {
             title: "Suggestions - Goedkeuren",
             descriptionRequired: "Gelieve een geldige suggestie id in te vullen.",
@@ -128,6 +135,8 @@ export default {
         reportbug: {
             title: "Suggestions - Reportbug",
             descriptionRequired: "Geef een beschrijving van de gevonden bug.",
+            confirmation: "Are you sure you want to report the bug to the developers of the bot?",
+            cancelled: "Successfully cancelled the bug report.",
             sent: "Je bugrapport is onderweg naar de ontwikkelaars van de bot.\n\n*Bedankt voor het indienen!*"
         },
         premium: {
@@ -160,7 +169,9 @@ export default {
      *
      * Words associated with reports are stated below
      */
-    open: "Open",
-    resolved: "Resolved"
+    reports: {
+        open: "Open",
+        resolved: "Resolved"
+    }
 
 }

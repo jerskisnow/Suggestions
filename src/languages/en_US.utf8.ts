@@ -105,21 +105,28 @@ export default {
             invalidChannel: "Please make sure that the owner of the server configured the bot properly.",
             descriptionRequired: "Please give a description of the idea you want to suggest.",
             description: "**Description:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
-            sent: "Succesfully created your suggestion! ([Click here](<Url>))"
+            sent: "Successfully created your suggestion! ([Click here](<Url>))"
+        },
+        report: {
+            title: "Suggestions - Report",
+            invalidChannel: "Please make sure that the owner of the server configured the bot properly.",
+            descriptionRequired: "Please fill in a description.",
+            description: "**Description:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
+            sent: "Your report was successfully sent."
         },
         approve: {
             title: "Suggestions - Approve",
             descriptionRequired: "Please fill in an valid suggestion id.",
             invalidInput: "You filled in an invalid suggestion id.",
             noSuggestionsFound: "I couldn't find any approvable suggestions.",
-            approved: "I've successfully completed the approval."
+            approved: "I successfully completed the approval."
         },
         reject: {
             title: "Suggestions - Reject",
             descriptionRequired: "Please fill in an valid suggestion id.",
             invalidInput: "You filled in an invalid suggestion id.",
             noSuggestionsFound: "I couldn't find any rejectable suggestions.",
-            rejected: "I've successfully completed the rejection."
+            rejected: "I successfully completed the rejection."
         },
         list: {
             title: "Suggestions - List",
@@ -142,6 +149,8 @@ export default {
         reportbug: {
             title: "Suggestions - Reportbug",
             descriptionRequired: "Please give a description of the bug you found.",
+            confirmation: "Are you sure you want to report the bug to the developers of the bot?",
+            cancelled: "Successfully cancelled the bug report.",
             sent: "Your bugreport is on its way to the developers of the bot.\n\n*Thanks for submitting!*"
         },
         premium: {
@@ -174,7 +183,9 @@ export default {
      *
      * Words associated with reports are stated below
      */
-    open: "Open",
-    resolved: "Resolved"
+    reports: {
+        open: "Open",
+        resolved: "Resolved"
+    }
 
 }

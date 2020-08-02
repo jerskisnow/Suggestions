@@ -1,5 +1,5 @@
 import ICommand from '../structures/ICommand';
-import { Client, Message, MessageEmbed } from 'discord.js';
+import { Client, Message, MessageEmbed, MessageReaction, User } from 'discord.js';
 
 export default class VoteCommand implements ICommand {
 
@@ -18,9 +18,39 @@ export default class VoteCommand implements ICommand {
                 .setFooter(process.env.EMBED_FOOTER)
         });
 
-        // TODO: Make an await message to ask if they want to report something about the bot, otherwise tell them they need to use the report command
+        const msg = await message.channel.send({
+            embed: new MessageEmbed()
+                .setAuthor(language.commands.config.title, client.user.avatarURL())
+                .setColor(process.env.EMBED_COLOR)
+                .setDescription(language.commands.reportbug.confirmation)
+                .setTimestamp()
+                .setFooter(process.env.EMBED_FOOTER)
+        });
 
-        message.channel.send({
+        await msg.react('☑️');
+        await msg.react('❌');
+
+        const filter = (reaction: MessageReaction, user: User) => ['☑️', '❌'].includes(reaction.emoji.name) && user.id === message.author.id;
+        const msgReactions = await msg.awaitReactions(filter, {
+            max: 1,
+            time: 50000
+        });
+
+        await msg.reactions.removeAll();
+
+        if (!msgReactions.first()) {
+            await msg.edit({
+                embed: new MessageEmbed()
+                .setAuthor(language.commands.config.title, client.user.avatarURL())
+                .setColor(process.env.EMBED_COLOR)
+                .setDescription(language.commands.reportbug.cancelled)
+                .setTimestamp()
+                .setFooter(process.env.EMBED_FOOTER)
+            });
+            return;
+        }
+
+        await msg.edit({
             embed: new MessageEmbed()
                 .setAuthor(language.commands.reportbug.title, client.user.avatarURL())
                 .setColor(process.env.EMBED_COLOR)

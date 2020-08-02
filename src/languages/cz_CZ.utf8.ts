@@ -93,6 +93,13 @@ export default {
             description: "**Popis:** <Description>\n\n**Stav:** <Status>\n**ID:** <ID>",
             sent: "Tvůj návrh byl úspěšně vytvořen! ([→ Tady je tvůj návrh ←](<Url>))"
         },
+        report: {
+            title: "Suggestions - Report",
+            invalidChannel: "Please make sure that the owner of the server configured the bot properly.",
+            descriptionRequired: "Please fill in a description.",
+            description: "**Description:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
+            sent: "Your report was succesfully sent."
+        },
         approve: {
             title: "Suggestions - Schválit návrh",
             descriptionRequired: "Vyplň prosím platné ID návrhu.",
@@ -128,6 +135,8 @@ export default {
         reportbug: {
             title: "Suggestions - Náhlášení chyby",
             descriptionRequired: "Uveď prosím popis chyby, kterou jste našli.",
+            confirmation: "Are you sure you want to report the bug to the developers of the bot?",
+            cancelled: "Successfully cancelled the bug report.",
             sent: "Tvoje nahlašní bugu je na cestě developerům bota.\n\n*Děkujeme za odeslání!*"
         },
         premium: {
@@ -160,7 +169,8 @@ export default {
      *
      * Words associated with reports are stated below
      */
-    open: "Open",
-    resolved: "Resolved"
-
+    reports: {
+        open: "Open",
+        resolved: "Resolved"
+    }
 }

@@ -93,6 +93,13 @@ export default {
             description: "**Описание:** <Description>\n\n**Статус:** <Status>\n**ID:** <ID>",
             sent: "Предложение успешно добавлено! ([Нажать](<Url>))"
         },
+        report: {
+            title: "Suggestions - Report",
+            invalidChannel: "Please make sure that the owner of the server configured the bot properly.",
+            descriptionRequired: "Please fill in a description.",
+            description: "**Description:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
+            sent: "Your report was succesfully sent."
+        },
         approve: {
             title: "Suggestions - Одобрение",
             descriptionRequired: "Пожалуйста напишите ID предложения.",
@@ -128,6 +135,8 @@ export default {
         reportbug: {
             title: "Suggestions - Reportbug",
             descriptionRequired: "Пожалуйста, опишите что за баг вы нашли.",
+            confirmation: "Are you sure you want to report the bug to the developers of the bot?",
+            cancelled: "Successfully cancelled the bug report.",
             sent: "Репорт отправлен разработчикам.\n\n*Спасибо за письмо!*"
         },
         premium: {
@@ -160,7 +169,9 @@ export default {
      *
      * Words associated with reports are stated below
      */
-    open: "Open",
-    resolved: "Resolved"
+    reports: {
+        open: "Open",
+        resolved: "Resolved"
+    }
 
 }
