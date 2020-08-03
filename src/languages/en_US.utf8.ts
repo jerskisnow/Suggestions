@@ -2,7 +2,7 @@
  * Language: Portuguese (pt_BR)
  * Date: 07/03/2020 (MM/DD/YYYY)
  *
- * Translation by Sordinni (CodedSnow)
+ * Translation by Sordinni#6464
  */
 export default {
 
@@ -13,7 +13,7 @@ export default {
      * are stated below
      */
     insufficientPermissions: "Você não tem permissão pra usar este comando! (<Permission> is required)",
-    errorTitle: "Sugestão - Erro",
+    errorTitle: "Suggestions - Erro",
     activeCooldown: "Você não pode usar esse comando devido a um cooldown.",
     premiumFeature: "Este comando é apenas para servidores premium (`<Prefix>premium`)",
 
@@ -24,7 +24,7 @@ export default {
      */
     commands: {
         config: {
-            title: "Sugestões - Config",
+            title: "Suggestions - Config",
             names: {
                 prefix: "Prefixo",
                 language: "Idioma",
@@ -87,53 +87,53 @@ export default {
             }
         },
         suggest: {
-            title: "Suggestion - Sugerir",
+            title: "Suggestions - Sugerir",
             invalidChannel: "Verifique se o dono do servidor configurou o bot corretamente.",
             descriptionRequired: "Qual será a descrição da sua sugestão?",
             description: "**Descrição:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
             sent: "Sugestão enviada! ([clique aqui](<Url>))"
         },
         report: {
-            title: "Suggestion - Relatório",
+            title: "Suggestions - Relatório",
             invalidChannel: "Verifique se o dono do servidor configurou o bot corretamente.",
             descriptionRequired: "Por favor, crie uma descrição.",
             description: "**Descrição:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
             sent: "Seu relatório foi enviado com sucesso."
         },
         approve: {
-            title: "Suggestion - Aprovar",
+            title: "Suggestions - Aprovar",
             descriptionRequired: "Ponha o ID válido da sugestão.",
             invalidInput: "Você preencheu um ID de sugestão inválido.",
             noSuggestionsFound: "Não encontrei sugestões a serem aprovadas.",
             approved: "Eu completei a aprovação com sucesso."
         },
         reject: {
-            title: "Suggestion - Rejeitar",
+            title: "Suggestions - Rejeitar",
             descriptionRequired: "Ponha o ID válido da sugestão.",
             invalidInput: "Você preencheu um ID de sugestão inválido.",
             noSuggestionsFound: "Não encontrei sugestões a serem descartadas.",
             rejected: "Eu completei com sucesso a rejeição."
         },
         list: {
-            title: "Suggestion - Listas",
+            title: "Suggestions - Listas",
             noSuggestions: "Não há sugestões abertas para esta guild.",
             description: "Você pode ver todas as sugestões abertas logo abaixo.",
             suggestionDescription: "**Descrição:** <Description>\n**ID:** <ID>\n**Link:** [clique aqui](<Url>)"
         },
         uptime: {
-            title: "Suggestion - Tempo de atividade",
+            title: "Suggestions - Tempo de atividade",
             description: "Estive online por <Days> dias, <Hours> horas, <Minutes> minutos e <Seconds> segundos!"
         },
         help: {
-            title: "Suggestion - Ajuda",
+            title: "Suggestions - Ajuda",
             commandTitle: "Comando Ajudar",
             serverTitle: "Servidor de Suporte"
         },
         vote: {
-            title: "Suggestion - Votação"
+            title: "Suggestions - Votação"
         },
         reportbug: {
-            title: "Suggestion - Reportar bug",
+            title: "Suggestions - Reportar bug",
             descriptionRequired: "Por favor, descreva o bug que você encontrou.",
             confirmation: "Tem certeza de que deseja relatar o bug aos desenvolvedores?",
             cancelled: "O relatório do bug foi cancelado com sucesso.",
@@ -146,7 +146,7 @@ export default {
             perksDescription: "1. Acesso antecipado aos recursos beta.\n2. Prioridade no Suporte.\n3. Um cargo premium no servidor de Discord CodedSnow."
         },
         translation: {
-            title: "Suggestion - Tradução",
+            title: "Suggestions - Tradução",
             description: "Se você deseja alterar o idioma da sugestão, use `<Prefix>config`.\n\nPara informações adicionais, clique abaixo.",
             contributeTitle: "Contribuir",
             contributeDescription: "Estamos sempre procurando pessoas para traduzir nosso bot. Se você deseja traduzir o bot em um idioma ou se deseja fazer alterações em um, leia as instruções sobre tradução[github page](https://github.com/jerskisnow/Suggestions/tree/dev)."
