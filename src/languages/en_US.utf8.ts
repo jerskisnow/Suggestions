@@ -1,22 +1,8 @@
 /**
- * PLEASE MAKE SURE THAT:
- *  - You read the instruction for translation in the readme.md file.
- *  - You speak the language you want to translate to fluently, since translation programs are NOT allowed.
- *  - You now how to use git / github and how to contribute to the project.
- *  - You are on the 'dev' branch.
+ * Language: Portuguese (pt_BR)
+ * Date: 07/03/2020 (MM/DD/YYYY)
  *
- * FURTHER INFORMATION:
- *  - You may put the language after 'Language: '
- *  - You may put the date after 'Date: ', keep in mind that the regular format is month/day/year
- *  - You may put your name after the 'Translation by' part.
- *  - You can join our discord (https://discord.gg/3SYg3M5) if you have any questions.
- */
-
-/**
- * Language: English (en_US)
- * Date: 03/07/2020 (MM/DD/YYYY)
- *
- * Translation by jerskisnow (CodedSnow)
+ * Translation by Sordinni (CodedSnow)
  */
 export default {
 
@@ -26,10 +12,10 @@ export default {
      * Often used messages which are not necessarily associated with a specific function / implementation
      * are stated below
      */
-    insufficientPermissions: "You don't have permission to use that command! (<Permission> is required)",
-    errorTitle: "Suggestions - Error",
-    activeCooldown: "You cannot use that command due to an active cooldown.",
-    premiumFeature: "This command is only usable for premium servers (`<Prefix>premium`)",
+    insufficientPermissions: "Você não tem permissão pra usar este comando! (<Permission> is required)",
+    errorTitle: "Sugestão - Erro",
+    activeCooldown: "Você não pode usar esse comando devido a um cooldown.",
+    premiumFeature: "Este comando é apenas para servidores premium (`<Prefix>premium`)",
 
     /**
      * Commands part
@@ -38,132 +24,132 @@ export default {
      */
     commands: {
         config: {
-            title: "Suggestions - Config",
+            title: "Sugestões - Config",
             names: {
-                prefix: "Prefix",
-                language: "Language",
-                suggestionChannel: "Suggestion Channel",
-                reportChannel: "Report Channel",
-                autoApprove: "Auto approve",
-                autoReject: "Auto reject",
-                deleteApproved: "Delete approved",
-                deleteRejected: "Delete rejected"
+                prefix: "Prefixo",
+                language: "Idioma",
+                suggestionChannel: "Canal de sugestões",
+                reportChannel: "Canal de report",
+                autoApprove: "Aprovação automática",
+                autoReject: "Rejeição automática",
+                deleteApproved: "Deletar aprovadas",
+                deleteRejected: "Deletar rejeitadas"
             },
             prefix: {
-                description: "Please enter a new prefix...",
-                missingInput: "You forgot to enter a new prefix.",
-                updated: "Updated the prefix to ``<Prefix>``."
+                description: "Digite um novo prefixo...",
+                missingInput: "Você esqueceu de digitar o prefixo.",
+                updated: "Prefixo atualizado para ``<Prefix>``."
             },
             language: {
-                description: "Please enter a new language...",
-                availableTitle: "Available languages",
-                missingInput: "You forgot to enter a new language.",
-                invalidLanguage: "Suggestions is not available in that language.",
-                updated: "Updated the language to ``<Language>``."
+                description: "Por favor, escolha um idioma...",
+                availableTitle: "Idiomas disponíveis",
+                missingInput: "Você esqueceu de escolher o idioma",
+                invalidLanguage: "As sugestões não estão disponíveis nesse idioma.",
+                updated: "Idioma foi atualizado para ``<Language>``."
             },
             suggestionChannel: {
-                description: "Please enter a new channel...",
-                missingInput: "You forgot to enter a new channel.",
-                invalidChannel: "You entered an invalid channel.",
-                updated: "Updated the channel to <#<ChannelID>>."
+                description: "Por favor, marque um canal...",
+                missingInput: "Você esqueceu de marcar um canal.",
+                invalidChannel: "Opa! Canal inválido!",
+                updated: "Canal foi atualizado para <#<ChannelID>>."
             },
             reportChannel: {
-                description: "Please enter a new channel...",
-                missingInput: "You forgot to enter a new channel.",
-                invalidChannel: "You entered an invalid channel.",
-                updated: "Updated the channel to <#<ChannelID>>."
+                description: "Por favor, marque um canal...",
+                missingInput: "Você esqueceu de marcar um canal.",
+                invalidChannel: "Opa! Canal inválido.",
+                updated: "Canal foi atualizado para <#<ChannelID>>."
             },
             autoApprove: {
-                description: "Please enter the required amount of positive reactions to approve a suggestion...\n\n*Enter -1 to disable*",
-                missingInput: "You forgot to enter a number of required reactions.",
-                invalidNumber: "That is not a valid number.",
-                numberIsTooLow: "The number should be -1 or higher.",
-                updated: "The amount of required positive reactions for auto approval is now ``<Number>``."
+                description: "Digite a quantidade exata de reações positivas para aprovar uma sugestão ...\n\n*Mande -1 para desativar*",
+                missingInput: "Você esqueceu de digitar um número exato.",
+                invalidNumber: "Ei, isso não é um número!.",
+                numberIsTooLow: "O número tem que ser maior que -1.",
+                updated: "A quantidade de reações positivas para a auto-aprovação agora é ``<Number>``."
             },
             autoReject: {
-                description: "Please enter the required amount of negative reactions to reject a suggestion...\n\n*Enter -1 to disable*",
-                missingInput: "You forgot to enter a number of required reactions.",
-                invalidNumber: "That is not a valid number.",
-                numberIsTooLow: "The number should be -1 or higher.",
-                updated: "The amount of required negative reactions for auto rejection is now ``<Number>``."
+                description: "Digite a quantidade de reações negativas para rejeitar uma sugestão\n\n*Mande -1 pra desativar*",
+                missingInput: "Ei, esqueceu de digitar o número!.",
+                invalidNumber: "Isso é um número?.",
+                numberIsTooLow: "O número tem que ser maior que -1.",
+                updated: "A quantidade de reações negativas para a auto-rejeição agora é ``<Number>``."
             },
             deleteApproved: {
-                description: "Please enter either **on** or **off**...",
-                missingInput: "You forgot to enter either on or off.",
-                invalidInput: "You can only choose between **on** and **off**.",
-                updated: "Approved suggestions will now be deleted automatically."
+                description: "Por favor, digite **on** ou **off**...",
+                missingInput: "Você esqueceu de ativar ou desativar.",
+                invalidInput: "Você só pode escolher entre **on** ou **off**.",
+                updated: "Sugestões aprovadas serão agora deletadas automaticamente."
             },
             deleteRejected: {
-                description: "Please enter either **on** or **off**...",
-                missingInput: "You forgot to enter either on or off.",
-                invalidInput: "You can only choose between **on** and **off**.",
-                updated: "Rejected suggestions will now be deleted automatically."
+                description: "Por favor, digite **on** ou **off**...",
+                missingInput: "Você esqueceu de ativar ou desativar.",
+                invalidInput: "Você só pode escolher entre **on** ou **off**.",
+                updated: "Sugestões rejeitadas serão agora deletadas automaticamente."
             }
         },
         suggest: {
-            title: "Suggestions - Suggest",
-            invalidChannel: "Please make sure that the owner of the server configured the bot properly.",
-            descriptionRequired: "Please give a description of the idea you want to suggest.",
-            description: "**Description:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
-            sent: "Successfully created your suggestion! ([Click here](<Url>))"
+            title: "Suggestion - Sugerir",
+            invalidChannel: "Verifique se o dono do servidor configurou o bot corretamente.",
+            descriptionRequired: "Qual será a descrição da sua sugestão?",
+            description: "**Descrição:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
+            sent: "Sugestão enviada! ([clique aqui](<Url>))"
         },
         report: {
-            title: "Suggestions - Report",
-            invalidChannel: "Please make sure that the owner of the server configured the bot properly.",
-            descriptionRequired: "Please fill in a description.",
-            description: "**Description:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
-            sent: "Your report was successfully sent."
+            title: "Suggestion - Relatório",
+            invalidChannel: "Verifique se o dono do servidor configurou o bot corretamente.",
+            descriptionRequired: "Por favor, crie uma descrição.",
+            description: "**Descrição:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
+            sent: "Seu relatório foi enviado com sucesso."
         },
         approve: {
-            title: "Suggestions - Approve",
-            descriptionRequired: "Please fill in an valid suggestion id.",
-            invalidInput: "You filled in an invalid suggestion id.",
-            noSuggestionsFound: "I couldn't find any approvable suggestions.",
-            approved: "I successfully completed the approval."
+            title: "Suggestion - Aprovar",
+            descriptionRequired: "Ponha o ID válido da sugestão.",
+            invalidInput: "Você preencheu um ID de sugestão inválido.",
+            noSuggestionsFound: "Não encontrei sugestões a serem aprovadas.",
+            approved: "Eu completei a aprovação com sucesso."
         },
         reject: {
-            title: "Suggestions - Reject",
-            descriptionRequired: "Please fill in an valid suggestion id.",
-            invalidInput: "You filled in an invalid suggestion id.",
-            noSuggestionsFound: "I couldn't find any rejectable suggestions.",
-            rejected: "I successfully completed the rejection."
+            title: "Suggestion - Rejeitar",
+            descriptionRequired: "Ponha o ID válido da sugestão.",
+            invalidInput: "Você preencheu um ID de sugestão inválido.",
+            noSuggestionsFound: "Não encontrei sugestões a serem descartadas.",
+            rejected: "Eu completei com sucesso a rejeição."
         },
         list: {
-            title: "Suggestions - List",
-            noSuggestions: "There aren't any open suggestions for this guild.",
-            description: "You can view all the open suggestion right below.",
-            suggestionDescription: "**Description:** <Description>\n**ID:** <ID>\n**Link:** [Click here](<Url>)"
+            title: "Suggestion - Listas",
+            noSuggestions: "Não há sugestões abertas para esta guild.",
+            description: "Você pode ver todas as sugestões abertas logo abaixo.",
+            suggestionDescription: "**Descrição:** <Description>\n**ID:** <ID>\n**Link:** [clique aqui](<Url>)"
         },
         uptime: {
-            title: "Suggestions - Uptime",
-            description: "I've been online for <Days> days, <Hours> hours, <Minutes> minutes and <Seconds> seconds!"
+            title: "Suggestion - Tempo de atividade",
+            description: "Estive online por <Days> dias, <Hours> horas, <Minutes> minutos e <Seconds> segundos!"
         },
         help: {
-            title: "Suggestions - Help",
-            commandTitle: "Command Help",
-            serverTitle: "Support Server"
+            title: "Suggestion - Ajuda",
+            commandTitle: "Comando Ajudar",
+            serverTitle: "Servidor de Suporte"
         },
         vote: {
-            title: "Suggestions - Vote"
+            title: "Suggestion - Votação"
         },
         reportbug: {
-            title: "Suggestions - Reportbug",
-            descriptionRequired: "Please give a description of the bug you found.",
-            confirmation: "Are you sure you want to report the bug to the developers of the bot?",
-            cancelled: "Successfully cancelled the bug report.",
-            sent: "Your bugreport is on its way to the developers of the bot.\n\n*Thanks for submitting!*"
+            title: "Suggestion - Reportar bug",
+            descriptionRequired: "Por favor, descreva o bug que você encontrou.",
+            confirmation: "Tem certeza de que deseja relatar o bug aos desenvolvedores?",
+            cancelled: "O relatório do bug foi cancelado com sucesso.",
+            sent: "Seu relatório de bugs está a caminho dos desenvolvedores. \n\n*Obrigado por enviar!*"
         },
         premium: {
             title: "Suggestions - Premium",
-            description: "Whenever you buy premium you'll get access to the perks below. Premium is per server and requires a one-time payment of $2.50. This will allow our developers to continue working on Suggestions and our other projects.",
-            perksTitle: "Premium Perks",
-            perksDescription: "1. Early access to beta features.\n2. Priority support.\n3. A premium rank in the CodedSnow discord server."
+            description: "Sempre que você comprar premium, terá acesso às vantagens abaixo. O Premium é por servidor e exige um pagamento único de US $ 2,50 (R$13,05). Isso permitirá que nossos desenvolvedores continuem trabalhando nas sugestões e nas nossas",
+            perksTitle: "Vantagens premium",
+            perksDescription: "1. Acesso antecipado aos recursos beta.\n2. Prioridade no Suporte.\n3. Um cargo premium no servidor de Discord CodedSnow."
         },
         translation: {
-            title: "Suggestions - Translation",
-            description: "If you're looking for changing Suggestion's language, please use `<Prefix>config`.\n\nFor more information about contributing a language please read the field below.",
-            contributeTitle: "Contribute",
-            contributeDescription: "We are always looking for people to translate our bot. If you would like the translate the bot in a language or if you want to make changes to a language please read the instructions about translating over on our [github page](https://github.com/jerskisnow/Suggestions/tree/dev)."
+            title: "Suggestion - Tradução",
+            description: "Se você deseja alterar o idioma da sugestão, use `<Prefix>config`.\n\nPara informações adicionais, clique abaixo.",
+            contributeTitle: "Contribuir",
+            contributeDescription: "Estamos sempre procurando pessoas para traduzir nosso bot. Se você deseja traduzir o bot em um idioma ou se deseja fazer alterações em um, leia as instruções sobre tradução[github page](https://github.com/jerskisnow/Suggestions/tree/dev)."
         }
     },
 
@@ -173,9 +159,9 @@ export default {
      * Words associated with suggestions are stated below
      */
     suggestions: {
-        open: "Open",
-        approved: "Approved",
-        rejected: "Rejected"
+        open: "Aberta",
+        approved: "Aprovada",
+        rejected: "Rejeitada"
     },
 
     /*
@@ -184,8 +170,8 @@ export default {
      * Words associated with reports are stated below
      */
     reports: {
-        open: "Open",
-        resolved: "Resolved"
+        open: "Aberto",
+        resolved: "Resolvido"
     }
 
 }
