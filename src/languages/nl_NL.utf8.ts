@@ -31,7 +31,7 @@ export default {
                 suggestionChannel: "Suggestion Channel",
                 reportChannel: "Report Channel",
                 autoApprove: "Auto goedkeuring",
-                autoReject: "Auto afkeuring",
+                autoReject: "Auto afwijzing",
                 deleteApproved: "Verwijder goedgekeurd",
                 deleteRejected: "Verwijder afgekeurd"
             },
@@ -67,23 +67,25 @@ export default {
                 updated: "De hoeveelheid vereiste positieve reacties voor de automatische goedkeuring is nu ``<Number>``."
             },
             autoReject: {
-                description: "Voer de vereiste hoeveelheid negatieve reacties in om een suggestie af te keuren...\n\n*Voer -1 in om uit te schakelen*",
+                description: "Voer de vereiste hoeveelheid negatieve reacties in om een suggestie af te wijzen...\n\n*Voer -1 in om uit te schakelen*",
                 missingInput: "U bent vergeten een aantal vereiste reacties in te voeren.",
                 invalidNumber: "Dat is geen geldig getal.",
                 numberIsTooLow: "Het getal moet -1 of hoger zijn.",
-                updated: "De hoeveelheid vereiste negatieve reacties voor automatische afkeuring is nu ``<Number>``."
+                updated: "De hoeveelheid vereiste negatieve reacties voor automatische afwijzing is nu ``<Number>``."
             },
             deleteApproved: {
                 description: "Voer **on** of **off** in...",
                 missingInput: "Je bent vergeten om on of off in te vullen.",
                 invalidInput: "Je kan alleen kiezen tussen **on** en **off**.",
-                updated: "Goedgekeurde suggesties worden nu automatisch verwijderd."
+                updatedEnabled: "Goedgekeurde suggesties worden vanaf nu automatisch verwijderd.",
+                updatedDisabled: "Goedgekeurde suggesties worden vanaf nu niet meer automatisch verwijderd."
             },
             deleteRejected: {
                 description: "Voer **on** of **off** in...",
                 missingInput: "Je bent vergeten om on of off in te vullen.",
                 invalidInput: "Je kan alleen kiezen tussen **on** en **off**.",
-                updated: "Afgekeurde suggesties worden nu automatisch verwijderd."
+                updatedEnabled: "Afgewezen suggesties worden vanaf nu automatisch verwijderd.",
+                updatedDisabled: "Afgewezen suggesties worden vanaf nu niet meer automatisch verwijderd."
             }
         },
         suggest: {
@@ -108,11 +110,11 @@ export default {
             approved: "Ik heb de goedkeuring succesvol afgerond."
         },
         reject: {
-            title: "Suggestions - Afkeuren",
+            title: "Suggestions - Afwijzen",
             descriptionRequired: "Gelieve een geldige suggestie id in te vullen.",
             invalidInput: "Je hebt een ongeldige suggestie id ingevuld.",
-            noSuggestionsFound: "Ik kon geen afkeurbare suggesties vinden.",
-            approved: "Ik heb de afkeuring succesvol afgerond."
+            noSuggestionsFound: "Ik kon geen afwijsbare suggesties vinden.",
+            approved: "Ik heb de afwijzing succesvol afgerond."
         },
         list: {
             title: "Suggestions - Lijst",

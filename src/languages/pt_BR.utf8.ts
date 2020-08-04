@@ -77,13 +77,15 @@ export default {
                 description: "Por favor, digite **on** ou **off**...",
                 missingInput: "Você esqueceu de ativar ou desativar.",
                 invalidInput: "Você só pode escolher entre **on** ou **off**.",
-                updated: "Sugestões aprovadas serão agora deletadas automaticamente."
+                updatedEnabled: "Approved suggestions will now automatically deleted from now on.",
+                updatedDisabled: "Approved suggestions won't be automatically deleted from now on."
             },
             deleteRejected: {
                 description: "Por favor, digite **on** ou **off**...",
                 missingInput: "Você esqueceu de ativar ou desativar.",
                 invalidInput: "Você só pode escolher entre **on** ou **off**.",
-                updated: "Sugestões rejeitadas serão agora deletadas automaticamente."
+                updatedEnabled: "Rejected suggestions will now automatically deleted from now on.",
+                updatedDisabled: "Rejected suggestions won't be automatically deleted from now on."
             }
         },
         suggest: {

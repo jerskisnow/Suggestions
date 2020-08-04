@@ -77,13 +77,15 @@ export default {
                 description: "Пожалуйста введите **on** или **off**...",
                 missingInput: "Вы забыли написать on или off.",
                 invalidInput: "Вы можете выбрать только между **on** и **off**.",
-                updated: "Одобренные предложения будет удалены автоматически."
+                updatedEnabled: "Approved suggestions will now automatically deleted from now on.",
+                updatedDisabled: "Approved suggestions won't be automatically deleted from now on."
             },
             deleteRejected: {
                 description: "Пожалуста напишите **on** или **off**...",
                 missingInput: "Вы забыли написать on или off.",
                 invalidInput: "Вы можете выбрать только между **on** и **off**.",
-                updated: "Отказанные предложения будут удалены автоматически."
+                updatedEnabled: "Rejected suggestions will now automatically deleted from now on.",
+                updatedDisabled: "Rejected suggestions won't be automatically deleted from now on."
             }
         },
         suggest: {

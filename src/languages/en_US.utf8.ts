@@ -91,13 +91,15 @@ export default {
                 description: "Please enter either **on** or **off**...",
                 missingInput: "You forgot to enter either on or off.",
                 invalidInput: "You can only choose between **on** and **off**.",
-                updated: "Approved suggestions will now be deleted automatically."
+                updatedEnabled: "Approved suggestions will now automatically deleted from now on.",
+                updatedDisabled: "Approved suggestions won't be automatically deleted from now on."
             },
             deleteRejected: {
                 description: "Please enter either **on** or **off**...",
                 missingInput: "You forgot to enter either on or off.",
                 invalidInput: "You can only choose between **on** and **off**.",
-                updated: "Rejected suggestions will now be deleted automatically."
+                updatedEnabled: "Rejected suggestions will now automatically deleted from now on.",
+                updatedDisabled: "Rejected suggestions won't be automatically deleted from now on."
             }
         },
         suggest: {

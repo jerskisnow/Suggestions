@@ -77,13 +77,15 @@ export default {
                 description: "Zadej prosím **on** nebo **off**...",
                 missingInput: "Zapomněl jsi napsat jestli se mají mazat schválené návrhy na zapnuto nebo vypnuto.",
                 invalidInput: "Na výběr je jenom **on** a **off**.",
-                updated: "Schválené návrhy budou nyní automaticky odstraněny."
+                updatedEnabled: "Approved suggestions will now automatically deleted from now on.",
+                updatedDisabled: "Approved suggestions won't be automatically deleted from now on."
             },
             deleteRejected: {
                 description: "Zadej prosím **on** nebo **off**...",
                 missingInput: "Zapomněl jsi napsat jestli se mají mazat neschválené návrhy na zapnuto nebo vypnuto.",
                 invalidInput: "Na výběr je jenom **on** a **off**.",
-                updated: "Odmítnuté návrhy budou nyní automaticky odstraněny."
+                updatedEnabled: "Rejected suggestions will now automatically deleted from now on.",
+                updatedDisabled: "Rejected suggestions won't be automatically deleted from now on."
             }
         },
         suggest: {
