@@ -1,7 +1,7 @@
 import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed } from 'discord.js';
 
-import { getGuildSetting } from '../structures/CacheManager';
+import { get } from '../structures/CacheManager';
 import { cmdMap } from '../structures/CMDMap';
 
 export default class HelpCommand implements ICommand {
@@ -12,10 +12,12 @@ export default class HelpCommand implements ICommand {
 
     async run(client: Client, message: Message, language: any) {
 
+        const prefix = await get(message.guild.id, 'prefix') as string;
+
         const stringArray: string[] = [];
 
         for (let cmd of Array.from(cmdMap.keys())) {
-            stringArray.push(getGuildSetting(message.guild.id, 'prefix') + cmd + " >> " + cmdMap.get(cmd).help());
+            stringArray.push(prefix + cmd + " >> " + cmdMap.get(cmd).help());
         }
 
         message.channel.send({

@@ -13,11 +13,13 @@ export default async (client: Client, message: Message) => {
     // If the message is not in a guild, return
     if (!message.guild) return;
 
-    if (!exists(message.guild.id)) {
+    const bool = await exists(message.guild.id);
+    if (!bool) {
         await cache(message.guild.id);
     }
 
     let prefix = await get(message.guild.id, 'prefix') as string;
+    console.log(prefix)
 
     // Check if the message contains the prefix
     if (message.content.startsWith(prefix) || message.content.startsWith(`<@${client.user.id}> `)) {
