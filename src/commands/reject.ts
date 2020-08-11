@@ -85,7 +85,7 @@ export default class RejectCommand implements ICommand {
                         .setFooter(process.env.EMBED_FOOTER)
                 });
 
-                await pgClient.release();
+                pgClient.release();
 
                 return;
             }

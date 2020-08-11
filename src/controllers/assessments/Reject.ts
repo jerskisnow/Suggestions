@@ -15,7 +15,7 @@ export default async (client: Client, msg: Message, language: any) => {
 	const result = await pgClient.query('SELECT id, context, author, status FROM suggestions WHERE message = $1::text', [msg.id]);
 
 	if (!result.rows.length || result.rows[0].status !== 'Open') {
-		await pgClient.release();
+		pgClient.release();
 		return;
 	}
 
@@ -56,6 +56,6 @@ export default async (client: Client, msg: Message, language: any) => {
 
 	}
 
-	await pgClient.release();
+	pgClient.release();
 
 }

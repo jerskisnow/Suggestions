@@ -26,10 +26,10 @@ export default class SuggestCommand implements ICommand {
 
         const pgClient = await pgPool.connect();
 
-        const res = await pgClient.query('SELECT suggestion_channel FROM servers WHERE id = $1::text', [message.guild.id]);
+        const res = await pgClient.query('SELECT channel FROM servers WHERE id = $1::text', [message.guild.id]);
         if (res.rows.length === 0) return;
 
-        const channel: TextChannel = message.guild.channels.cache.get(res.rows[0].suggestion_channel) as TextChannel;
+        const channel: TextChannel = message.guild.channels.cache.get(res.rows[0].channel) as TextChannel;
         if (!channel) {
             message.channel.send({
                 embed: new MessageEmbed()
@@ -40,7 +40,7 @@ export default class SuggestCommand implements ICommand {
                     .setFooter(process.env.EMBED_FOOTER)
             });
 
-            await pgClient.release();
+            pgClient.release();
 
             return;
         }
@@ -55,7 +55,7 @@ export default class SuggestCommand implements ICommand {
                     .setFooter(process.env.EMBED_FOOTER)
             });
 
-            await pgClient.release();
+            pgClient.release();
 
             return;
         }
@@ -99,7 +99,7 @@ export default class SuggestCommand implements ICommand {
 
         await pgClient.query('INSERT INTO suggestions (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::text)', [desc, message.author.id, message.guild.id, channel.id, msg.id, 'Open']);
 
-        await pgClient.release();
+        pgClient.release();
     }
 
     help() {

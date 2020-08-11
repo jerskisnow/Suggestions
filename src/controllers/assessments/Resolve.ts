@@ -9,7 +9,7 @@ export default async (client: Client, msg: Message, language: any) => {
     const result = await pgClient.query('SELECT id, context, author, status FROM suggestions WHERE message = $1::text', [msg.id]);
 
     if (!result.rows.length || result.rows[0].status === 'Resolved') {
-        await pgClient.release();
+        pgClient.release();
         return;
     }
 
@@ -43,6 +43,6 @@ export default async (client: Client, msg: Message, language: any) => {
 
     await pgClient.query('UPDATE reports SET status = $1::text WHERE message = $2::text', ['Resolved', msg.id]);
 
-    await pgClient.release();
+    pgClient.release();
 
 }
