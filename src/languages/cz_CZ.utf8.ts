@@ -116,6 +116,13 @@ export default {
             noSuggestionsFound: "Nemohl jsem najít žádné schválitelné návrhy.",
             rejected: "Tento návrh byl právě zamítnut."
         },
+        resolve: {
+            title: "Suggestions - Resolve",
+            descriptionRequired: "Please fill in an valid report id.",
+            invalidInput: "You filled in an invalid report id.",
+            noSuggestionsFound: "I couldn't find any approvable reports.",
+            resolved: "The report was successfully resolved."
+        },
         list: {
             title: "Suggestions - List",
             noSuggestions: "Na tomto serveru nejsou žádné otevřené návrhy.",

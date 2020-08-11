@@ -116,6 +116,13 @@ export default {
             noSuggestionsFound: "Ik kon geen afwijsbare suggesties vinden.",
             approved: "Ik heb de afwijzing succesvol afgerond."
         },
+        resolve: {
+            title: "Suggestions - Resolve",
+            descriptionRequired: "Please fill in an valid report id.",
+            invalidInput: "You filled in an invalid report id.",
+            noSuggestionsFound: "I couldn't find any approvable reports.",
+            resolved: "The report was successfully resolved."
+        },
         list: {
             title: "Suggestions - Lijst",
             noSuggestions: "Er zijn geen open suggesties voor deze server.",

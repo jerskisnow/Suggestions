@@ -116,6 +116,13 @@ export default {
             noSuggestionsFound: "No puedo encontrar ninguna sugerencia rechazable.",
             rejected: "He completado el rechazo correctamente."
         },
+        resolve: {
+            title: "Suggestions - Resolve",
+            descriptionRequired: "Please fill in an valid report id.",
+            invalidInput: "You filled in an invalid report id.",
+            noSuggestionsFound: "I couldn't find any approvable reports.",
+            resolved: "The report was successfully resolved."
+        },
         list: {
             title: "Suggestions - Lista",
             noSuggestions: "No hay ninguna sugerencia abierta para este servidor.",
