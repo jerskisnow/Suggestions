@@ -3,6 +3,7 @@
  * Date: 21/05/2020 (DD/MM/YYYY)
  *
  * Translation by Jarnar (Discord: Jarnar#9709)
+ * Edited by &zdarova (Discord: &zdarova#6882)
  */
 export default {
 
@@ -12,10 +13,10 @@ export default {
      * Often used messages which are not necessarily associated with a specific function / implementation
      * are stated below
      */
-    insufficientPermissions: "У тебя нет прав для использования этой команды (Тебе нужно права <Permission>)",
-    errorTitle: "Ошибка Предложения",
-    activeCooldown: "You cannot use that command due to an active cooldown.",
-    premiumFeature: "This command is only usable for premium servers (`<Prefix>premium`)",
+    insufficientPermissions: "У вас нет прав для использования этой команды (вам нужны права <Permission>)",
+    errorTitle: "Ошибка предложения",
+    activeCooldown: "Вы не можете использовать эту команду из-за активного медленного режима.",
+    premiumFeature: "Эта команда может быть использована только на премиум-серверах! (`<Prefix>premium`)",
 
     /**
      * Commands part
@@ -24,24 +25,24 @@ export default {
      */
     commands: {
         config: {
-            title: "Настройка",
+            title: "Настройки",
             names: {
                 prefix: "Префикс",
                 language: "Язык",
-                suggestionChannel: "Suggestion Channel",
-                reportChannel: "Report Channel",
+                suggestionChannel: "Канал предложений",
+                reportChannel: "Канал для жалоб",
                 autoApprove: "Авто-одобрение",
                 autoReject: "Авто-отказ",
-                deleteApproved: "Удалить одобренные",
-                deleteRejected: "Удалить откзанные"
+                deleteApproved: "Удаление одобренных",
+                deleteRejected: "Удаление откзанных"
             },
             prefix: {
-                description: "Пожалуйста напишите новый префикс...",
+                description: "Пожалуйста, напишите новый префикс...",
                 missingInput: "Вы забыли написать новый префикс.",
-                updated: "Префикс обновлён ``<Prefix>``."
+                updated: "Префикс сменен на ``<Prefix>``."
             },
             language: {
-                description: "Пожалуйста напиште какой язык вы выбрали...",
+                description: "Пожалуйста напишите, какой язык вы выбрали...",
                 availableTitle: "Доступные языки",
                 missingInput: "Вы забыли выбрать язык.",
                 invalidLanguage: "В Suggestions нету такого языка.",
@@ -60,61 +61,61 @@ export default {
                 updated: "Updated the channel to <#<ChannelID>>."
             },
             autoApprove: {
-                description: "Пожалуйста, напишите количество позитивных реакций в цифрах, для одобрения предложения...\n\n*Enter -1 to disable*",
-                missingInput: "Вы забыли написать сколько нужно реакций.",
-                invalidNumber: "Это неправильна цифра.",
+                description: "Пожалуйста, напишите количество позитивных реакций в цифрах, для одобрения предложения...\n\n*Укажите значение -1 для отключения*",
+                missingInput: "Вы забыли написать, сколько нужно реакций.",
+                invalidNumber: "Это неправильная цифра!",
                 numberIsTooLow: "Цифра должна быть -1 или выше.",
-                updated: "Количесво позитивных реакций для одобрения Предложения теперь ``<Number>``."
+                updated: "Количество позитивных реакций для одобрения предложения теперь ``<Number>``."
             },
             autoReject: {
-                description: "Пожалуйста, напишите количество негативных реакций в цифрах, для отказа предложения...\n\n*Enter -1 to disable*",
-                missingInput: "Вы забыли написать сколько нужно реакций.",
-                invalidNumber: "Это неправильна цифра",
+                description: "Пожалуйста, напишите количество негативных реакций в цифрах для отказа предложения...\n\n*Укажите значение -1 для отключения*",
+                missingInput: "Вы забыли написать, сколько нужно реакций.",
+                invalidNumber: "Это неправильная цифра!",
                 numberIsTooLow: "Цифра должна быть -1 или выше.",
-                updated: "Количесво негативных реакций для отказа Предложения теперь ``<Number>``."
+                updated: "Количество негативных реакций для отказа предложения теперь ``<Number>``."
             },
             deleteApproved: {
                 description: "Пожалуйста введите **on** или **off**...",
                 missingInput: "Вы забыли написать on или off.",
                 invalidInput: "Вы можете выбрать только между **on** и **off**.",
-                updatedEnabled: "Approved suggestions will now automatically deleted from now on.",
-                updatedDisabled: "Approved suggestions won't be automatically deleted from now on."
+                updatedEnabled: "Одобренные предложения теперь будут автоматически удаляться.",
+                updatedDisabled: "Одобренные предложения теперь не будут автоматически удаляться."
             },
             deleteRejected: {
                 description: "Пожалуста напишите **on** или **off**...",
                 missingInput: "Вы забыли написать on или off.",
                 invalidInput: "Вы можете выбрать только между **on** и **off**.",
-                updatedEnabled: "Rejected suggestions will now automatically deleted from now on.",
-                updatedDisabled: "Rejected suggestions won't be automatically deleted from now on."
+                updatedEnabled: "Отклоненные предложения теперь будут автоматически удаляться.",
+                updatedDisabled: "Отклоненные предложения теперь не будут автоматически удаляться."
             }
         },
         suggest: {
             title: "Suggestions - Предложение",
-            invalidChannel: "Убедитесь в том что Администратор сервера, настроил бота правильно!",
-            descriptionRequired:"Пожалуйста опишите свою идею!",
+            invalidChannel: "Убедитесь в том, что администратор сервера настроил бота правильно!",
+            descriptionRequired:"Пожалуйста, опишите свою идею!",
             description: "**Описание:** <Description>\n\n**Статус:** <Status>\n**ID:** <ID>",
             sent: "Предложение успешно добавлено! ([Нажать](<Url>))"
         },
         report: {
-            title: "Suggestions - Report",
-            invalidChannel: "Please make sure that the owner of the server configured the bot properly.",
-            descriptionRequired: "Please fill in a description.",
-            description: "**Description:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
-            sent: "Your report was succesfully sent."
+            title: "Suggestions - Жалоба",
+            invalidChannel: "Убедитесь в том, что администратор сервера настроил бота правильно!",
+            descriptionRequired: "Пожалуйста, заполните описание.",
+            description: "**Описание:** <Description>\n\n**Статус:** <Status>\n**ID:** <ID>",
+            sent: "Ваша жалоба была успешно отправлена."
         },
         approve: {
             title: "Suggestions - Одобрение",
             descriptionRequired: "Пожалуйста напишите ID предложения.",
             invalidInput: "Вы ввели неправильный ID предложения.",
-            noSuggestionsFound: "Я не могу найти больше предложений, которые можно одобрить.",
-            approved: "Предложение Одобренно."
+            noSuggestionsFound: "Я не могу найти предложения, которые можно одобрить.",
+            approved: "Предложение одобрено."
         },
         reject: {
             title: "Suggestions - Отказ",
             descriptionRequired: "Пожалуйста напишите ID предложения.",
             invalidInput: "Вы ввели неправильный ID предложения.",
-            noSuggestionsFound: "Я не могу найти больше предложений, которые можно откозать.",
-            rejected: "Предложению Отколонено/Откзано."
+            noSuggestionsFound: "Я не могу найти предложения, которые можно отклонить.",
+            rejected: "Предложение отклонено."
         },
         resolve: {
             title: "Suggestions - Resolve",
@@ -124,14 +125,14 @@ export default {
             resolved: "The report was successfully resolved."
         },
         list: {
-            title: "Suggestions - Лист",
+            title: "Suggestions - Список",
             noSuggestions: "Нет ни одно открытого предложения на сервере.",
             description: "Вы можете посмотреть все открытые предложения ниже.",
             suggestionDescription: "**Описание:** <Description>\n**ID:** <ID>\n**Ссылка:** [Нажать](<Url>)"
         },
         uptime: {
             title: "Suggestions - Время работы",
-            description: "Я в онлайнже <Days> дней, <Hours> часов, <Minutes> минут и <Seconds> секунд!"
+            description: "Я в онлайне <Days> дней, <Hours> часов, <Minutes> минут и <Seconds> секунд!"
         },
         help: {
             title: "Suggestions - Помощь",
