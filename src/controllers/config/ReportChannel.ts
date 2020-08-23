@@ -1,13 +1,13 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
 import pgPool from '../../structures/PostgreSQL';
-import { setGuildSetting } from '../../structures/CacheManager';
+import { set } from '../../structures/CacheManager';
 import Utils from '../../structures/Utils';
 
 const utils: Utils = new Utils();
 
 /**
- * The prefix controller function handles the prefix part
+ * The prefix controller function handles the reportchannel part
  * @param {Client}  client   The client supplied by discord
  * @param {Message} message  The message that was used to initiate the controller process
  * @param {Object}  language The language used on the server where the controller process got initated
@@ -20,7 +20,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
         embed: new MessageEmbed()
             .setAuthor(language.commands.config.title, client.user.avatarURL())
             .setColor(process.env.EMBED_COLOR)
-            .setDescription(language.commands.config.channel.description)
+            .setDescription(language.commands.config.reportChannel.description)
             .setTimestamp()
             .setFooter(process.env.EMBED_FOOTER)
     });
@@ -39,7 +39,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
             embed: new MessageEmbed()
                 .setAuthor(language.commands.config.title, client.user.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.config.channel.missingInput)
+                .setDescription(language.commands.config.reportChannel.missingInput)
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
@@ -71,7 +71,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
             embed: new MessageEmbed()
                 .setAuthor(language.commands.config.title, client.user.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.config.channel.invalidChannel)
+                .setDescription(language.commands.config.reportChannel.invalidChannel)
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
@@ -88,7 +88,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
         embed: new MessageEmbed()
             .setAuthor(language.commands.config.title, client.user.avatarURL())
             .setColor(process.env.EMBED_COLOR)
-            .setDescription(language.commands.config.channel.updated
+            .setDescription(language.commands.config.reportChannel.updated
                 .replace(/<ChannelID>/g, newChannelObject.id)
             )
             .setTimestamp()
@@ -98,11 +98,11 @@ export default async (client: Client, message: Message, language: any, msg: Mess
     const pgClient = await pgPool.connect();
 
     try {
-        await pgClient.query('UPDATE servers SET channel = $1::text WHERE id = $2::text', [newChannelObject.id, message.guild.id]);
+        await pgClient.query('UPDATE servers SET report_channel = $1::text WHERE id = $2::text', [newChannelObject.id, message.guild.id]);
     } finally {
         pgClient.release();
     }
 
-    setGuildSetting(message.guild.id, 'channel', newChannelObject.id);
+    await set(message.guild.id, 'report_channel', newChannelObject.id);
 
 }

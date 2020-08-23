@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
 import pgPool from '../../structures/PostgreSQL';
-import { setGuildSetting } from '../../structures/CacheManager';
+import { set } from '../../structures/CacheManager';
 import languageList from '../../structures/Languages';
 import Utils from '../../structures/Utils';
 
@@ -104,6 +104,6 @@ export default async(client: Client, message: Message, language: any, msg: Messa
         pgClient.release();
     }
 
-    setGuildSetting(message.guild.id, 'language', newLanguage);
+    await set(message.guild.id, 'language', newLanguage);
 
 }

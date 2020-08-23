@@ -1,11 +1,8 @@
 import { Guild } from 'discord.js';
 import pgPool from '../structures/PostgreSQL';
-import { guildExists, deleteGuild } from '../structures/CacheManager';
+import { exists, remove } from '../structures/CacheManager';
 
 export default async (guild: Guild) => {
-
-    if (guildExists)
-        deleteGuild(guild.id);
 
     const pgClient = await pgPool.connect();
 
@@ -14,5 +11,8 @@ export default async (guild: Guild) => {
     } finally {
         pgClient.release();
     }
+
+    if (exists(guild.id))
+        remove(guild.id);
 
 }

@@ -1,10 +1,9 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
 import pgPool from '../../structures/PostgreSQL';
-import { getGuildSetting } from '../../structures/CacheManager';
+import { get } from '../../structures/CacheManager';
 
 import DeleteController from './Delete';
-import { isNullOrUndefined } from 'util';
 
 /*
  msg -> The suggestion message
@@ -16,11 +15,13 @@ export default async (client: Client, msg: Message, language: any) => {
 	const result = await pgClient.query('SELECT id, context, author, status FROM suggestions WHERE message = $1::text', [msg.id]);
 
 	if (!result.rows.length || result.rows[0].status !== 'Open') {
-		await pgClient.release();
+		pgClient.release();
 		return;
-    }
+	}
+	
+	const deleteApproved = await get(msg.guild.id, 'delete_approved') as boolean;
 
-	if (getGuildSetting(msg.guild.id, 'delete_approved')) {
+	if (deleteApproved) {
 		DeleteController(msg);
 	} else {
 
@@ -55,6 +56,6 @@ export default async (client: Client, msg: Message, language: any) => {
 
 	}
 
-	await pgClient.release();
+	pgClient.release();
 
 }

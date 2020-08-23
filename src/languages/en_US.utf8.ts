@@ -28,6 +28,8 @@ export default {
      */
     insufficientPermissions: "You don't have permission to use that command! (<Permission> is required)",
     errorTitle: "Suggestions - Error",
+    activeCooldown: "You cannot use that command due to an active cooldown.",
+    premiumFeature: "This command is only usable for premium servers (`<Prefix>premium`)",
 
     /**
      * Commands part
@@ -40,7 +42,8 @@ export default {
             names: {
                 prefix: "Prefix",
                 language: "Language",
-                channel: "Channel",
+                suggestionChannel: "Suggestion Channel",
+                reportChannel: "Report Channel",
                 autoApprove: "Auto approve",
                 autoReject: "Auto reject",
                 deleteApproved: "Delete approved",
@@ -58,7 +61,13 @@ export default {
                 invalidLanguage: "Suggestions is not available in that language.",
                 updated: "Updated the language to ``<Language>``."
             },
-            channel: {
+            suggestionChannel: {
+                description: "Please enter a new channel...",
+                missingInput: "You forgot to enter a new channel.",
+                invalidChannel: "You entered an invalid channel.",
+                updated: "Updated the channel to <#<ChannelID>>."
+            },
+            reportChannel: {
                 description: "Please enter a new channel...",
                 missingInput: "You forgot to enter a new channel.",
                 invalidChannel: "You entered an invalid channel.",
@@ -82,13 +91,15 @@ export default {
                 description: "Please enter either **on** or **off**...",
                 missingInput: "You forgot to enter either on or off.",
                 invalidInput: "You can only choose between **on** and **off**.",
-                updated: "Approved suggestions will now be deleted automatically."
+                updatedEnabled: "Approved suggestions will now automatically deleted from now on.",
+                updatedDisabled: "Approved suggestions won't be automatically deleted from now on."
             },
             deleteRejected: {
                 description: "Please enter either **on** or **off**...",
                 missingInput: "You forgot to enter either on or off.",
                 invalidInput: "You can only choose between **on** and **off**.",
-                updated: "Rejected suggestions will now be deleted automatically."
+                updatedEnabled: "Rejected suggestions will now automatically deleted from now on.",
+                updatedDisabled: "Rejected suggestions won't be automatically deleted from now on."
             }
         },
         suggest: {
@@ -96,21 +107,35 @@ export default {
             invalidChannel: "Please make sure that the owner of the server configured the bot properly.",
             descriptionRequired: "Please give a description of the idea you want to suggest.",
             description: "**Description:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
-            sent: "Succesfully created your suggestion! ([Click here](<Url>))"
+            sent: "Successfully created your suggestion! ([Click here](<Url>))"
+        },
+        report: {
+            title: "Suggestions - Report",
+            invalidChannel: "Please make sure that the owner of the server configured the bot properly.",
+            descriptionRequired: "Please fill in a description.",
+            description: "**Description:** <Description>\n\n**Status:** <Status>\n**ID:** <ID>",
+            sent: "Your report was successfully sent."
         },
         approve: {
             title: "Suggestions - Approve",
             descriptionRequired: "Please fill in an valid suggestion id.",
             invalidInput: "You filled in an invalid suggestion id.",
             noSuggestionsFound: "I couldn't find any approvable suggestions.",
-            approved: "I've successfully completed the approval."
+            approved: "I successfully completed the approval."
         },
         reject: {
             title: "Suggestions - Reject",
             descriptionRequired: "Please fill in an valid suggestion id.",
             invalidInput: "You filled in an invalid suggestion id.",
             noSuggestionsFound: "I couldn't find any rejectable suggestions.",
-            rejected: "I've successfully completed the rejection."
+            rejected: "I successfully completed the rejection."
+        },
+        resolve: {
+            title: "Suggestions - Resolve",
+            descriptionRequired: "Please fill in an valid report id.",
+            invalidInput: "You filled in an invalid report id.",
+            noReportsFound: "I couldn't find any approvable reports.",
+            resolved: "The report was successfully resolved."
         },
         list: {
             title: "Suggestions - List",
@@ -133,7 +158,21 @@ export default {
         reportbug: {
             title: "Suggestions - Reportbug",
             descriptionRequired: "Please give a description of the bug you found.",
+            confirmation: "Are you sure you want to report the bug to the developers of the bot?",
+            cancelled: "Successfully cancelled the bug report.",
             sent: "Your bugreport is on its way to the developers of the bot.\n\n*Thanks for submitting!*"
+        },
+        premium: {
+            title: "Suggestions - Premium",
+            description: "Whenever you buy premium you'll get access to the perks below. Premium is per server and requires a one-time payment of $2.50. This will allow our developers to continue working on Suggestions and our other projects.",
+            perksTitle: "Premium Perks",
+            perksDescription: "1. Early access to beta features.\n2. Priority support.\n3. A premium rank in the CodedSnow discord server."
+        },
+        translation: {
+            title: "Suggestions - Translation",
+            description: "If you're looking for changing Suggestion's language, please use `<Prefix>config`.\n\nFor more information about contributing a language please read the field below.",
+            contributeTitle: "Contribute",
+            contributeDescription: "We are always looking for people to translate our bot. If you would like the translate the bot in a language or if you want to make changes to a language please read the instructions about translating over on our [github page](https://github.com/jerskisnow/Suggestions/tree/dev)."
         }
     },
 
@@ -146,6 +185,16 @@ export default {
         open: "Open",
         approved: "Approved",
         rejected: "Rejected"
+    },
+
+    /*
+     * Reports part
+     *
+     * Words associated with reports are stated below
+     */
+    reports: {
+        open: "Open",
+        resolved: "Resolved"
     }
 
 }

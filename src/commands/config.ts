@@ -4,7 +4,8 @@ import { Client, Message, MessageReaction, User, MessageEmbed } from 'discord.js
 // Controller imports
 import PrefixController from '../controllers/config/Prefix';
 import LanguageController from '../controllers/config/Language';
-import ChannelController from '../controllers/config/Channel';
+import SuggestionChannelController from '../controllers/config/SuggestionChannel';
+import ReportChannelController from '../controllers/config/ReportChannel';
 import AutoAproveController from '../controllers/config/AutoApprove';
 import AutoRejectController from '../controllers/config/AutoReject';
 import DeleteApprovedController from '../controllers/config/DeleteAproved';
@@ -13,11 +14,12 @@ import DeleteRejectedController from '../controllers/config/DeleteRejected';
 const reactions: any = {
     '1️⃣': PrefixController,
     '2️⃣': LanguageController,
-    '3️⃣': ChannelController,
-    '4️⃣': AutoAproveController,
-    '5️⃣': AutoRejectController,
-    '6️⃣': DeleteApprovedController,
-    '7️⃣': DeleteRejectedController
+    '3️⃣': SuggestionChannelController,
+    '4️⃣': ReportChannelController,
+    '5️⃣': AutoAproveController,
+    '6️⃣': AutoRejectController,
+    '7️⃣': DeleteApprovedController,
+    '8️⃣': DeleteRejectedController
 }
 
 export default class ConfigCommand implements ICommand {
@@ -45,11 +47,12 @@ export default class ConfigCommand implements ICommand {
                 .setDescription(
                     `**1.** ${language.commands.config.names.prefix}
                     **2.** ${language.commands.config.names.language}
-                    **3.** ${language.commands.config.names.channel}
-                    **4.** ${language.commands.config.names.autoApprove}
-                    **5.** ${language.commands.config.names.autoReject}
-                    **6.** ${language.commands.config.names.deleteApproved}
-                    **7.** ${language.commands.config.names.deleteRejected}`
+                    **3.** ${language.commands.config.names.suggestionChannel}
+                    **4.** ${language.commands.config.names.reportChannel}
+                    **5.** ${language.commands.config.names.autoApprove}
+                    **6.** ${language.commands.config.names.autoReject}
+                    **7.** ${language.commands.config.names.deleteApproved}
+                    **8.** ${language.commands.config.names.deleteRejected}`
                 )
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)

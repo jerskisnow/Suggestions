@@ -1,7 +1,7 @@
 import { Client, MessageReaction, Message } from 'discord.js';
 import Utils from '../structures/Utils';
 
-import { guildExists, getGuildSetting, cacheGuild } from '../structures/CacheManager';
+import { exists, get, cache } from '../structures/CacheManager';
 
 import ApproveController from '../controllers/assessments/Approve';
 import RejectController from '../controllers/assessments/Reject';
@@ -25,19 +25,22 @@ export default async (client: Client, reaction: MessageReaction) => {
 	if (!reaction.message.reactions.cache.get("✅") || !reaction.message.reactions.cache.get("❎"))
 		return;
 
-	if (!guildExists(reaction.message.guild.id)) {
-		await cacheGuild(reaction.message.guild.id);
-	}
+	if (!exists(reaction.message.guild.id))
+		await cache(reaction.message.guild.id);
 
 	const positiveCount = reaction.message.reactions.cache.get("✅").count - 1;
 	const negativeCount = reaction.message.reactions.cache.get("❎").count - 1;
 
-	const auto_approve = getGuildSetting(reaction.message.guild.id, 'auto_approve');
-	const auto_reject = getGuildSetting(reaction.message.guild.id, 'auto_reject');
+	const auto_approve = await get(reaction.message.guild.id, 'auto_approve') as number;
+	const auto_reject = await get(reaction.message.guild.id, 'auto_reject') as number;
 
-	if (auto_approve !== -1 && positiveCount >= auto_approve)
-		ApproveController(client, reaction.message as Message, utils.languageCodeToObject(getGuildSetting(reaction.message.guild.id, 'language')));
-	else if (auto_reject !== -1 && negativeCount >= auto_reject)
-		RejectController(client, reaction.message as Message, utils.languageCodeToObject(getGuildSetting(reaction.message.guild.id, 'language')));
+	if (auto_approve !== -1 && positiveCount >= auto_approve) {
+		const languageCodeString = await get(reaction.message.guild.id, 'language') as string;
+		ApproveController(client, reaction.message as Message, utils.languageCodeToObject(languageCodeString));
+	}
+	else if (auto_reject !== -1 && negativeCount >= auto_reject) {
+		const languageCodeString = await get(reaction.message.guild.id, 'language') as string;
+		RejectController(client, reaction.message as Message, utils.languageCodeToObject(languageCodeString));
+	}
 
 }

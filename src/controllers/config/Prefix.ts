@@ -2,7 +2,7 @@ import { Client, Message, MessageEmbed } from 'discord.js';
 import utf8 from 'utf8';
 
 import pgPool from '../../structures/PostgreSQL';
-import { setGuildSetting } from '../../structures/CacheManager';
+import { set } from '../../structures/CacheManager';
 
 /**
  * The prefix controller function handles the prefix part
@@ -75,6 +75,6 @@ export default async(client: Client, message: Message, language: any, msg: Messa
         pgClient.release();
     }
 
-    setGuildSetting(message.guild.id, 'prefix', newPrefix);
+    await set(message.guild.id, 'prefix', newPrefix);
     
 }

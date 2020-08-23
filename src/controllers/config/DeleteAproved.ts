@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
 import pgPool from '../../structures/PostgreSQL';
-import { setGuildSetting } from '../../structures/CacheManager';
+import { set } from '../../structures/CacheManager';
 
 /**
  * The delete approved controller function handles the delete approved part
@@ -81,7 +81,7 @@ export default async(client: Client, message: Message, language: any, msg: Messa
 		embed: new MessageEmbed()
 		.setAuthor(language.commands.config.title, client.user.avatarURL())
 		.setColor(process.env.EMBED_COLOR)
-		.setDescription(language.commands.config.deleteApproved.updated)
+		.setDescription(inputResult ? language.commands.config.deleteApproved.updatedEnabled : language.commands.config.deleteApproved.updatedDisabled)
 		.setTimestamp()
 		.setFooter(process.env.EMBED_FOOTER)
 	});
@@ -94,6 +94,6 @@ export default async(client: Client, message: Message, language: any, msg: Messa
 		pgClient.release();
 	}
 
-	setGuildSetting(message.guild.id, 'delete_approved', inputResult);
+	await set(message.guild.id, 'delete_approved', inputResult);
 
 }

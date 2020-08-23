@@ -2,19 +2,15 @@ import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
 import pgPool from '../structures/PostgreSQL';
 
-import ApproveController from '../controllers/assessments/Approve';
+import ResolveController from '../controllers/assessments/Resolve';
 
-/*
- * Listen for ID or 'all'
- */
-export default class ApproveCommand implements ICommand {
+export default class ResolveCommand implements ICommand {
 
     aliases() {
-        return ['accept'];
+        return null as null;
     }
 
     async run(client: Client, message: Message, language: any, args: string[]) {
-
         if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.channel.send({
             embed: new MessageEmbed()
                 .setAuthor(language.errorTitle, client.user.avatarURL())
@@ -29,7 +25,7 @@ export default class ApproveCommand implements ICommand {
             embed: new MessageEmbed()
                 .setAuthor(language.errorTitle, client.user.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.approve.descriptionRequired)
+                .setDescription(language.commands.resolve.descriptionRequired)
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
@@ -41,7 +37,7 @@ export default class ApproveCommand implements ICommand {
             let result;
 
             try {
-                result = await pgClient.query('SELECT message, channel FROM suggestions WHERE NOT status = $1::text', ['Deleted']);
+                result = await pgClient.query('SELECT message, channel FROM reports WHERE status = $1::text', ['Open']);
             } finally {
                 pgClient.release();
             }
@@ -51,7 +47,7 @@ export default class ApproveCommand implements ICommand {
                     embed: new MessageEmbed()
                         .setAuthor(language.errorTitle, client.user.avatarURL())
                         .setColor(process.env.EMBED_COLOR)
-                        .setDescription(language.commands.approve.noSuggestionsFound)
+                        .setDescription(language.commands.resolve.noReportsFound)
                         .setTimestamp()
                         .setFooter(process.env.EMBED_FOOTER)
                 });
@@ -64,7 +60,7 @@ export default class ApproveCommand implements ICommand {
                 if (chn) {
                     try {
                         const msg = await chn.messages.fetch(result.rows[i].message, false);
-                        ApproveController(client, msg, language);
+                        ResolveController(client, msg, language);
                     } catch (err) {
                         // throw err;
                     }
@@ -80,7 +76,7 @@ export default class ApproveCommand implements ICommand {
                     embed: new MessageEmbed()
                         .setAuthor(language.errorTitle, client.user.avatarURL())
                         .setColor(process.env.EMBED_COLOR)
-                        .setDescription(language.commands.approve.invalidInput)
+                        .setDescription(language.commands.resolve.invalidInput)
                         .setTimestamp()
                         .setFooter(process.env.EMBED_FOOTER)
                 });
@@ -98,7 +94,7 @@ export default class ApproveCommand implements ICommand {
             let result;
 
             try {
-                result = await pgClient.query('SELECT message, channel FROM suggestions WHERE id = $1::int', [sID]);
+                result = await pgClient.query('SELECT message, channel FROM reports WHERE id = $1::int', [sID]);
             } finally {
                 pgClient.release();
             }
@@ -107,7 +103,7 @@ export default class ApproveCommand implements ICommand {
                 embed: new MessageEmbed()
                     .setAuthor(language.errorTitle, client.user.avatarURL())
                     .setColor(process.env.EMBED_COLOR)
-                    .setDescription(language.commands.approve.invalidInput)
+                    .setDescription(language.commands.resolve.invalidInput)
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
             });
@@ -116,7 +112,7 @@ export default class ApproveCommand implements ICommand {
             if (chn) {
                 try {
                     const msg = await chn.messages.fetch(result.rows[0].message, false);
-                    ApproveController(client, msg, language);
+                    ResolveController(client, msg, language);
                 } catch (err) {
                     // throw err;
                 }
@@ -125,17 +121,16 @@ export default class ApproveCommand implements ICommand {
 
         message.channel.send({
             embed: new MessageEmbed()
-                .setAuthor(language.commands.approve.title, client.user.avatarURL())
+                .setAuthor(language.commands.resolve.title, client.user.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.approve.approved)
+                .setDescription(language.commands.resolve.resolved)
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
-
     }
 
     help() {
-        return "Approve a suggestion.";
+        return "Resolve a report.";
     }
 
 }
