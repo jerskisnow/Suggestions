@@ -52,20 +52,20 @@ export default {
                 description: "Пожалуйста, введите новый канал...",
                 missingInput: "Вы забыли ввести новый канал.",
                 invalidChannel: "Вы ввели недействительный канал.",
-                updated: "Канал обновлен на <#<ChannelID>>."
+                updated: "Канал сменен на <#<ChannelID>>."
             },
             reportChannel: {
                 description: "Пожалуйста, введите новый канал...",
                 missingInput: "Вы забыли ввести новый канал.",
                 invalidChannel: "Вы ввели недействительный канал.",
-                updated: "Канал обновлен на <#<ChannelID>>."
+                updated: "Канал сменен на <#<ChannelID>>."
             },
             autoApprove: {
                 description: "Пожалуйста, напишите количество позитивных реакций в цифрах, для одобрения предложения...\n\n*Укажите значение -1 для отключения*",
                 missingInput: "Вы забыли написать, сколько нужно реакций.",
                 invalidNumber: "Это неправильная цифра!",
                 numberIsTooLow: "Цифра должна быть -1 или выше.",
-                updated: "Количество позитивных реакций для одобрения предложения теперь ``<Number>``."
+                updated: "Количество положительных реакций для одобрения предложения теперь ``<Number>``."
             },
             autoReject: {
                 description: "Пожалуйста, напишите количество негативных реакций в цифрах для отказа предложения...\n\n*Укажите значение -1 для отключения*",
@@ -169,9 +169,9 @@ export default {
      * Words associated with suggestions are stated below
      */
     suggestions: {
-        open: "Открыть",
-        approved: "Одобрить",
-        rejected: "Отклонить"
+        open: "Открытое",
+        approved: "Одобренное",
+        rejected: "Отклоненное"
     },
 
     /*
@@ -180,8 +180,8 @@ export default {
      * Words associated with reports are stated below
      */
     reports: {
-        open: "Открытое",
-        resolved: "Решенное"
+        open: "Открытая",
+        resolved: "Решенная"
     }
 
 }
