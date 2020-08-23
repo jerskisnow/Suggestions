@@ -4,9 +4,6 @@ import pgPool from '../structures/PostgreSQL';
 
 import ApproveController from '../controllers/assessments/Approve';
 
-/*
- * Listen for ID or 'all'
- */
 export default class ApproveCommand implements ICommand {
 
     aliases() {

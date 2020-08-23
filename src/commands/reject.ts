@@ -4,9 +4,6 @@ import pgPool from '../structures/PostgreSQL';
 
 import RejectController from '../controllers/assessments/Reject';
 
-/*
- * Listen for ID or 'all'
- */
 export default class RejectCommand implements ICommand {
 
     aliases() {
