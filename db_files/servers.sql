@@ -3,10 +3,10 @@ CREATE TABLE servers (
     prefix VARCHAR(25) NOT NULL,
     language VARCHAR(25) NOT NULL,
     suggestion_channel VARCHAR(55),
-    report_channel VARCHAR(55),
+    -- report_channel VARCHAR(55),
     auto_approve INT,
     auto_reject INT,
     delete_approved BOOLEAN,
     delete_rejected BOOLEAN,
-    is_premium BOOLEAN NOT NULL
+    -- is_premium BOOLEAN NOT NULL
 );

@@ -7,7 +7,7 @@ import Utils from '../../structures/Utils';
 const utils: Utils = new Utils();
 
 /**
- * The prefix controller function handles the prefix part
+ * The prefix controller function handles the reportchannel part
  * @param {Client}  client   The client supplied by discord
  * @param {Message} message  The message that was used to initiate the controller process
  * @param {Object}  language The language used on the server where the controller process got initated

@@ -120,7 +120,7 @@ export default {
             title: "Suggestions - Resolve",
             descriptionRequired: "Please fill in an valid report id.",
             invalidInput: "You filled in an invalid report id.",
-            noSuggestionsFound: "I couldn't find any approvable reports.",
+            noReportsFound: "I couldn't find any approvable reports.",
             resolved: "The report was successfully resolved."
         },
         list: {

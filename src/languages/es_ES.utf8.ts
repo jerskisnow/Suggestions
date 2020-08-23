@@ -120,7 +120,7 @@ export default {
             title: "Suggestions - Resolver",
             descriptionRequired: "Por favor, introduzca una ID válida.",
             invalidInput: "Has introducido una ID no válida.",
-            noSuggestionsFound: "No puedo encontrar ningún reporte aprovable.",
+            noReportsFound: "No puedo encontrar ningún reporte aprovable.",
             resolved: "He completado el aprovado correctamente."
         },
         list: {

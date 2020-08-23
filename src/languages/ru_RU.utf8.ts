@@ -114,7 +114,7 @@ export default {
             title: "Suggestions - Отказ",
             descriptionRequired: "Пожалуйста напишите ID предложения.",
             invalidInput: "Вы ввели неправильный ID предложения.",
-            noSuggestionsFound: "Я не могу найти предложения, которые можно отклонить.",
+            noReportsFound: "Я не могу найти предложения, которые можно отклонить.",
             rejected: "Предложение отклонено."
         },
         resolve: {
