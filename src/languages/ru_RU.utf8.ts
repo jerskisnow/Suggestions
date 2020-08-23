@@ -3,7 +3,7 @@
  * Date: 21/05/2020 (DD/MM/YYYY)
  *
  * Translation by Jarnar (Discord: Jarnar#9709)
- * Edited by &zdarova (Discord: &zdarova#6882)
+ * Edited and finished by &zdarova (Discord: &zdarova#6882)
  */
 export default {
 
@@ -45,20 +45,20 @@ export default {
                 description: "Пожалуйста напишите, какой язык вы выбрали...",
                 availableTitle: "Доступные языки",
                 missingInput: "Вы забыли выбрать язык.",
-                invalidLanguage: "В Suggestions нету такого языка.",
+                invalidLanguage: "В боте Suggestions нету такого языка.",
                 updated: "Язык обновлён на ``<Language>``."
             },
             suggestionChannel: {
-                description: "Please enter a new channel...",
-                missingInput: "You forgot to enter a new channel.",
-                invalidChannel: "You entered an invalid channel.",
-                updated: "Updated the channel to <#<ChannelID>>."
+                description: "Пожалуйста, введите новый канал...",
+                missingInput: "Вы забыли ввести новый канал.",
+                invalidChannel: "Вы ввели недействительный канал.",
+                updated: "Канал обновлен на <#<ChannelID>>."
             },
             reportChannel: {
-                description: "Please enter a new channel...",
-                missingInput: "You forgot to enter a new channel.",
-                invalidChannel: "You entered an invalid channel.",
-                updated: "Updated the channel to <#<ChannelID>>."
+                description: "Пожалуйста, введите новый канал...",
+                missingInput: "Вы забыли ввести новый канал.",
+                invalidChannel: "Вы ввели недействительный канал.",
+                updated: "Канал обновлен на <#<ChannelID>>."
             },
             autoApprove: {
                 description: "Пожалуйста, напишите количество позитивных реакций в цифрах, для одобрения предложения...\n\n*Укажите значение -1 для отключения*",
@@ -118,11 +118,11 @@ export default {
             rejected: "Предложение отклонено."
         },
         resolve: {
-            title: "Suggestions - Resolve",
-            descriptionRequired: "Please fill in an valid report id.",
-            invalidInput: "You filled in an invalid report id.",
-            noSuggestionsFound: "I couldn't find any approvable reports.",
-            resolved: "The report was successfully resolved."
+            title: "Suggestions - Решить вопрос",
+            descriptionRequired: "Пожалуйста, заполните действительный идентификационный номер отчета.",
+            invalidInput: "Вы заполнили недействительный идентификационный номер отчета.",
+            noSuggestionsFound: "Я не смог найти ни одного подходящего отчета.",
+            resolved: "Отчет был успешно разрешен."
         },
         list: {
             title: "Suggestions - Список",
@@ -143,23 +143,23 @@ export default {
             title: "Suggestions - Голосовать"
         },
         reportbug: {
-            title: "Suggestions - Reportbug",
+            title: "Suggestions - Отчет об ошибке",
             descriptionRequired: "Пожалуйста, опишите что за баг вы нашли.",
-            confirmation: "Are you sure you want to report the bug to the developers of the bot?",
-            cancelled: "Successfully cancelled the bug report.",
-            sent: "Репорт отправлен разработчикам.\n\n*Спасибо за письмо!*"
+            confirmation: "Вы уверены, что хотите сообщить об ошибке разработчикам бота?",
+            cancelled: "Сообщение об ошибке успешно отменено.",
+            sent: "Сообщение отправлено разработчикам.\n\n*Спасибо за сообщение!*"
         },
         premium: {
-            title: "Suggestions - Premium",
-            description: "Whenever you buy premium you'll get access to the perks below. Premium is per server and requires a one-time payment of $2.50. This will allow our developers to continue working on Suggestions and our other projects.",
-            perksTitle: "Premium Perks",
-            perksDescription: "1. Early access to beta features.\n2. Priority support.\n3. A premium rank in the CodedSnow discord server."
+            title: "Suggestions - Премиум",
+            description: "Всякий раз, когда вы покупаете премиум, вы получаете доступ к льготам, указанным ниже. Премиум взимается за каждый сервер и требует единовременной оплаты в размере 2,50$. Это позволит нашим разработчикам продолжить работу над ботом Suggestions и другими нашими проектами.",
+            perksTitle: "Премиум-перки",
+            perksDescription: "1. Ранний доступ к бета-функциям.\n2. Приоритетная поддержка.\n3. Премиум ранг в Discord-сервере CodedSnow. "
         },
         translation: {
-            title: "Suggestions - Translation",
-            description: "If you're looking for changing Suggestion's language, please use `<Prefix>config`.\n\nFor more information about contributing a language please read the field below.",
-            contributeTitle: "Contribute",
-            contributeDescription: "We are always looking for people to translate our bot. If you would like the translate the bot in a language or if you want to make changes to a language please read the instructions about translating over on our [github page](https://github.com/jerskisnow/Suggestions/tree/dev)."
+            title: "Suggestions - Перевод",
+            description: "Если вы хотите изменить язык бота Suggestions, воспользуйтесь`<Prefix>config`.\n\nДля получения более подробной информации о том, как написать текст на том или ином языке, ознакомьтесь, пожалуйста, с полем ниже.",
+            contributeTitle: "Внести свой вклад",
+            contributeDescription: "Мы всегда ищем людей для перевода нашего бота. Если вы хотите перевести бота на другой язык или внести изменения в язык, ознакомьтесь с инструкциями по переводу на нашей странице [на Github.](https://github.com/jerskisnow/Suggestions/tree/dev)."
         }
     },
 
@@ -171,7 +171,7 @@ export default {
     suggestions: {
         open: "Открыть",
         approved: "Одобрить",
-        rejected: "Отказать"
+        rejected: "Отклонить"
     },
 
     /*
@@ -180,8 +180,8 @@ export default {
      * Words associated with reports are stated below
      */
     reports: {
-        open: "Open",
-        resolved: "Resolved"
+        open: "Открытое",
+        resolved: "Решенное"
     }
 
 }
