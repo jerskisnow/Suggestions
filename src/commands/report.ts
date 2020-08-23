@@ -23,10 +23,10 @@ export default class ReportCommand implements ICommand {
 
         const pgClient = await pgPool.connect();
 
-        const res = await pgClient.query('SELECT channel FROM reports WHERE id = $1::text', [message.guild.id]);
+        const res = await pgClient.query('SELECT report_channel FROM servers WHERE id = $1::text', [message.guild.id]);
         if (res.rows.length === 0) return;
 
-        const channel: TextChannel = message.guild.channels.cache.get(res.rows[0].channel) as TextChannel;
+        const channel: TextChannel = message.guild.channels.cache.get(res.rows[0].report_channel) as TextChannel;
         if (!channel) {
             message.channel.send({
                 embed: new MessageEmbed()
@@ -73,6 +73,15 @@ export default class ReportCommand implements ICommand {
                     .replace(/<Status>/g, language.suggestions.open)
                     .replace(/<ID>/g, id)
                 )
+                .setTimestamp()
+                .setFooter(process.env.EMBED_FOOTER)
+        });
+
+        message.channel.send({
+            embed: new MessageEmbed()
+                .setAuthor(language.commands.report.title, client.user.avatarURL())
+                .setColor(process.env.EMBED_COLOR)
+                .setDescription(language.commands.report.sent)
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });

@@ -19,7 +19,6 @@ export default async (client: Client, message: Message) => {
     }
 
     let prefix = await get(message.guild.id, 'prefix') as string;
-    console.log(prefix)
 
     // Check if the message contains the prefix
     if (message.content.startsWith(prefix) || message.content.startsWith(`<@${client.user.id}> `)) {

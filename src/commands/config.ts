@@ -48,7 +48,7 @@ export default class ConfigCommand implements ICommand {
                     `**1.** ${language.commands.config.names.prefix}
                     **2.** ${language.commands.config.names.language}
                     **3.** ${language.commands.config.names.suggestionChannel}
-                    **5.** ${language.commands.config.names.reportChannel}
+                    **4.** ${language.commands.config.names.reportChannel}
                     **5.** ${language.commands.config.names.autoApprove}
                     **6.** ${language.commands.config.names.autoReject}
                     **7.** ${language.commands.config.names.deleteApproved}

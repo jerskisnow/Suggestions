@@ -6,13 +6,12 @@ export default async (client: Client, msg: Message, language: any) => {
 
     const pgClient = await pgPool.connect();
 
-    const result = await pgClient.query('SELECT id, context, author, status FROM suggestions WHERE message = $1::text', [msg.id]);
+    const result = await pgClient.query('SELECT id, context, author, status FROM reports WHERE message = $1::text', [msg.id]);
 
     if (!result.rows.length || result.rows[0].status === 'Resolved') {
         pgClient.release();
         return;
     }
-
 
     // const shard_result = await client.shard.broadcastEval(`this.users.cache.get('${res.rows[0].author}')`);
     // const user = shard_result[0];
