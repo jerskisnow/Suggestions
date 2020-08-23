@@ -98,7 +98,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
     const pgClient = await pgPool.connect();
 
     try {
-        await pgClient.query('UPDATE servers SET channel = $1::text WHERE id = $2::text', [newChannelObject.id, message.guild.id]);
+        await pgClient.query('UPDATE servers SET suggestion_channel = $1::text WHERE id = $2::text', [newChannelObject.id, message.guild.id]);
     } finally {
         pgClient.release();
     }

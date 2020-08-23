@@ -75,4 +75,6 @@ export default async (client: Client, guild: Guild) => {
         channel.send({ embed: ${JSON.stringify(embed)} });
     `);
 
+    console.log('test')
+
 }
