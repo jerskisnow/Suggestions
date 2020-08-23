@@ -1,6 +1,3 @@
-/*
- * This class is still untested.
- */
 import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
 import pgPool from '../structures/PostgreSQL';
