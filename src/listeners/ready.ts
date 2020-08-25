@@ -11,7 +11,6 @@ export default async (client: Client) => {
     setInterval(async () => {
         const res = await client.shard.fetchClientValues('guilds.cache.size');
         const shard_id = await client.shard.broadcastEval('this.guilds.cache.first().shardID');
-        console.log('DEBUG: ' + shard_id)
         dbl.postStats(
             res.reduce((prev, guildCount) => prev + guildCount, 0),
             shard_id[0],
