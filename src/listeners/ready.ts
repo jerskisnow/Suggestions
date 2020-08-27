@@ -29,11 +29,10 @@ export default async (client: Client) => {
         }); 
     }
 
-
     setTimeout(setPresence, 30000);
 
-    console.log(cliColors.FgBlue + "\n---=[Succesfully enabled the bot]=---" + cliColors.Reset);
-
     setInterval(setPresence, 3000000);
+
+    console.log(cliColors.FgBlue + "\n---=[Succesfully enabled the bot]=---" + cliColors.Reset);
 
 }
