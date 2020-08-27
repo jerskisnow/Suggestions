@@ -69,7 +69,7 @@ const cache = async function (guild_id: string) {
     await redisClient.setAsync(
         guild_id, // key
         JSON.stringify(cacheObject), // value
-        'EX', 43200 // expiration in seconds (12 hours)
+        'EX', 28800 // expiration in seconds (8 hours)
     );
     return cacheObject;
 };
@@ -83,7 +83,7 @@ const set = async function (guild_id: string, guild_setting: string, setting_val
     const settings = JSON.parse(settingsString);
 
     settings[guild_setting] = setting_value;
-    redisClient.setAsync(guild_id, JSON.stringify(settings), 'EX', 43200);
+    redisClient.setAsync(guild_id, JSON.stringify(settings), 'EX', 28800);
 
 }
 
