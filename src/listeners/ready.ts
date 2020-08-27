@@ -29,7 +29,8 @@ export default async (client: Client) => {
         }); 
     }
 
-    setPresence();
+
+    setTimeout(setPresence, 30000);
 
     console.log(cliColors.FgBlue + "\n---=[Succesfully enabled the bot]=---" + cliColors.Reset);
 
