@@ -16,6 +16,10 @@ console.log(cliColors.FgCyan + `\n ██████╗ ██████╗ �
  ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝ ╚══════╝╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝
                                                                               ` + cliColors.FgBlue + "\n==============================================================================\n" + cliColors.Reset);
 
+process.on('unhandledRejection', error => {
+    console.error('Unhandled promise rejection:', error);
+});
+
 const manager = new ShardingManager('app.js', {
     token: process.env.CLIENT_TOKEN
 });
