@@ -15,10 +15,10 @@ export default class TranslationCommand implements ICommand {
 
         message.channel.send({
             embed: new MessageEmbed()
-                .setAuthor(language.commands.translate.title, client.user.avatarURL())
+                .setAuthor(language.commands.translation.title, client.user.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.translate.description.replaceAll(/<Prefix>/g, prefix))
-                .addField(language.commands.translate.contributeTitle, language.commands.translate.contributeDescription, false)
+                .setDescription(language.commands.translation.description.replaceAll(/<Prefix>/g, prefix))
+                .addField(language.commands.translation.contributeTitle, language.commands.translation.contributeDescription, false)
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
