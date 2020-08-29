@@ -3,10 +3,11 @@ import pgPool from '../structures/PostgreSQL';
 
 export default async (client: Client, guild: Guild) => {
 
+    // We're creating the server in the database to relieve some pressure of the message event, since that one also create a guild when it doesn't exist
     const pgClient = await pgPool.connect();
 
     try {
-        await pgClient.query('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE]);
+        await pgClient.query('INSERT INTO servers (id, prefix, language, is_premium) VALUES ($1::text, $2::text, $3::text, $4::boolean)', [guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE, false]);
     } finally {
         pgClient.release();
     }
@@ -74,7 +75,5 @@ export default async (client: Client, guild: Guild) => {
         const channel = this.channels.cache.get('${process.env.CHANNELS_LOGS}');
         channel.send({ embed: ${JSON.stringify(embed)} });
     `);
-
-    console.log('test')
 
 }
