@@ -7,12 +7,10 @@ const client = new Client({
     partials: ['MESSAGE', 'REACTION']
 });
 
-// TODO: Make a custom error system
 // client.on("error", (e) => console.error(e));
 // client.on("warn", (e) => console.warn(e));
-
-client.on("debug", e => console.info(e));
-client.on('shardError', e => console.error(e));
+// client.on("debug", e => console.info(e));
+// client.on('shardError', e => console.error(e));
 
 readdir('./listeners/', (err, files) => {
     if (err) throw err;
