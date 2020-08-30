@@ -77,7 +77,7 @@ export default async (client: Client, guild: Guild) => {
             if (channel) {
                 channel.send({ embed: ${JSON.stringify(embed)} });
             }
-        })
+        })();
     `);
 
 }

@@ -74,7 +74,7 @@ export default class VoteCommand implements ICommand {
                 if (channel) {
                     channel.send({ embed: ${JSON.stringify(stringEmbed)} });
                 }
-            })
+            })();
         `);
 
     }
