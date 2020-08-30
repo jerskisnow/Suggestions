@@ -69,9 +69,12 @@ export default class VoteCommand implements ICommand {
         ).replace(/'/g, "\'");
 
         client.shard.broadcastEval(`
-            const channel = this.channels.cache.get('${process.env.CHANNELS_BUG_REPORTS}');
-            const embed = JSON.parse('${stringEmbed}');
-            channel.send({ embed: embed });
+            (async () => {
+                const channel = await this.channels.cache.get('${process.env.CHANNELS_BUG_REPORTS}');
+                if (channel) {
+                    channel.send({ embed: ${JSON.stringify(stringEmbed)} });
+                }
+            })
         `);
 
     }

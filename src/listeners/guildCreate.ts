@@ -72,8 +72,12 @@ export default async (client: Client, guild: Guild) => {
         .setFooter(process.env.EMBED_FOOTER);
 
     client.shard.broadcastEval(`
-        const channel = this.channels.cache.get('${process.env.CHANNELS_LOGS}');
-        channel.send({ embed: ${JSON.stringify(embed)} });
+        (async () => {
+            const channel = await this.channels.cache.get('${process.env.CHANNELS_LOGS}');
+            if (channel) {
+                channel.send({ embed: ${JSON.stringify(embed)} });
+            }
+        })
     `);
 
 }
