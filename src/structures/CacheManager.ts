@@ -33,7 +33,7 @@ const cache = async function (guild_id: string) {
         result = await pgClient.query('SELECT prefix, language, suggestion_channel, report_channel, auto_approve, auto_reject, delete_approved, delete_rejected, is_premium FROM servers WHERE id = $1::text', [guild_id]);
         if (!result.rows.length) {
             console.log(cliColors.FgCyan + "Creating an offline server in the database and cache with the id of: " + cliColors.FgYellow + guild_id + cliColors.FgCyan + "." + cliColors.Reset);
-            await pgClient.query('INSERT INTO servers (id, prefix, language, is_premium) VALUES ($1::text, $2::text, $3::text, $4::bool)', [guild_id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE, false]);
+            await pgClient.query('INSERT INTO servers (id, prefix, language, is_premium) VALUES ($1::text, $2::text, $3::text, $4::boolean)', [guild_id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE, false]);
             result = {
                 rows: [
                     {
@@ -68,9 +68,9 @@ const cache = async function (guild_id: string) {
 
     await redisClient.setAsync(
         guild_id, // key
-        JSON.stringify(cacheObject) // value
+        JSON.stringify(cacheObject), // value
+        'EX', 28800 // expiration in seconds (8 hours)
     );
-
     return cacheObject;
 };
 
@@ -83,7 +83,7 @@ const set = async function (guild_id: string, guild_setting: string, setting_val
     const settings = JSON.parse(settingsString);
 
     settings[guild_setting] = setting_value;
-    redisClient.setAsync(guild_id, JSON.stringify(settings));
+    redisClient.setAsync(guild_id, JSON.stringify(settings), 'EX', 28800);
 
 }
 
@@ -92,7 +92,7 @@ const set = async function (guild_id: string, guild_setting: string, setting_val
  * @param guild_id the id of the specific guild
  */
 const remove = async function (guild_id: string) {
-    await redisClient.removeAsync(guild_id);
+    await redisClient.delAsync(guild_id);
 }
 
 export {

@@ -9,7 +9,8 @@ const client = new Client({
 
 // client.on("error", (e) => console.error(e));
 // client.on("warn", (e) => console.warn(e));
-// client.on("debug", (e) => console.info(e));
+// client.on("debug", e => console.info(e));
+// client.on('shardError', e => console.error(e));
 
 readdir('./listeners/', (err, files) => {
     if (err) throw err;

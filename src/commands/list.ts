@@ -37,6 +37,9 @@ export default class ListCommand implements ICommand {
             .setFooter(process.env.EMBED_FOOTER);
 
         for (var i = 0; i < result.rows.length; i++) {
+            if (i === 9) {
+                break;
+            }
             const user = message.guild.members.cache.get(result.rows[i].author) ?
                 message.guild.members.cache.get(result.rows[i].author).user.tag :
                 "User Left ~ Suggestions";
