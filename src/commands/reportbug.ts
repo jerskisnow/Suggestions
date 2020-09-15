@@ -66,7 +66,7 @@ export default class VoteCommand implements ICommand {
                 .setDescription(args.join(" "))
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
-        ).replace(/'/g, "\'");
+        );
 
         client.shard.broadcastEval(`
             (async () => {

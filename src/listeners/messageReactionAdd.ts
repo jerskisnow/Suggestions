@@ -6,9 +6,9 @@ import { exists, get, cache } from '../structures/CacheManager';
 import ApproveController from '../controllers/assessments/Approve';
 import RejectController from '../controllers/assessments/Reject';
 
-const utils: Utils = new Utils();
-
 export default async (client: Client, reaction: MessageReaction) => {
+
+	const utils: Utils = new Utils();
 
 	if (reaction.partial) {
 		try {

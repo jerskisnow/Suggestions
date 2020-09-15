@@ -4,9 +4,9 @@ import { Client, Message } from 'discord.js';
 
 import { exists, get, cache } from '../structures/CacheManager';
 
-const utils = new Utils();
-
 export default async (client: Client, message: Message) => {
+
+    const utils = new Utils();
 
     // If the author is a bot, return
     if (message.author.bot) return;
