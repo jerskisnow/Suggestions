@@ -29,7 +29,7 @@ export default async (client: Client) => {
         }); 
     }
 
-    setTimeout(setPresence, 5000);
+    setTimeout(setPresence, 25000);
 
     setInterval(setPresence, 3000000);
 
