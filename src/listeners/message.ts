@@ -1,12 +1,9 @@
 import { cmdMap, aliasMap } from '../structures/CMDMap';
-import Utils from '../structures/Utils';
 import { Client, Message } from 'discord.js';
 
 import { exists, get, cache } from '../structures/CacheManager';
 
 export default async (client: Client, message: Message) => {
-
-    const utils = new Utils();
 
     // If the author is a bot, return
     if (message.author.bot) return;
@@ -36,7 +33,7 @@ export default async (client: Client, message: Message) => {
 
         // Fetch the language of the guild
         const languageCode = await get(message.guild.id, 'language') as string;
-        const language: Object = utils.languageCodeToObject(languageCode);
+        const language: Object = require(`../languages/${languageCode}.utf8.js`).default;
         
         // Define the command instance
         const cmdInstance = cmdMap.get(command);

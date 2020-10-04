@@ -2,9 +2,6 @@ import { Client, Message, MessageEmbed } from 'discord.js';
 
 import pgPool from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
-import Utils from '../../structures/Utils';
-
-const utils: Utils = new Utils();
 
 /**
  * The prefix controller function handles the prefix part
@@ -61,7 +58,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
     let newChannelObject;
 
     if (newChannel.indexOf('<#') > -1 || !isNaN(newChannel))
-        newChannelObject = message.guild.channels.cache.get(utils.stripChannelInput(newChannel));
+        newChannelObject = message.guild.channels.cache.get(newChannel.replace('<#', '').replace('>', ''));
     else
         newChannelObject = message.guild.channels.cache.find(chn => chn.name === newChannel);
 

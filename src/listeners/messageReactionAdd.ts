@@ -1,5 +1,4 @@
 import { Client, MessageReaction, Message } from 'discord.js';
-import Utils from '../structures/Utils';
 
 import { exists, get, cache } from '../structures/CacheManager';
 
@@ -7,8 +6,6 @@ import ApproveController from '../controllers/assessments/Approve';
 import RejectController from '../controllers/assessments/Reject';
 
 export default async (client: Client, reaction: MessageReaction) => {
-
-	const utils: Utils = new Utils();
 
 	if (reaction.partial) {
 		try {
@@ -36,11 +33,11 @@ export default async (client: Client, reaction: MessageReaction) => {
 
 	if (auto_approve !== -1 && positiveCount >= auto_approve) {
 		const languageCodeString = await get(reaction.message.guild.id, 'language') as string;
-		ApproveController(client, reaction.message as Message, utils.languageCodeToObject(languageCodeString));
+		ApproveController(client, reaction.message as Message, require(`../languages/${languageCodeString}.utf8.js`).default);
 	}
 	else if (auto_reject !== -1 && negativeCount >= auto_reject) {
 		const languageCodeString = await get(reaction.message.guild.id, 'language') as string;
-		RejectController(client, reaction.message as Message, utils.languageCodeToObject(languageCodeString));
+		RejectController(client, reaction.message as Message, require(`../languages/${languageCodeString}.utf8.js`).default);
 	}
 
 }

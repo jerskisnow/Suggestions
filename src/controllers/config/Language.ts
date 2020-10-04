@@ -3,9 +3,6 @@ import { Client, Message, MessageEmbed } from 'discord.js';
 import pgPool from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
 import languageList from '../../structures/Languages';
-import Utils from '../../structures/Utils';
-
-const utils = new Utils();
 
 /**
  * The language controller function handles the language part
@@ -65,8 +62,10 @@ export default async(client: Client, message: Message, language: any, msg: Messa
         timeout: 125
     });
 
+    const splittedInput: string[] = input.split('_');
+    const languageCode: string = splittedInput[0].toLowerCase() + "_" + splittedInput[1].toUpperCase();
 
-    if (input.indexOf("_") !== 2 || !languages.includes(utils.reformatLanguageCode(input))) {
+    if (input.indexOf("_") !== 2 || !languages.includes(languageCode)) {
         await msg.edit({
             embed: new MessageEmbed()
                 .setAuthor(language.commands.config.title, client.user.avatarURL())
@@ -83,14 +82,12 @@ export default async(client: Client, message: Message, language: any, msg: Messa
         return;
     }
 
-    const newLanguage: string = utils.reformatLanguageCode(input);
-
     await msg.edit({
         embed: new MessageEmbed()
         .setAuthor(language.commands.config.title, client.user.avatarURL())
         .setColor(process.env.EMBED_COLOR)
         .setDescription(language.commands.config.language.updated
-            .replace(/<Language>/g, newLanguage)
+            .replace(/<Language>/g, languageCode)
         )
         .setTimestamp()
         .setFooter(process.env.EMBED_FOOTER)
@@ -99,11 +96,11 @@ export default async(client: Client, message: Message, language: any, msg: Messa
     const pgClient = await pgPool.connect();
 
     try {
-        await pgClient.query('UPDATE servers SET language = $1::text WHERE id = $2::text', [newLanguage, message.guild.id]);
+        await pgClient.query('UPDATE servers SET language = $1::text WHERE id = $2::text', [languageCode, message.guild.id]);
     } finally {
         pgClient.release();
     }
 
-    await set(message.guild.id, 'language', newLanguage);
+    await set(message.guild.id, 'language', languageCode);
 
 }
