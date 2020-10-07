@@ -1,6 +1,4 @@
 import pgPool from './PostgreSQL';
-import cliColors from './CLIColors';
-
 import redisClient from './RedisClient';
 
 /**
@@ -27,12 +25,14 @@ const get = async function (guild_id: string, guild_setting: string): Promise<st
  * TODO: Make this dynamic once
  */
 const cache = async function (guild_id: string) {
+
     const pgClient = await pgPool.connect();
+
     let result;
+
     try {
         result = await pgClient.query('SELECT prefix, language, suggestion_channel, report_channel, auto_approve, auto_reject, delete_approved, delete_rejected, is_premium FROM servers WHERE id = $1::text', [guild_id]);
         if (!result.rows.length) {
-            console.log(cliColors.FgCyan + "Creating an offline server in the database and cache with the id of: " + cliColors.FgYellow + guild_id + cliColors.FgCyan + "." + cliColors.Reset);
             await pgClient.query('INSERT INTO servers (id, prefix, language, is_premium) VALUES ($1::text, $2::text, $3::text, $4::boolean)', [guild_id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE, false]);
             result = {
                 rows: [
@@ -71,7 +71,7 @@ const cache = async function (guild_id: string) {
         JSON.stringify(cacheObject), // value
         'EX', 28800 // expiration in seconds (8 hours)
     );
-    
+
     return cacheObject;
 };
 
@@ -96,6 +96,4 @@ const remove = async function (guild_id: string) {
     await redisClient.delAsync(guild_id);
 }
 
-export {
-    exists, get, cache, set, remove
-};
+export { exists, get, cache, set, remove };
