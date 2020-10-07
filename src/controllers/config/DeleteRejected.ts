@@ -1,5 +1,4 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
-
 import pgPool from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
 

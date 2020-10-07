@@ -1,5 +1,4 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
-
 import pgPool from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
 
@@ -11,15 +10,15 @@ import { set } from '../../structures/CacheManager';
  * @param {Message} msg      The choose menu message used to activate the controller
  * @return                   Ends the function in an earlier stage
  */
-export default async(client: Client, message: Message, language: any, msg: Message) => {
+export default async (client: Client, message: Message, language: any, msg: Message) => {
 
 	await msg.edit({
 		embed: new MessageEmbed()
-		.setAuthor(language.commands.config.title, client.user.avatarURL())
-		.setColor(process.env.EMBED_COLOR)
-		.setDescription(language.commands.config.deleteApproved.description)
-		.setTimestamp()
-		.setFooter(process.env.EMBED_FOOTER)
+			.setAuthor(language.commands.config.title, client.user.avatarURL())
+			.setColor(process.env.EMBED_COLOR)
+			.setDescription(language.commands.config.deleteApproved.description)
+			.setTimestamp()
+			.setFooter(process.env.EMBED_FOOTER)
 	});
 
 	const filter = (msg: Message) => msg.author.id === message.author.id;
@@ -34,11 +33,11 @@ export default async(client: Client, message: Message, language: any, msg: Messa
 	if (inputMessage === undefined) {
 		await msg.edit({
 			embed: new MessageEmbed()
-			.setAuthor(language.commands.config.title, client.user.avatarURL())
-			.setColor(process.env.EMBED_COLOR)
-			.setDescription(language.commands.config.deleteApproved.missingInput)
-			.setTimestamp()
-			.setFooter(process.env.EMBED_FOOTER)
+				.setAuthor(language.commands.config.title, client.user.avatarURL())
+				.setColor(process.env.EMBED_COLOR)
+				.setDescription(language.commands.config.deleteApproved.missingInput)
+				.setTimestamp()
+				.setFooter(process.env.EMBED_FOOTER)
 		});
 
 		await msg.delete({
@@ -63,15 +62,15 @@ export default async(client: Client, message: Message, language: any, msg: Messa
 	} else {
 		await msg.edit({
 			embed: new MessageEmbed()
-			.setAuthor(language.commands.config.title, client.user.avatarURL())
-			.setColor(process.env.EMBED_COLOR)
-			.setDescription(language.commands.config.deleteApproved.invalidInput)
-			.setTimestamp()
-			.setFooter(process.env.EMBED_FOOTER)
+				.setAuthor(language.commands.config.title, client.user.avatarURL())
+				.setColor(process.env.EMBED_COLOR)
+				.setDescription(language.commands.config.deleteApproved.invalidInput)
+				.setTimestamp()
+				.setFooter(process.env.EMBED_FOOTER)
 		});
 
 		await msg.delete({
-		  timeout: 50000
+			timeout: 50000
 		});
 
 		return;
@@ -79,11 +78,11 @@ export default async(client: Client, message: Message, language: any, msg: Messa
 
 	await msg.edit({
 		embed: new MessageEmbed()
-		.setAuthor(language.commands.config.title, client.user.avatarURL())
-		.setColor(process.env.EMBED_COLOR)
-		.setDescription(inputResult ? language.commands.config.deleteApproved.updatedEnabled : language.commands.config.deleteApproved.updatedDisabled)
-		.setTimestamp()
-		.setFooter(process.env.EMBED_FOOTER)
+			.setAuthor(language.commands.config.title, client.user.avatarURL())
+			.setColor(process.env.EMBED_COLOR)
+			.setDescription(inputResult ? language.commands.config.deleteApproved.updatedEnabled : language.commands.config.deleteApproved.updatedDisabled)
+			.setTimestamp()
+			.setFooter(process.env.EMBED_FOOTER)
 	});
 
 	const pgClient = await pgPool.connect();

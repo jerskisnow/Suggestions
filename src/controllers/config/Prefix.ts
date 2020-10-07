@@ -1,6 +1,5 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 import utf8 from 'utf8';
-
 import pgPool from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
 
@@ -12,15 +11,15 @@ import { set } from '../../structures/CacheManager';
  * @param {Message} msg      The choose menu message used to activate the controller
  * @return                   Ends the function in an earlier stage
  */
-export default async(client: Client, message: Message, language: any, msg: Message) => {
+export default async (client: Client, message: Message, language: any, msg: Message) => {
 
     await msg.edit({
         embed: new MessageEmbed()
-        .setAuthor(language.commands.config.title, client.user.avatarURL())
-        .setColor(process.env.EMBED_COLOR)
-        .setDescription(language.commands.config.prefix.description)
-        .setTimestamp()
-        .setFooter(process.env.EMBED_FOOTER)
+            .setAuthor(language.commands.config.title, client.user.avatarURL())
+            .setColor(process.env.EMBED_COLOR)
+            .setDescription(language.commands.config.prefix.description)
+            .setTimestamp()
+            .setFooter(process.env.EMBED_FOOTER)
     });
 
     const filter = (msg: Message) => msg.author.id === message.author.id;
@@ -35,11 +34,11 @@ export default async(client: Client, message: Message, language: any, msg: Messa
 
         await msg.edit({
             embed: new MessageEmbed()
-            .setAuthor(language.commands.config.title, client.user.avatarURL())
-            .setColor(process.env.EMBED_COLOR)
-            .setDescription(language.commands.config.prefix.missingInput)
-            .setTimestamp()
-            .setFooter(process.env.EMBED_FOOTER)
+                .setAuthor(language.commands.config.title, client.user.avatarURL())
+                .setColor(process.env.EMBED_COLOR)
+                .setDescription(language.commands.config.prefix.missingInput)
+                .setTimestamp()
+                .setFooter(process.env.EMBED_FOOTER)
         });
 
         await msg.delete({
@@ -58,13 +57,13 @@ export default async(client: Client, message: Message, language: any, msg: Messa
 
     await msg.edit({
         embed: new MessageEmbed()
-        .setAuthor(language.commands.config.title, client.user.avatarURL())
-        .setColor(process.env.EMBED_COLOR)
-        .setDescription(language.commands.config.prefix.updated
-            .replace(/<Prefix>/g, newPrefix)
-        )
-        .setTimestamp()
-        .setFooter(process.env.EMBED_FOOTER)
+            .setAuthor(language.commands.config.title, client.user.avatarURL())
+            .setColor(process.env.EMBED_COLOR)
+            .setDescription(language.commands.config.prefix.updated
+                .replace(/<Prefix>/g, newPrefix)
+            )
+            .setTimestamp()
+            .setFooter(process.env.EMBED_FOOTER)
     });
 
     const pgClient = await pgPool.connect();
@@ -76,5 +75,5 @@ export default async(client: Client, message: Message, language: any, msg: Messa
     }
 
     await set(message.guild.id, 'prefix', newPrefix);
-    
+
 }

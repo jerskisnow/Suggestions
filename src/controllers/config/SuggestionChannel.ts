@@ -51,9 +51,9 @@ export default async (client: Client, message: Message, language: any, msg: Mess
 
     const newChannel: any = awaitMessage.first().content;
 
-	await awaitMessage.first().delete({
-		timeout: 125
-	});
+    await awaitMessage.first().delete({
+        timeout: 125
+    });
 
     let newChannelObject;
 

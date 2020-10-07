@@ -1,5 +1,4 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
-
 import pgPool from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
 
@@ -51,9 +50,9 @@ export default async (client: Client, message: Message, language: any, msg: Mess
 
     const newChannel: any = awaitMessage.first().content;
 
-	await awaitMessage.first().delete({
-		timeout: 125
-	});
+    await awaitMessage.first().delete({
+        timeout: 125
+    });
 
     let newChannelObject;
 

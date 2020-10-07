@@ -1,5 +1,5 @@
 import ICommand from '../structures/ICommand';
-import { Client, Message, MessageEmbed, TextChannel, GuildMember } from 'discord.js';
+import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
 import pgPool from '../structures/PostgreSQL';
 
 import ApproveController from '../controllers/assessments/Approve';
