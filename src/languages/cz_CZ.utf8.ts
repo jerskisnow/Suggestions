@@ -14,7 +14,6 @@ export default {
      */
     insufficientPermissions: "Nemáš právo použít tento příkaz! (Potřebuješ <Permission>)",
     errorTitle: "Suggestions - Error",
-    activeCooldown: "You cannot use that command due to an active cooldown.",
     premiumFeature: "This command is only usable for premium servers (`<Prefix>premium`)",
 
     /**

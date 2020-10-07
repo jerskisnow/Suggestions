@@ -1,7 +1,8 @@
 import { Client } from 'discord.js';
 import { cmdMap, aliasMap } from './structures/CMDMap';
-import cliColors from './structures/CLIColors';
 import { readdir } from 'fs';
+
+import cliColors from './structures/CLIColors';
 
 const client = new Client({
     partials: ['MESSAGE', 'REACTION']

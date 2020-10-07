@@ -2,8 +2,6 @@ import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
 import pgPool from '../structures/PostgreSQL';
 
-const cooldowns: Set<string> = new Set();
-
 export default class SuggestCommand implements ICommand {
 
     aliases() {
@@ -11,15 +9,6 @@ export default class SuggestCommand implements ICommand {
     }
 
     async run(client: Client, message: Message, language: any, args: string[]) {
-
-        if (cooldowns.has(message.author.id)) return message.channel.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.errorTitle, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.activeCooldown)
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        });
 
         const pgClient = await pgPool.connect();
 
@@ -90,9 +79,6 @@ export default class SuggestCommand implements ICommand {
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
-
-        cooldowns.add(message.author.id);
-        setTimeout(() => cooldowns.delete(message.author.id), 10000);
 
         await pgClient.query('INSERT INTO suggestions (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::text)', [desc, message.author.id, message.guild.id, channel.id, msg.id, 'Open']);
 

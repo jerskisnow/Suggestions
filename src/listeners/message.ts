@@ -50,7 +50,7 @@ export default async (client: Client, message: Message) => {
             // Get the command instance from the command map with the value from the alias map
             const secondary = cmdMap.get(cmdName);
             // Finally run the command file
-            secondary.run(client, message, language, args)
+            secondary.run(client, message, language, args);
         }
     }
 
