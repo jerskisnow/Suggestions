@@ -71,6 +71,7 @@ const cache = async function (guild_id: string) {
         JSON.stringify(cacheObject), // value
         'EX', 28800 // expiration in seconds (8 hours)
     );
+    
     return cacheObject;
 };
 

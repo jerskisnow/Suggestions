@@ -1,12 +1,12 @@
+import { ShardingManager } from 'discord.js';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+
+import cliColors from './structures/CLIColors';
 
 dotenv.config({
     path: path.resolve(process.cwd(), "../.env")
 });
-
-import { ShardingManager } from 'discord.js';
-import cliColors from './structures/CLIColors';
 
 console.log(cliColors.FgCyan + `\n ██████╗ ██████╗ ██████╗ ███████╗██████╗ ███████╗███╗   ██╗ ██████╗ ██╗    ██╗
 ██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗██╔════╝████╗  ██║██╔═══██╗██║    ██║

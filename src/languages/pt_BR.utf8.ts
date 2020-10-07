@@ -14,7 +14,6 @@ export default {
      */
     insufficientPermissions: "Você não tem permissão pra usar este comando! (<Permission> is required)",
     errorTitle: "Suggestions - Erro",
-    activeCooldown: "Você não pode usar esse comando devido a um cooldown.",
     premiumFeature: "Este comando é apenas para servidores premium (`<Prefix>premium`)",
 
     /**
