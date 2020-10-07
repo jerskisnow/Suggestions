@@ -26,7 +26,7 @@ export default async (client: Client) => {
 
         client.user.setActivity(`${guildCount} guilds on ${client.shard.count} shards.`, {
             type: "WATCHING"
-        }); 
+        });
     }
 
     setTimeout(setPresence, 25000);

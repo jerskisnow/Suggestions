@@ -14,7 +14,7 @@ const exists = async function (guild_id: string): Promise<boolean> {
  * Get a cached setting from a guild
  * @return the setting of the guild or null when the guild is not cached
  */
-const get = async function (guild_id: string, guild_setting: string): Promise<string|number|boolean|null> {
+const get = async function (guild_id: string, guild_setting: string): Promise<string | number | boolean | null> {
     const output = await redisClient.getAsync(guild_id);
     return JSON.parse(output)[guild_setting];
 };

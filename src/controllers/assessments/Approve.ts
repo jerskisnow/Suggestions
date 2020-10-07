@@ -18,7 +18,7 @@ export default async (client: Client, msg: Message, language: any) => {
 		pgClient.release();
 		return;
 	}
-	
+
 	const deleteApproved = await get(msg.guild.id, 'delete_approved') as boolean;
 
 	if (deleteApproved) {

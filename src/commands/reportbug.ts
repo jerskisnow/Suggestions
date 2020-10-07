@@ -41,11 +41,11 @@ export default class VoteCommand implements ICommand {
         if (!msgReactions.first()) {
             await msg.edit({
                 embed: new MessageEmbed()
-                .setAuthor(language.commands.config.title, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.reportbug.cancelled)
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
+                    .setAuthor(language.commands.config.title, client.user.avatarURL())
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.commands.reportbug.cancelled)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
             });
             return;
         }
@@ -60,11 +60,11 @@ export default class VoteCommand implements ICommand {
         });
 
         const embed: MessageEmbed = new MessageEmbed()
-                .setAuthor(message.author.tag, message.author.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(args.join(" "))
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER);
+            .setAuthor(message.author.tag, message.author.avatarURL())
+            .setColor(process.env.EMBED_COLOR)
+            .setDescription(args.join(" "))
+            .setTimestamp()
+            .setFooter(process.env.EMBED_FOOTER);
 
         client.shard.broadcastEval(`
             (async () => {

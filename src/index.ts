@@ -20,7 +20,7 @@ const manager = new ShardingManager('app.js', {
     token: process.env.CLIENT_TOKEN
 });
 
-manager.on('shardCreate', shard =>  console.log(`${cliColors.FgCyan}>> Shard ${cliColors.FgYellow + shard.id + cliColors.FgCyan} has been launched.`));
+manager.on('shardCreate', shard => console.log(`${cliColors.FgCyan}>> Shard ${cliColors.FgYellow + shard.id + cliColors.FgCyan} has been launched.`));
 
 console.log(cliColors.FgBlue + "\n---=[Loading Shards...]=---" + cliColors.Reset);
 

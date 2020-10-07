@@ -10,7 +10,7 @@ const languageList = (): Promise<string[]> =>
             if (error) reject(error);
             else resolve(result);
         });
-});
+    });
 
 // const languageList = function (): Promise<string[]> {
 //     return new Promise(function(resolve, reject) {

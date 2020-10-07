@@ -4,7 +4,7 @@ import pgPool from '../../structures/PostgreSQL';
 /*
  msg -> The suggestion message
 */
-export default async(msg: Message) => {
+export default async (msg: Message) => {
 
 	if (!msg.deleted && msg.deletable)
 		await msg.delete();

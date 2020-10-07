@@ -91,7 +91,7 @@ export default {
         suggest: {
             title: "Suggestions - Предложение",
             invalidChannel: "Убедитесь в том, что администратор сервера настроил бота правильно!",
-            descriptionRequired:"Пожалуйста, опишите свою идею!",
+            descriptionRequired: "Пожалуйста, опишите свою идею!",
             description: "**Описание:** <Description>\n\n**Статус:** <Status>\n**ID:** <ID>",
             sent: "Предложение успешно добавлено! ([Нажать](<Url>))"
         },
