@@ -11,21 +11,21 @@ import AutoRejectController from '../controllers/config/AutoReject';
 import DeleteApprovedController from '../controllers/config/DeleteAproved';
 import DeleteRejectedController from '../controllers/config/DeleteRejected';
 
-const reactions: any = {
-    '1️⃣': PrefixController,
-    '2️⃣': LanguageController,
-    '3️⃣': SuggestionChannelController,
-    '4️⃣': ReportChannelController,
-    '5️⃣': AutoAproveController,
-    '6️⃣': AutoRejectController,
-    '7️⃣': DeleteApprovedController,
-    '8️⃣': DeleteRejectedController
-}
-
 export default class ConfigCommand implements ICommand {
 
     aliases() {
         return ['cfg', 'configuration']
+    }
+
+    private reactions: any = {
+        '1️⃣': PrefixController,
+        '2️⃣': LanguageController,
+        '3️⃣': SuggestionChannelController,
+        '4️⃣': ReportChannelController,
+        '5️⃣': AutoAproveController,
+        '6️⃣': AutoRejectController,
+        '7️⃣': DeleteApprovedController,
+        '8️⃣': DeleteRejectedController
     }
 
     async run(client: Client, message: Message, language: any) {
@@ -58,7 +58,7 @@ export default class ConfigCommand implements ICommand {
                 .setFooter(process.env.EMBED_FOOTER)
         });
 
-        const reactionsArray: Array<string> = Object.keys(reactions);
+        const reactionsArray: Array<string> = Object.keys(this.reactions);
 
         for (let i = 0; i < reactionsArray.length; i++) {
             msg.react(reactionsArray[i]);
@@ -73,7 +73,7 @@ export default class ConfigCommand implements ICommand {
         msg.reactions.removeAll();
 
         if (msgReactions.first()) {
-            const controller: Function = reactions[msgReactions.first().emoji.name]
+            const controller: Function = this.reactions[msgReactions.first().emoji.name]
             controller(client, message, language, msg)
         }
 

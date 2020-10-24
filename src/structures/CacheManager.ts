@@ -16,6 +16,9 @@ const exists = async function (guild_id: string): Promise<boolean> {
  */
 const get = async function (guild_id: string, guild_setting: string): Promise<string | number | boolean | null> {
     const output = await redisClient.getAsync(guild_id);
+    if (output == null) {
+        return null;
+    }
     return JSON.parse(output)[guild_setting];
 };
 

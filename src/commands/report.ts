@@ -13,7 +13,10 @@ export default class ReportCommand implements ICommand {
         const pgClient = await pgPool.connect();
 
         const res = await pgClient.query('SELECT report_channel FROM servers WHERE id = $1::text', [message.guild.id]);
-        if (res.rows.length === 0) return;
+        if (res.rows.length === 0) {
+            pgClient.release();
+            return;
+        }
 
         const channel: TextChannel = message.guild.channels.cache.get(res.rows[0].report_channel) as TextChannel;
         if (!channel) {
