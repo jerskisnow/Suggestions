@@ -49,6 +49,22 @@ export default async (client: Client, message: Message): Promise<void> => {
             return;
         }
 
+        if (cmd.role !== null &&
+            !message.member.roles.cache.has(cmd.role)
+        ) {
+            const roleName = message.guild.roles.cache.get(cmd.role).name;
+            message.channel.send({
+                embed: new MessageEmbed()
+                    .setAuthor(language.errorTitle, client.user.avatarURL())
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.roleRequired
+                        .replace(/<Role>/g, roleName))
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
+            return;
+        }
+
         cmdCache.get(command).exec(client, message, language, args);
     }
 

@@ -12,8 +12,9 @@ export default {
      * Often used messages which are not necessarily associated with a specific function / implementation
      * are stated below
      */
-    insufficientPermissions: "Je hebt geen toestemming om die command te gebruiken! (<Permission> is vereist)",
-    errorTitle: "Suggestions - Error",
+    insufficientPermissions: "Je hebt geen toestemming om die command te gebruiken. (<Permission> is vereist)",
+    roleRequired: "Je hebt de `<Role>` role nodig om die command te gebruiken.",
+    errorTitle: "Suggestions - Foutmelding",
     premiumFeature: "This command is only usable for premium servers (`<Prefix>premium`)",
 
     /**

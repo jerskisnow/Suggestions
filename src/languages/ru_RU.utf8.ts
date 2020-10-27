@@ -14,6 +14,7 @@ export default {
      * are stated below
      */
     insufficientPermissions: "У вас нет прав для использования этой команды (вам нужны права <Permission>)",
+    roleRequired: "You need the role `<Role>` in order to use that command.",
     errorTitle: "Ошибка предложения",
     premiumFeature: "Эта команда может быть использована только на премиум-серверах! (`<Prefix>premium`)",
 
