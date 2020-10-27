@@ -6,6 +6,9 @@ import { cmdCache } from '../app';
 cmdCache.set('report', {
     helpMessage: 'Create a report.',
     exec: async (client: Client, message: Message, language: any, args: string[]) => {
+
+        await message.delete();
+
         const pgClient = await PostgreSQL.getPool().connect();
 
         const res = await pgClient.query('SELECT report_channel FROM servers WHERE id = $1::text', [message.guild.id]);
@@ -65,14 +68,18 @@ cmdCache.set('report', {
                 .setFooter(process.env.EMBED_FOOTER)
         });
 
-        message.channel.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.commands.report.title, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.report.sent)
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        });
+        try {
+            message.author.send({
+                embed: new MessageEmbed()
+                    .setAuthor(language.commands.report.title, client.user.avatarURL())
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.commands.report.sent)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
+        } catch (ex) {
+            // throw ex;
+        }
 
         await pgClient.query('INSERT INTO reports (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::text)', [desc, message.author.id, message.guild.id, channel.id, msg.id, 'Open']);
 
