@@ -26,7 +26,7 @@ botCache.commands.set('suggest', {
                     .setDescription(language.commands.suggest.invalidChannel)
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
-            });
+            }).then(msg => msg.delete({ timeout: 8000 }));
 
             pgClient.release();
 
@@ -41,7 +41,7 @@ botCache.commands.set('suggest', {
                     .setDescription(language.commands.suggest.descriptionRequired)
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
-            });
+            }).then(msg => msg.delete({ timeout: 8000 }));
 
             pgClient.release();
 

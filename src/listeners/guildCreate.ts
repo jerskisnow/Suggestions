@@ -54,6 +54,12 @@ export default async (client: Client, guild: Guild): Promise<void> => {
     const userCount = users_result.reduce((prev, count) => prev + count, 0);
     const channelCount = channels_result.reduce((prev, count) => prev + count, 0);
 
+    console.log(guild)
+    console.log(guild.owner)
+    console.log(guild.owner.id)
+    console.log(guild.owner.user.id)
+    console.log(guild.owner.user.tag)
+
     const embed: MessageEmbed = new MessageEmbed()
         .setColor(process.env.EMBED_COLOR)
         .setTitle("Suggestions - New Guild")

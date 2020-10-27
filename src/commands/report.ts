@@ -26,7 +26,7 @@ botCache.commands.set('report', {
                     .setDescription(language.commands.report.invalidChannel)
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
-            });
+            }).then(msg => msg.delete({ timeout: 8000 }));
 
             pgClient.release();
 
@@ -41,7 +41,7 @@ botCache.commands.set('report', {
                     .setDescription(language.commands.report.descriptionRequired)
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
-            });
+            }).then(msg => msg.delete({ timeout: 8000 }));
 
             pgClient.release();
 

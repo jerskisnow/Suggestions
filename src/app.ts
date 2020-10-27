@@ -44,7 +44,7 @@ readdir('./listeners/', (_err, files) =>
 readdir('./languages/', (_err, files) =>
     files.forEach(file =>
         botCache.languages.set(
-            file.split(".")[0], require(`./languages/${file}`)
+            file.split(".")[0], require(`./languages/${file}`).default
         )
     )
 )
