@@ -1,15 +1,15 @@
 import { Message } from 'discord.js';
-import pgPool from '../../structures/PostgreSQL';
+import PostgreSQL from '../../structures/PostgreSQL';
 
 /*
  msg -> The suggestion message
 */
-export default async (msg: Message) => {
+export default async (msg: Message): Promise<void> => {
 
 	if (!msg.deleted && msg.deletable)
 		await msg.delete();
 
-	const pgClient = await pgPool.connect();
+	const pgClient = await PostgreSQL.getPool().connect();
 
 	try {
 		const result = await pgClient.query('SELECT id FROM suggestions WHERE message = $1::text', [msg.id]);

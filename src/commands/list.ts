@@ -1,16 +1,12 @@
-import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed } from 'discord.js';
-import pgPool from '../structures/PostgreSQL';
+import PostgreSQL from '../structures/PostgreSQL';
 
-export default class ListCommand implements ICommand {
+import { cmdCache } from '../app';
 
-    aliases() {
-        return ['suggestions'];
-    }
-
-    async run(client: Client, message: Message, language: any) {
-
-        const pgClient = await pgPool.connect();
+cmdCache.set('list', {
+    helpMessage: 'Obtain a list of all active suggestions.',
+    exec: async (client: Client, message: Message, language: any) => {
+        const pgClient = await PostgreSQL.getPool().connect();
 
         let result;
 
@@ -20,14 +16,17 @@ export default class ListCommand implements ICommand {
             pgClient.release();
         }
 
-        if (!result.rows.length) return message.channel.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.errorTitle, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.list.noSuggestions)
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        });
+        if (!result.rows.length) {
+            message.channel.send({
+                embed: new MessageEmbed()
+                    .setAuthor(language.errorTitle, client.user.avatarURL())
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.commands.list.noSuggestions)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
+            return;
+        }
 
         const listEmbed = new MessageEmbed()
             .setAuthor(language.commands.list.title, client.user.avatarURL())
@@ -36,7 +35,7 @@ export default class ListCommand implements ICommand {
             .setTimestamp()
             .setFooter(process.env.EMBED_FOOTER);
 
-        for (var i = 0; i < result.rows.length; i++) {
+        for (let i = 0; i < result.rows.length; i++) {
             if (i === 9) {
                 break;
             }
@@ -53,11 +52,5 @@ export default class ListCommand implements ICommand {
         }
 
         message.channel.send({ embed: listEmbed });
-
     }
-
-    help() {
-        return "Obtain a list of all active suggestions.";
-    }
-
-}
+});

@@ -1,16 +1,12 @@
-import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
-import pgPool from '../structures/PostgreSQL';
+import PostgreSQL from '../structures/PostgreSQL';
 
-export default class ReportCommand implements ICommand {
+import { cmdCache } from '../app';
 
-    aliases() {
-        return null as null;
-    }
-
-    async run(client: Client, message: Message, language: any, args: string[]) {
-
-        const pgClient = await pgPool.connect();
+cmdCache.set('report', {
+    helpMessage: 'Create a report.',
+    exec: async (client: Client, message: Message, language: any, args: string[]) => {
+        const pgClient = await PostgreSQL.getPool().connect();
 
         const res = await pgClient.query('SELECT report_channel FROM servers WHERE id = $1::text', [message.guild.id]);
         if (res.rows.length === 0) {
@@ -81,11 +77,5 @@ export default class ReportCommand implements ICommand {
         await pgClient.query('INSERT INTO reports (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::text)', [desc, message.author.id, message.guild.id, channel.id, msg.id, 'Open']);
 
         pgClient.release();
-
     }
-
-    help() {
-        return "Create a report. (10 second cooldown)";
-    }
-
-}
+});

@@ -1,36 +1,27 @@
-import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
-import pgPool from '../structures/PostgreSQL';
+import PostgreSQL from '../structures/PostgreSQL';
 
 import ResolveController from '../controllers/assessments/Resolve';
 
-export default class ResolveCommand implements ICommand {
+import { cmdCache } from '../app';
 
-    aliases() {
-        return null as null;
-    }
+cmdCache.set('resolve', {
+    permission: 'MANAGE_MESSAGES',
+    helpMessage: 'Resolve a report.',
+    exec: async (client: Client, message: Message, language: any, args: string[]) => {
+        if (!args.length) {
+            message.channel.send({
+                embed: new MessageEmbed()
+                    .setAuthor(language.errorTitle, client.user.avatarURL())
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.commands.resolve.descriptionRequired)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
+            return;
+        }
 
-    async run(client: Client, message: Message, language: any, args: string[]) {
-        if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.channel.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.errorTitle, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.insufficientPermissions
-                    .replace(/<Permission>/g, "MANAGE_MESSAGES"))
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        });
-
-        if (!args.length) return message.channel.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.errorTitle, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.resolve.descriptionRequired)
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        });
-
-        const pgClient = await pgPool.connect();
+        const pgClient = await PostgreSQL.getPool().connect();
 
         if (args[0].toLowerCase() === "all") {
 
@@ -99,15 +90,18 @@ export default class ResolveCommand implements ICommand {
                 pgClient.release();
             }
 
-            if (!result.rows.length) return message.channel.send({
-                embed: new MessageEmbed()
-                    .setAuthor(language.errorTitle, client.user.avatarURL())
-                    .setColor(process.env.EMBED_COLOR)
-                    .setDescription(language.commands.resolve.invalidInput)
-                    .setTimestamp()
-                    .setFooter(process.env.EMBED_FOOTER)
-            });
-
+            if (!result.rows.length) {
+                message.channel.send({
+                    embed: new MessageEmbed()
+                        .setAuthor(language.errorTitle, client.user.avatarURL())
+                        .setColor(process.env.EMBED_COLOR)
+                        .setDescription(language.commands.resolve.invalidInput)
+                        .setTimestamp()
+                        .setFooter(process.env.EMBED_FOOTER)
+                });
+                return;    
+            }
+            
             const chn: TextChannel = message.guild.channels.cache.get(result.rows[0].channel) as TextChannel;
             if (chn) {
                 try {
@@ -128,9 +122,4 @@ export default class ResolveCommand implements ICommand {
                 .setFooter(process.env.EMBED_FOOTER)
         });
     }
-
-    help() {
-        return "Resolve a report.";
-    }
-
-}
+});

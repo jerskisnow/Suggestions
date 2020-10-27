@@ -1,16 +1,12 @@
-import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
-import pgPool from '../structures/PostgreSQL';
+import PostgreSQL from '../structures/PostgreSQL';
 
-export default class SuggestCommand implements ICommand {
+import { cmdCache } from '../app';
 
-    aliases() {
-        return null as null;
-    }
-
-    async run(client: Client, message: Message, language: any, args: string[]) {
-
-        const pgClient = await pgPool.connect();
+cmdCache.set('suggest', {
+    helpMessage: 'Create a suggestion.',
+    exec: async (client: Client, message: Message, language: any, args: string[]) => {
+        const pgClient = await PostgreSQL.getPool().connect();
 
         const res = await pgClient.query('SELECT suggestion_channel FROM servers WHERE id = $1::text', [message.guild.id]);
         if (res.rows.length === 0) {
@@ -87,9 +83,4 @@ export default class SuggestCommand implements ICommand {
 
         pgClient.release();
     }
-
-    help() {
-        return "Create a suggestion. (10 second cooldown)";
-    }
-
-}
+});

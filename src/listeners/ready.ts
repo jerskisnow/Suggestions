@@ -2,7 +2,7 @@
 import cliColors from '../structures/CLIColors';
 import DBL from 'dblapi.js';
 
-export default async (client: Client) => {
+export default async (client: Client): Promise<void> => {
 
     console.log(cliColors.FgBlue + "\n---=[Loading Apis...]=---" + cliColors.Reset);
 

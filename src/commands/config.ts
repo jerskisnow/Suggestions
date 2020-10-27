@@ -1,4 +1,3 @@
-import ICommand from '../structures/ICommand';
 import { Client, Message, MessageReaction, User, MessageEmbed } from 'discord.js';
 
 // Controller imports
@@ -11,35 +10,12 @@ import AutoRejectController from '../controllers/config/AutoReject';
 import DeleteApprovedController from '../controllers/config/DeleteAproved';
 import DeleteRejectedController from '../controllers/config/DeleteRejected';
 
-export default class ConfigCommand implements ICommand {
+import { cmdCache } from '../app';
 
-    aliases() {
-        return ['cfg', 'configuration']
-    }
-
-    private reactions: any = {
-        '1️⃣': PrefixController,
-        '2️⃣': LanguageController,
-        '3️⃣': SuggestionChannelController,
-        '4️⃣': ReportChannelController,
-        '5️⃣': AutoAproveController,
-        '6️⃣': AutoRejectController,
-        '7️⃣': DeleteApprovedController,
-        '8️⃣': DeleteRejectedController
-    }
-
-    async run(client: Client, message: Message, language: any) {
-
-        if (!message.member.permissions.has("ADMINISTRATOR")) return message.channel.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.errorTitle, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.insufficientPermissions
-                    .replace(/<Permission>/g, "ADMINISTRATOR"))
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        });
-
+cmdCache.set('config', {
+    permission: 'ADMINISTRATOR',
+    helpMessage: 'Configure the bot.',
+    exec: async (client: Client, message: Message, language: any) => {
         const msg = await message.channel.send({
             embed: new MessageEmbed()
                 .setAuthor(language.commands.config.title, client.user.avatarURL())
@@ -58,7 +34,18 @@ export default class ConfigCommand implements ICommand {
                 .setFooter(process.env.EMBED_FOOTER)
         });
 
-        const reactionsArray: Array<string> = Object.keys(this.reactions);
+        const reactions: any = {
+            '1️⃣': PrefixController,
+            '2️⃣': LanguageController,
+            '3️⃣': SuggestionChannelController,
+            '4️⃣': ReportChannelController,
+            '5️⃣': AutoAproveController,
+            '6️⃣': AutoRejectController,
+            '7️⃣': DeleteApprovedController,
+            '8️⃣': DeleteRejectedController
+        }
+
+        const reactionsArray: Array<string> = Object.keys(reactions);
 
         for (let i = 0; i < reactionsArray.length; i++) {
             msg.react(reactionsArray[i]);
@@ -73,16 +60,8 @@ export default class ConfigCommand implements ICommand {
         msg.reactions.removeAll();
 
         if (msgReactions.first()) {
-            const controller: Function = this.reactions[msgReactions.first().emoji.name]
+            const controller = reactions[msgReactions.first().emoji.name]
             controller(client, message, language, msg)
         }
-
-        // Probably edit the message saying the process failed
-
     }
-
-    help() {
-        return "Configure the bot.";
-    }
-
-}
+});

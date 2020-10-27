@@ -1,14 +1,10 @@
-import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed } from 'discord.js';
 
-export default class PremiumCommand implements ICommand {
+import { cmdCache } from '../app';
 
-    aliases() {
-        return null as null;
-    }
-
-    async run(client: Client, message: Message, language: any) {
-
+cmdCache.set('premium', {
+    helpMessage: 'Receive information about the Suggestion\'s premium plan.',
+    exec: async (client: Client, message: Message, language: any) => {
         message.channel.send({
             embed: new MessageEmbed()
                 .setAuthor(language.commands.premium.title, client.user.avatarURL())
@@ -18,11 +14,5 @@ export default class PremiumCommand implements ICommand {
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
-
     }
-
-    help() {
-        return "Receive information about the Suggestion's premium plan.";
-    }
-
-}
+});

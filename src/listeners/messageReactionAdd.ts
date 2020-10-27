@@ -5,7 +5,7 @@ import { exists, get, cache } from '../structures/CacheManager';
 import ApproveController from '../controllers/assessments/Approve';
 import RejectController from '../controllers/assessments/Reject';
 
-export default async (client: Client, reaction: MessageReaction) => {
+export default async (client: Client, reaction: MessageReaction): Promise<void> => {
 
 	if (reaction.partial) {
 		try {

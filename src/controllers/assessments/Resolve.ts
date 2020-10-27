@@ -1,10 +1,10 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
-import pgPool from '../../structures/PostgreSQL';
+import PostgreSQL from '../../structures/PostgreSQL';
 
-export default async (client: Client, msg: Message, language: any) => {
+export default async (client: Client, msg: Message, language: any): Promise<void> => {
 
-    const pgClient = await pgPool.connect();
+    const pgClient = await PostgreSQL.getPool().connect();
 
     const result = await pgClient.query('SELECT id, context, author, status FROM reports WHERE message = $1::text', [msg.id]);
 

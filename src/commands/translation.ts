@@ -1,16 +1,12 @@
-import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed } from 'discord.js';
 
 import { get } from '../structures/CacheManager';
 
-export default class TranslationCommand implements ICommand {
+import { cmdCache } from '../app';
 
-    aliases() {
-        return ['translate', 'language', 'languages', 'translations'];
-    }
-
-    async run(client: Client, message: Message, language: any) {
-
+cmdCache.set('translation', {
+    helpMessage: 'Receive information about the translations of the bot.',
+    exec: async (client: Client, message: Message, language: any) => {
         const prefix = await get(message.guild.id, 'prefix') as string;
 
         message.channel.send({
@@ -22,11 +18,5 @@ export default class TranslationCommand implements ICommand {
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
-
     }
-
-    help() {
-        return "Receive information about the translations of the bot.";
-    }
-
-}
+});

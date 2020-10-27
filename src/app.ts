@@ -1,17 +1,24 @@
 import { Client } from 'discord.js';
-import { cmdMap, aliasMap } from './structures/CMDMap';
 import { readdir } from 'fs';
 
 import cliColors from './structures/CLIColors';
+import Command from './types/Command';
+import PostgreSQL from './structures/PostgreSQL';
 
 const client = new Client({
     partials: ['MESSAGE', 'REACTION']
 });
 
+PostgreSQL.setupPool();
+
+const cmdCache = new Map<string, Command>();
+
 // client.on("error", (e) => console.error(e));
 // client.on("warn", (e) => console.warn(e));
 // client.on("debug", e => console.info(e));
 // client.on('shardError', e => console.error(e));
+
+readdir('./commands/', (err, files) => files.forEach(file => require(`./commands/${file}`)));
 
 readdir('./listeners/', (err, files) => {
     if (err) throw err;
@@ -29,33 +36,8 @@ readdir('./listeners/', (err, files) => {
 
 });
 
-readdir('./commands/', (err, files) => {
-    if (err) throw err;
-
-    console.log(cliColors.FgBlue + "\n---=[Loading Commands...]=---" + cliColors.Reset);
-
-    files.forEach((file) => {
-        if (!file.endsWith(".js")) return;
-
-        const cmdInstance = require(`./commands/${file}`);
-        const cmdName = file.split(".")[0];
-
-        console.log(cliColors.FgCyan + `>> ${cliColors.FgYellow + cmdName + cliColors.FgCyan} has been loaded.` + cliColors.Reset);
-
-        const cmdClass = new cmdInstance.default();
-
-        cmdMap.set(cmdName, cmdClass);
-
-        const cmdAliases = cmdClass.aliases();
-
-        if (cmdAliases !== null) {
-            for (let i = 0; i < cmdAliases.length; i++) {
-                aliasMap.set(cmdAliases[i], cmdName);
-            }
-        }
-
-    });
-
-});
-
 client.login(process.env.CLIENT_TOKEN);
+
+export {
+    cmdCache
+}

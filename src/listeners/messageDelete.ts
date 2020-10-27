@@ -1,11 +1,11 @@
 import { Message } from 'discord.js';
-import pgPool from '../structures/PostgreSQL';
+import PostgreSQL from '../structures/PostgreSQL';
 
 import DeleteController from '../controllers/assessments/Delete';
 
-export default async (message: Message) => {
+export default async (message: Message): Promise<void> => {
 
-	const pgClient = await pgPool.connect();
+	const pgClient = await PostgreSQL.getPool().connect();
 
 	let res;
 
@@ -15,7 +15,8 @@ export default async (message: Message) => {
 		pgClient.release();
 	}
 
-	if (res.rows.length)
-		DeleteController(message);
+	if (res.rows.length) {
+		await DeleteController(message);
+	}
 
 }

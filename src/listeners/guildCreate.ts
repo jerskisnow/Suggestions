@@ -1,10 +1,10 @@
 import { Client, Guild, MessageEmbed } from 'discord.js';
-import pgPool from '../structures/PostgreSQL';
+import PostgreSQL from '../structures/PostgreSQL';
 
-export default async (client: Client, guild: Guild) => {
+export default async (client: Client, guild: Guild): Promise<void> => {
 
     // We're creating the server in the database to relieve some pressure of the message event, since that one also create a guild when it doesn't exist
-    const pgClient = await pgPool.connect();
+    const pgClient = await PostgreSQL.getPool().connect();
 
     try {
         await pgClient.query('INSERT INTO servers (id, prefix, language, is_premium) VALUES ($1::text, $2::text, $3::text, $4::boolean)', [guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE, false]);

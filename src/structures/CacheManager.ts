@@ -1,4 +1,4 @@
-import pgPool from './PostgreSQL';
+import PostgreSQL from './PostgreSQL';
 import redisClient from './RedisClient';
 
 /**
@@ -27,9 +27,19 @@ const get = async function (guild_id: string, guild_setting: string): Promise<st
  * 
  * TODO: Make this dynamic once
  */
-const cache = async function (guild_id: string) {
+const cache = async function (guild_id: string): Promise<{
+    prefix: string;
+    language: string;
+    suggestion_channel: string | null;
+    report_channel: string | null;
+    auto_approve: number;
+    auto_reject: number;
+    delete_approved: boolean;
+    delete_rejected: boolean;
+    is_premium: boolean;
+}> {
 
-    const pgClient = await pgPool.connect();
+    const pgClient = await PostgreSQL.getPool().connect();
 
     let result;
 
@@ -81,7 +91,7 @@ const cache = async function (guild_id: string) {
 /**
  * Set a specific guild setting
  */
-const set = async function (guild_id: string, guild_setting: string, setting_value: any) {
+const set = async function (guild_id: string, guild_setting: string, setting_value: string | number | boolean): Promise<void> {
 
     const settingsString = await redisClient.getAsync(guild_id);
     const settings = JSON.parse(settingsString);
@@ -95,7 +105,7 @@ const set = async function (guild_id: string, guild_setting: string, setting_val
  * Remove a specific guild
  * @param guild_id the id of the specific guild
  */
-const remove = async function (guild_id: string) {
+const remove = async function (guild_id: string): Promise<void>  {
     await redisClient.delAsync(guild_id);
 }
 

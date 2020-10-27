@@ -26,6 +26,9 @@
     "@types/redis": "^2.8.27",
     "@types/utf8": "^2.1.6",
     "@types/ws": "^7.2.7",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.12.0",
     "typescript": "^4.0.3"
   }
 }
