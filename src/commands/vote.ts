@@ -1,14 +1,10 @@
-import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed } from 'discord.js';
 
-export default class VoteCommand implements ICommand {
+import { botCache } from '../app';
 
-    aliases() {
-        return ['elect'];
-    }
-
-    async run(client: Client, message: Message, language: any) {
-
+botCache.commands.set('vote', {
+    helpMessage: 'Obtain a link in order to vote for the bot.',
+    exec: (client: Client, message: Message, language: any) => {
         message.channel.send({
             embed: new MessageEmbed()
                 .setAuthor(language.commands.vote.title, client.user.avatarURL())
@@ -17,11 +13,5 @@ export default class VoteCommand implements ICommand {
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
-
     }
-
-    help() {
-        return "Obtain a link in order to vote for the bot.";
-    }
-
-}
+});

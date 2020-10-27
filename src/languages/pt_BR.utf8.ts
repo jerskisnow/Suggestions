@@ -12,7 +12,8 @@ export default {
      * Often used messages which are not necessarily associated with a specific function / implementation
      * are stated below
      */
-    insufficientPermissions: "Você não tem permissão pra usar este comando! (<Permission> is required)",
+    insufficientPermissions: "Você não tem permissão pra usar este comando. (<Permission> is required)",
+    roleRequired: "You need the role `<Role>` in order to use that command.",
     errorTitle: "Suggestions - Erro",
     premiumFeature: "Este comando é apenas para servidores premium (`<Prefix>premium`)",
 

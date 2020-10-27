@@ -1,12 +1,12 @@
-import { cmdMap, aliasMap } from '../structures/CMDMap';
-import { Client, Message } from 'discord.js';
+import { Client, Message, MessageEmbed } from 'discord.js';
+import Command from '../types/Command';
+
 import { exists, get, cache } from '../structures/CacheManager';
+import { botCache } from '../app';
 
-export default async (client: Client, message: Message) => {
+export default async (client: Client, message: Message): Promise<void> => {
 
-    // If the author is a bot, return
     if (message.author.bot) return;
-    // If the message is not in a guild, return
     if (!message.guild) return;
 
     const bool = await exists(message.guild.id);
@@ -14,43 +14,42 @@ export default async (client: Client, message: Message) => {
         await cache(message.guild.id);
     }
 
-    let prefix = await get(message.guild.id, 'prefix') as string;
+    const prefix = await get(message.guild.id, 'prefix') as string;
 
-    // Check if the message contains the prefix
     if (message.content.startsWith(prefix) || message.content.startsWith(`<@${client.user.id}> `)) {
 
-        // Define the command arguments
         const args = message.content
             .slice(prefix.length)
             .trim()
             .split(/ +/g);
 
-        // Define the commandName
         const command = args.shift().toLowerCase();
-        // Check if someone actually entered a command instead of just the prefix
         if (command === '') return;
 
-        // Fetch the language of the guild
         const languageCode = await get(message.guild.id, 'language') as string;
-        const language: Object = require(`../languages/${languageCode}.utf8.js`).default;
+        const language = botCache.languages.get(languageCode);
 
-        // Define the command instance
-        const cmdInstance = cmdMap.get(command);
-
-        // Check if the command is not undefined, if so run the command
-        if (cmdInstance != null) {
-            cmdInstance.run(client, message, language, args);
-        } else {
-            // Search for a registered alias
-            const cmdName = aliasMap.get(command);
-            // Return if the alias is not registered
-            if (cmdName === undefined) return;
-
-            // Get the command instance from the command map with the value from the alias map
-            const secondary = cmdMap.get(cmdName);
-            // Finally run the command file
-            secondary.run(client, message, language, args);
+        const cmd: Command = botCache.commands.get(command);
+        if (cmd === undefined) {
+            return;
         }
+
+        if (cmd.permission !== null &&
+            !message.member.permissions.has(cmd.permission as any)
+        ) {
+            message.channel.send({
+                embed: new MessageEmbed()
+                    .setAuthor(language.errorTitle, client.user.avatarURL())
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.insufficientPermissions
+                        .replace(/<Permission>/g, cmd.permission))
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
+            return;
+        }
+
+        botCache.commands.get(command).exec(client, message, language, args);
     }
 
 }

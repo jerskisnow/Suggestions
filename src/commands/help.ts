@@ -1,23 +1,18 @@
-import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed } from 'discord.js';
 
 import { get } from '../structures/CacheManager';
-import { cmdMap } from '../structures/CMDMap';
+import { botCache } from '../app';
 
-export default class HelpCommand implements ICommand {
-
-    aliases() {
-        return ['info'];
-    }
-
-    async run(client: Client, message: Message, language: any) {
-
+botCache.commands.set('help', {
+    helpMessage: 'Obtain a list of all commands with a description and a link to the support discord.',
+    exec: async (client: Client, message: Message, language: any) => {
         const prefix = await get(message.guild.id, 'prefix') as string;
 
         const stringArray: string[] = [];
 
-        for (let cmd of Array.from(cmdMap.keys())) {
-            stringArray.push(prefix + cmd + " >> " + cmdMap.get(cmd).help());
+        for (const key of Array.from(botCache.commands.keys())) {
+            stringArray.push(prefix + key + " >> " + botCache.commands.get(key).helpMessage);
+            
         }
 
         message.channel.send({
@@ -29,11 +24,5 @@ export default class HelpCommand implements ICommand {
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
-
     }
-
-    help() {
-        return "Obtain a list of all commands with a description and a link to the support discord.";
-    }
-
-}
+});

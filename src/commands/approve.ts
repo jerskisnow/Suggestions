@@ -1,37 +1,27 @@
-import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
-import pgPool from '../structures/PostgreSQL';
+import PostgreSQL from '../structures/PostgreSQL';
 
 import ApproveController from '../controllers/assessments/Approve';
 
-export default class ApproveCommand implements ICommand {
+import { botCache } from '../app';
 
-    aliases() {
-        return ['accept'];
-    }
+botCache.commands.set('approve', {
+    permission: 'MANAGE_MESSAGES',
+    helpMessage: 'Approve a suggestion.',
+    exec: async (client: Client, message: Message, language: any, args: string[]) => {
+        if (!args.length) {
+            message.channel.send({
+                embed: new MessageEmbed()
+                    .setAuthor(language.errorTitle, client.user.avatarURL())
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.commands.approve.descriptionRequired)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
+            return;
+        }
 
-    async run(client: Client, message: Message, language: any, args: string[]) {
-
-        if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.channel.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.errorTitle, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.insufficientPermissions
-                    .replace(/<Permission>/g, "MANAGE_MESSAGES"))
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        });
-
-        if (!args.length) return message.channel.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.errorTitle, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.approve.descriptionRequired)
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        });
-
-        const pgClient = await pgPool.connect();
+        const pgClient = await PostgreSQL.getPool().connect();
 
         if (args[0].toLowerCase() === "all") {
 
@@ -61,7 +51,7 @@ export default class ApproveCommand implements ICommand {
                 if (chn) {
                     try {
                         const msg = await chn.messages.fetch(result.rows[i].message, false);
-                        ApproveController(client, msg, language);
+                        await ApproveController(client, msg, language);
                     } catch (err) {
                         // throw err;
                     }
@@ -100,20 +90,23 @@ export default class ApproveCommand implements ICommand {
                 pgClient.release();
             }
 
-            if (!result.rows.length) return message.channel.send({
-                embed: new MessageEmbed()
-                    .setAuthor(language.errorTitle, client.user.avatarURL())
-                    .setColor(process.env.EMBED_COLOR)
-                    .setDescription(language.commands.approve.invalidInput)
-                    .setTimestamp()
-                    .setFooter(process.env.EMBED_FOOTER)
-            });
+            if (!result.rows.length) {
+                message.channel.send({
+                    embed: new MessageEmbed()
+                        .setAuthor(language.errorTitle, client.user.avatarURL())
+                        .setColor(process.env.EMBED_COLOR)
+                        .setDescription(language.commands.approve.invalidInput)
+                        .setTimestamp()
+                        .setFooter(process.env.EMBED_FOOTER)
+                });
+                return;
+            }
 
             const chn: TextChannel = message.guild.channels.cache.get(result.rows[0].channel) as TextChannel;
             if (chn) {
                 try {
                     const msg = await chn.messages.fetch(result.rows[0].message, false);
-                    ApproveController(client, msg, language);
+                    await ApproveController(client, msg, language);
                 } catch (err) {
                     // throw err;
                 }
@@ -128,11 +121,5 @@ export default class ApproveCommand implements ICommand {
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
         });
-
     }
-
-    help() {
-        return "Approve a suggestion.";
-    }
-
-}
+});

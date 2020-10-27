@@ -1,22 +1,21 @@
-import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed, MessageReaction, User } from 'discord.js';
 
-export default class VoteCommand implements ICommand {
+import { botCache } from '../app';
 
-    aliases() {
-        return ['bugreport'];
-    }
-
-    async run(client: Client, message: Message, language: any, args: string[]) {
-
-        if (!args.length) return message.channel.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.errorTitle, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.reportbug.descriptionRequired)
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        });
+botCache.commands.set('reportbug', {
+    helpMessage: 'Report a bug to the developer of this bot.',
+    exec: async (client: Client, message: Message, language: any, args: string[]) => {
+        if (!args.length) {
+            message.channel.send({
+                embed: new MessageEmbed()
+                    .setAuthor(language.errorTitle, client.user.avatarURL())
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.commands.reportbug.descriptionRequired)
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
+            return;
+        }
 
         const msg = await message.channel.send({
             embed: new MessageEmbed()
@@ -74,11 +73,5 @@ export default class VoteCommand implements ICommand {
                 }
             })();
         `);
-
     }
-
-    help() {
-        return "Report a bug to the developer of this bot.";
-    }
-
-}
+});

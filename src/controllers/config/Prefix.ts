@@ -1,6 +1,7 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 import utf8 from 'utf8';
-import pgPool from '../../structures/PostgreSQL';
+
+import PostgreSQL from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
 
 /**
@@ -11,7 +12,7 @@ import { set } from '../../structures/CacheManager';
  * @param {Message} msg      The choose menu message used to activate the controller
  * @return                   Ends the function in an earlier stage
  */
-export default async (client: Client, message: Message, language: any, msg: Message) => {
+export default async (client: Client, message: Message, language: any, msg: Message): Promise<void> => {
 
     await msg.edit({
         embed: new MessageEmbed()
@@ -66,7 +67,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
             .setFooter(process.env.EMBED_FOOTER)
     });
 
-    const pgClient = await pgPool.connect();
+    const pgClient = await PostgreSQL.getPool().connect();
 
     try {
         await pgClient.query('UPDATE servers SET prefix = $1::text WHERE id = $2::text', [utf8.encode(newPrefix), message.guild.id]);

@@ -1,19 +1,21 @@
-import ICommand from '../structures/ICommand';
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
-import pgPool from '../structures/PostgreSQL';
+import PostgreSQL from '../structures/PostgreSQL';
 
-export default class SuggestCommand implements ICommand {
+import { botCache } from '../app';
 
-    aliases() {
-        return null as null;
-    }
+botCache.commands.set('suggest', {
+    helpMessage: 'Create a suggestion.',
+    exec: async (client: Client, message: Message, language: any, args: string[]) => {
 
-    async run(client: Client, message: Message, language: any, args: string[]) {
+        await message.delete();
 
-        const pgClient = await pgPool.connect();
+        const pgClient = await PostgreSQL.getPool().connect();
 
         const res = await pgClient.query('SELECT suggestion_channel FROM servers WHERE id = $1::text', [message.guild.id]);
-        if (res.rows.length === 0) return;
+        if (res.rows.length === 0) {
+            pgClient.release();
+            return;
+        }
 
         const channel: TextChannel = message.guild.channels.cache.get(res.rows[0].suggestion_channel) as TextChannel;
         if (!channel) {
@@ -24,7 +26,7 @@ export default class SuggestCommand implements ICommand {
                     .setDescription(language.commands.suggest.invalidChannel)
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
-            });
+            }).then(msg => msg.delete({ timeout: 8000 }));
 
             pgClient.release();
 
@@ -39,7 +41,7 @@ export default class SuggestCommand implements ICommand {
                     .setDescription(language.commands.suggest.descriptionRequired)
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
-            });
+            }).then(msg => msg.delete({ timeout: 8000 }));
 
             pgClient.release();
 
@@ -69,24 +71,23 @@ export default class SuggestCommand implements ICommand {
         await msg.react('✅');
         await msg.react('❎');
 
-        message.channel.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.commands.suggest.title, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.suggest.sent
-                    .replace(/<Url>/g, `https://canary.discordapp.com/channels/${message.guild.id}/${channel.id}/${msg.id}`)
-                )
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        });
+        try {
+            message.author.send({
+                embed: new MessageEmbed()
+                    .setAuthor(language.commands.suggest.title, client.user.avatarURL())
+                    .setColor(process.env.EMBED_COLOR)
+                    .setDescription(language.commands.suggest.sent
+                        .replace(/<Url>/g, `https://canary.discordapp.com/channels/${message.guild.id}/${channel.id}/${msg.id}`)
+                    )
+                    .setTimestamp()
+                    .setFooter(process.env.EMBED_FOOTER)
+            });
+        } catch (ex) {
+            // throw ex;
+        }
 
         await pgClient.query('INSERT INTO suggestions (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::text)', [desc, message.author.id, message.guild.id, channel.id, msg.id, 'Open']);
 
         pgClient.release();
     }
-
-    help() {
-        return "Create a suggestion. (10 second cooldown)";
-    }
-
-}
+});

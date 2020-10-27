@@ -1,38 +1,29 @@
 ﻿import { Client } from 'discord.js';
-import cliColors from '../structures/CLIColors';
 import DBL from 'dblapi.js';
 
-export default async (client: Client) => {
-
-    console.log(cliColors.FgBlue + "\n---=[Loading Apis...]=---" + cliColors.Reset);
+export default async (client: Client): Promise<void> => {
 
     // Api part
     const dbl = new DBL(process.env.APIS_DBL_TOKEN, client);
+
     setInterval(async () => {
-        const res = await client.shard.fetchClientValues('guilds.cache.size');
-        const shard_id = await client.shard.broadcastEval('this.guilds.cache.first().shardID');
+        const guilds_result = await client.shard.fetchClientValues('guilds.cache.size');
         dbl.postStats(
-            res.reduce((prev, guildCount) => prev + guildCount, 0),
-            shard_id[0],
+            guilds_result.reduce((prev, guildCount) => prev + guildCount, 0),
+            client.guilds.cache.first().shardID,
             client.shard.count
         );
     }, 1800000);
 
-    console.log(cliColors.FgCyan + "Loaded the " + cliColors.FgYellow + "DBL (Top.GG)" + cliColors.FgCyan + " api." + cliColors.Reset);
+    setTimeout(async () => await setPresence(client), 25000);
+    setInterval(async () => await setPresence(client), 3000000);
+}
 
-    const setPresence = async () => {
-        const guilds_result = await client.shard.fetchClientValues('guilds.cache.size');
-        const guildCount = guilds_result.reduce((prev, count) => prev + count, 0);
+const setPresence = async (client: Client) => {
+    const guilds_result = await client.shard.fetchClientValues('guilds.cache.size');
+    const guildCount = guilds_result.reduce((prev, count) => prev + count, 0);
 
-        client.user.setActivity(`${guildCount} guilds on ${client.shard.count} shards.`, {
-            type: "WATCHING"
-        });
-    }
-
-    setTimeout(setPresence, 25000);
-
-    setInterval(setPresence, 3000000);
-
-    console.log(cliColors.FgBlue + "\n---=[Succesfully enabled the bot]=---" + cliColors.Reset);
-
+    client.user.setActivity(`${guildCount} guilds on ${client.shard.count} shards.`, {
+        type: 'WATCHING'
+    });
 }

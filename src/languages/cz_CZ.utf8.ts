@@ -12,7 +12,8 @@ export default {
      * Often used messages which are not necessarily associated with a specific function / implementation
      * are stated below
      */
-    insufficientPermissions: "Nemáš právo použít tento příkaz! (Potřebuješ <Permission>)",
+    insufficientPermissions: "Nemáš právo použít tento příkaz. (Potřebuješ <Permission>)",
+    roleRequired: "You need the role `<Role>` in order to use that command.",
     errorTitle: "Suggestions - Error",
     premiumFeature: "This command is only usable for premium servers (`<Prefix>premium`)",
 

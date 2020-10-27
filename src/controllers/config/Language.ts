@@ -1,7 +1,9 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
-import pgPool from '../../structures/PostgreSQL';
+
+import PostgreSQL from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
-import languageList from '../../structures/Languages';
+
+import { botCache } from '../../app';
 
 /**
  * The language controller function handles the language part
@@ -11,10 +13,10 @@ import languageList from '../../structures/Languages';
  * @param {Message} msg      The choose menu message used to activate the controller
  * @return                   Ends the function in an earlier stage
  */
-export default async (client: Client, message: Message, language: any, msg: Message) => {
+export default async (client: Client, message: Message, language: any, msg: Message): Promise<void> => {
 
-    const list: string[] = await languageList();
-    const languages: string[] = new Array();
+    const list: any = botCache.languages.keys();
+    const languages: string[] = [];
 
     for (const language of list)
         languages.push(language.split('.utf8')[0]);
@@ -92,7 +94,7 @@ export default async (client: Client, message: Message, language: any, msg: Mess
             .setFooter(process.env.EMBED_FOOTER)
     });
 
-    const pgClient = await pgPool.connect();
+    const pgClient = await PostgreSQL.getPool().connect();
 
     try {
         await pgClient.query('UPDATE servers SET language = $1::text WHERE id = $2::text', [languageCode, message.guild.id]);

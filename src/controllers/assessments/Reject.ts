@@ -1,6 +1,6 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
-import pgPool from '../../structures/PostgreSQL';
+import PostgreSQL from '../../structures/PostgreSQL';
 import { get } from '../../structures/CacheManager';
 
 import DeleteController from './Delete';
@@ -8,9 +8,9 @@ import DeleteController from './Delete';
 /*
  msg -> The suggestion message
 */
-export default async (client: Client, msg: Message, language: any) => {
+export default async (client: Client, msg: Message, language: any): Promise<void> => {
 
-	const pgClient = await pgPool.connect();
+	const pgClient = await PostgreSQL.getPool().connect();
 
 	const result = await pgClient.query('SELECT id, context, author, status FROM suggestions WHERE message = $1::text', [msg.id]);
 
@@ -22,7 +22,7 @@ export default async (client: Client, msg: Message, language: any) => {
 	const deleteRejected = await get(msg.guild.id, 'delete_rejected') as boolean;
 
 	if (deleteRejected) {
-		DeleteController(msg);
+		await DeleteController(msg);
 	} else {
 
 		// const shard_result = await client.shard.broadcastEval(`this.users.cache.get('${res.rows[0].author}')`);

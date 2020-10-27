@@ -1,61 +1,52 @@
 import { Client } from 'discord.js';
-import { cmdMap, aliasMap } from './structures/CMDMap';
 import { readdir } from 'fs';
 
-import cliColors from './structures/CLIColors';
+import Command from './types/Command';
+
+import PostgreSQL from './structures/PostgreSQL';
+import Redis from './structures/Redis';
 
 const client = new Client({
     partials: ['MESSAGE', 'REACTION']
 });
 
-// client.on("error", (e) => console.error(e));
-// client.on("warn", (e) => console.warn(e));
-// client.on("debug", e => console.info(e));
-// client.on('shardError', e => console.error(e));
+export const botCache = {
+    commands: new Map<string, Command>(),
+    languages: new Map<string, any>()
+}
 
-readdir('./listeners/', (err, files) => {
-    if (err) throw err;
+// Enable advanced logging, if enabled
+if (process.env.ADVANCED_LOGS === 'true') {
+    client.on("error", (e) => console.error(e));
+    client.on("warn", (e) => console.warn(e));
+    client.on("debug", e => console.info(e));
+    client.on('shardError', e => console.error(e));
+}
 
-    console.log(cliColors.FgBlue + "\n---=[Loading Listeners...]=---" + cliColors.Reset);
+PostgreSQL.setupPool();
+Redis.setupClient();
 
-    files.forEach((file) => {
-        const lFile = require(`./listeners/${file}`);
-        const lName: any = file.split(".")[0];
+// Initiate all command files, which basically means that they will execute and get added to the bot cache
+readdir('./commands/', (_err, files) =>
+    files.forEach(file => require(`./commands/${file}`))
+);
 
-        console.log(cliColors.FgCyan + `>> ${cliColors.FgYellow + lName + cliColors.FgCyan} has been loaded.` + cliColors.Reset);
+// Register all listeners to the client
+readdir('./listeners/', (_err, files) =>
+    files.forEach(file =>
+        client.on(file.split(".")[0],
+            require(`./listeners/${file}`).default.bind(null, client)
+        )
+    )
+)
 
-        client.on(lName, lFile.default.bind(null, client));
-    });
-
-});
-
-readdir('./commands/', (err, files) => {
-    if (err) throw err;
-
-    console.log(cliColors.FgBlue + "\n---=[Loading Commands...]=---" + cliColors.Reset);
-
-    files.forEach((file) => {
-        if (!file.endsWith(".js")) return;
-
-        const cmdInstance = require(`./commands/${file}`);
-        const cmdName = file.split(".")[0];
-
-        console.log(cliColors.FgCyan + `>> ${cliColors.FgYellow + cmdName + cliColors.FgCyan} has been loaded.` + cliColors.Reset);
-
-        const cmdClass = new cmdInstance.default();
-
-        cmdMap.set(cmdName, cmdClass);
-
-        const cmdAliases = cmdClass.aliases();
-
-        if (cmdAliases !== null) {
-            for (let i = 0; i < cmdAliases.length; i++) {
-                aliasMap.set(cmdAliases[i], cmdName);
-            }
-        }
-
-    });
-
-});
+// Store all languages including the imports in the bot cache
+readdir('./languages/', (_err, files) =>
+    files.forEach(file =>
+        botCache.languages.set(
+            file.split(".")[0], require(`./languages/${file}`).default
+        )
+    )
+)
 
 client.login(process.env.CLIENT_TOKEN);
