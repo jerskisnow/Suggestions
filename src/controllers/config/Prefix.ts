@@ -1,5 +1,6 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 import utf8 from 'utf8';
+
 import PostgreSQL from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
 

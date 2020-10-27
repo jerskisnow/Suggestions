@@ -1,9 +1,9 @@
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
 import PostgreSQL from '../structures/PostgreSQL';
 
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
-cmdCache.set('report', {
+botCache.commands.set('report', {
     helpMessage: 'Create a report.',
     exec: async (client: Client, message: Message, language: any, args: string[]) => {
 

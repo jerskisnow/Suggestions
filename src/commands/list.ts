@@ -1,9 +1,9 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 import PostgreSQL from '../structures/PostgreSQL';
 
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
-cmdCache.set('list', {
+botCache.commands.set('list', {
     helpMessage: 'Obtain a list of all active suggestions.',
     exec: async (client: Client, message: Message, language: any) => {
         const pgClient = await PostgreSQL.getPool().connect();

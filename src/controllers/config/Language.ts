@@ -1,7 +1,9 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
+
 import PostgreSQL from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
-import languageList from '../../structures/Languages';
+
+import { botCache } from '../../app';
 
 /**
  * The language controller function handles the language part
@@ -13,7 +15,7 @@ import languageList from '../../structures/Languages';
  */
 export default async (client: Client, message: Message, language: any, msg: Message): Promise<void> => {
 
-    const list: string[] = await languageList();
+    const list: any = botCache.languages.keys();
     const languages: string[] = [];
 
     for (const language of list)

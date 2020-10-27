@@ -2,9 +2,9 @@ import { Client, Message, MessageEmbed } from 'discord.js';
 
 import { get } from '../structures/CacheManager';
 
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
-cmdCache.set('translation', {
+botCache.commands.set('translation', {
     helpMessage: 'Receive information about the translations of the bot.',
     exec: async (client: Client, message: Message, language: any) => {
         const prefix = await get(message.guild.id, 'prefix') as string;

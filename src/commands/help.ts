@@ -1,17 +1,17 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
 import { get } from '../structures/CacheManager';
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
-cmdCache.set('help', {
+botCache.commands.set('help', {
     helpMessage: 'Obtain a list of all commands with a description and a link to the support discord.',
     exec: async (client: Client, message: Message, language: any) => {
         const prefix = await get(message.guild.id, 'prefix') as string;
 
         const stringArray: string[] = [];
 
-        for (const key of Array.from(cmdCache.keys())) {
-            stringArray.push(prefix + key + " >> " + cmdCache.get(key).helpMessage);
+        for (const key of Array.from(botCache.commands.keys())) {
+            stringArray.push(prefix + key + " >> " + botCache.commands.get(key).helpMessage);
             
         }
 

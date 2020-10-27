@@ -3,9 +3,9 @@ import PostgreSQL from '../structures/PostgreSQL';
 
 import RejectController from '../controllers/assessments/Reject';
 
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
-cmdCache.set('reject', {
+botCache.commands.set('reject', {
     permission: 'MANAGE_MESSAGES',
     helpMessage: 'Reject a suggestion.',
     exec: async (client: Client, message: Message, language: any, args: string[]) => {
@@ -51,7 +51,7 @@ cmdCache.set('reject', {
                 if (chn) {
                     try {
                         const msg = await chn.messages.fetch(result.rows[i].message, false);
-                        RejectController(client, msg, language);
+                        await RejectController(client, msg, language);
                     } catch (err) {
                         // throw err;
                     }
@@ -105,7 +105,7 @@ cmdCache.set('reject', {
             if (chn) {
                 try {
                     const msg = await chn.messages.fetch(result.rows[0].message, false);
-                    RejectController(client, msg, language);
+                    await RejectController(client, msg, language);
                 } catch (err) {
                     // throw err;
                 }

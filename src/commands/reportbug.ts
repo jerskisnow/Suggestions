@@ -1,8 +1,8 @@
 import { Client, Message, MessageEmbed, MessageReaction, User } from 'discord.js';
 
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
-cmdCache.set('reportbug', {
+botCache.commands.set('reportbug', {
     helpMessage: 'Report a bug to the developer of this bot.',
     exec: async (client: Client, message: Message, language: any, args: string[]) => {
         if (!args.length) {

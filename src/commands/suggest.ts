@@ -1,9 +1,9 @@
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
 import PostgreSQL from '../structures/PostgreSQL';
 
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
-cmdCache.set('suggest', {
+botCache.commands.set('suggest', {
     helpMessage: 'Create a suggestion.',
     exec: async (client: Client, message: Message, language: any, args: string[]) => {
 

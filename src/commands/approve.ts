@@ -3,9 +3,9 @@ import PostgreSQL from '../structures/PostgreSQL';
 
 import ApproveController from '../controllers/assessments/Approve';
 
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
-cmdCache.set('approve', {
+botCache.commands.set('approve', {
     permission: 'MANAGE_MESSAGES',
     helpMessage: 'Approve a suggestion.',
     exec: async (client: Client, message: Message, language: any, args: string[]) => {
@@ -51,7 +51,7 @@ cmdCache.set('approve', {
                 if (chn) {
                     try {
                         const msg = await chn.messages.fetch(result.rows[i].message, false);
-                        ApproveController(client, msg, language);
+                        await ApproveController(client, msg, language);
                     } catch (err) {
                         // throw err;
                     }
@@ -106,7 +106,7 @@ cmdCache.set('approve', {
             if (chn) {
                 try {
                     const msg = await chn.messages.fetch(result.rows[0].message, false);
-                    ApproveController(client, msg, language);
+                    await ApproveController(client, msg, language);
                 } catch (err) {
                     // throw err;
                 }

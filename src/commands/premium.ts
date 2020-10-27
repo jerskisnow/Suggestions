@@ -1,8 +1,8 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
-cmdCache.set('premium', {
+botCache.commands.set('premium', {
     helpMessage: 'Receive information about the Suggestion\'s premium plan.',
     exec: async (client: Client, message: Message, language: any) => {
         message.channel.send({

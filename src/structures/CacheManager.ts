@@ -1,12 +1,12 @@
 import PostgreSQL from './PostgreSQL';
-import redisClient from './RedisClient';
+import Redis from './Redis';
 
 /**
  * Get whether a guild is cached or not (Deprecated)
  * @return {Promise<Boolean>} the setting of the guild or null when the guild is not cached
  */
 const exists = async function (guild_id: string): Promise<boolean> {
-    const result: boolean = await redisClient.existsAsync(guild_id);
+    const result: boolean = await (Redis.getClient() as any).existsAsync(guild_id);
     return result;
 };
 
@@ -15,7 +15,7 @@ const exists = async function (guild_id: string): Promise<boolean> {
  * @return the setting of the guild or null when the guild is not cached
  */
 const get = async function (guild_id: string, guild_setting: string): Promise<string | number | boolean | null> {
-    const output = await redisClient.getAsync(guild_id);
+    const output = await (Redis.getClient() as any).getAsync(guild_id);
     if (output == null) {
         return null;
     }
@@ -27,17 +27,7 @@ const get = async function (guild_id: string, guild_setting: string): Promise<st
  * 
  * TODO: Make this dynamic once
  */
-const cache = async function (guild_id: string): Promise<{
-    prefix: string;
-    language: string;
-    suggestion_channel: string | null;
-    report_channel: string | null;
-    auto_approve: number;
-    auto_reject: number;
-    delete_approved: boolean;
-    delete_rejected: boolean;
-    is_premium: boolean;
-}> {
+const cache = async function (guild_id: string): Promise<void>{
 
     const pgClient = await PostgreSQL.getPool().connect();
 
@@ -79,13 +69,11 @@ const cache = async function (guild_id: string): Promise<{
         is_premium: result.rows[0].is_premium // Not null
     }
 
-    await redisClient.setAsync(
+    await (Redis.getClient() as any).setAsync(
         guild_id, // key
         JSON.stringify(cacheObject), // value
         'EX', 28800 // expiration in seconds (8 hours)
     );
-
-    return cacheObject;
 };
 
 /**
@@ -93,11 +81,11 @@ const cache = async function (guild_id: string): Promise<{
  */
 const set = async function (guild_id: string, guild_setting: string, setting_value: string | number | boolean): Promise<void> {
 
-    const settingsString = await redisClient.getAsync(guild_id);
+    const settingsString = await (Redis.getClient() as any).getAsync(guild_id);
     const settings = JSON.parse(settingsString);
 
     settings[guild_setting] = setting_value;
-    redisClient.setAsync(guild_id, JSON.stringify(settings), 'EX', 28800);
+    (Redis.getClient() as any).setAsync(guild_id, JSON.stringify(settings), 'EX', 28800);
 
 }
 
@@ -106,7 +94,7 @@ const set = async function (guild_id: string, guild_setting: string, setting_val
  * @param guild_id the id of the specific guild
  */
 const remove = async function (guild_id: string): Promise<void>  {
-    await redisClient.delAsync(guild_id);
+    await (Redis.getClient() as any).delAsync(guild_id);
 }
 
 export { exists, get, cache, set, remove };

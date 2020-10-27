@@ -2,7 +2,7 @@ import { Client, Message, MessageEmbed } from 'discord.js';
 import Command from '../types/Command';
 
 import { exists, get, cache } from '../structures/CacheManager';
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
 export default async (client: Client, message: Message): Promise<void> => {
 
@@ -27,9 +27,9 @@ export default async (client: Client, message: Message): Promise<void> => {
         if (command === '') return;
 
         const languageCode = await get(message.guild.id, 'language') as string;
-        const language = require(`../languages/${languageCode}.utf8.js`).default;
+        const language = botCache.languages.get(languageCode);
 
-        const cmd: Command = cmdCache.get(command);
+        const cmd: Command = botCache.commands.get(command);
         if (cmd === undefined) {
             return;
         }
@@ -65,7 +65,7 @@ export default async (client: Client, message: Message): Promise<void> => {
             return;
         }
 
-        cmdCache.get(command).exec(client, message, language, args);
+        botCache.commands.get(command).exec(client, message, language, args);
     }
 
 }

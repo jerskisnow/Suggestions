@@ -10,9 +10,9 @@ import AutoRejectController from '../controllers/config/AutoReject';
 import DeleteApprovedController from '../controllers/config/DeleteAproved';
 import DeleteRejectedController from '../controllers/config/DeleteRejected';
 
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
-cmdCache.set('config', {
+botCache.commands.set('config', {
     permission: 'ADMINISTRATOR',
     helpMessage: 'Configure the bot.',
     exec: async (client: Client, message: Message, language: any) => {
@@ -61,7 +61,7 @@ cmdCache.set('config', {
 
         if (msgReactions.first()) {
             const controller = reactions[msgReactions.first().emoji.name]
-            controller(client, message, language, msg)
+            await controller(client, message, language, msg)
         }
     }
 });

@@ -3,9 +3,9 @@ import PostgreSQL from '../structures/PostgreSQL';
 
 import ResolveController from '../controllers/assessments/Resolve';
 
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
-cmdCache.set('resolve', {
+botCache.commands.set('resolve', {
     permission: 'MANAGE_MESSAGES',
     helpMessage: 'Resolve a report.',
     exec: async (client: Client, message: Message, language: any, args: string[]) => {
@@ -51,7 +51,7 @@ cmdCache.set('resolve', {
                 if (chn) {
                     try {
                         const msg = await chn.messages.fetch(result.rows[i].message, false);
-                        ResolveController(client, msg, language);
+                        await ResolveController(client, msg, language);
                     } catch (err) {
                         // throw err;
                     }
@@ -106,7 +106,7 @@ cmdCache.set('resolve', {
             if (chn) {
                 try {
                     const msg = await chn.messages.fetch(result.rows[0].message, false);
-                    ResolveController(client, msg, language);
+                    await ResolveController(client, msg, language);
                 } catch (err) {
                     // throw err;
                 }

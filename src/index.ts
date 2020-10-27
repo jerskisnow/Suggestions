@@ -25,22 +25,3 @@ manager.on('shardCreate', shard => console.log(`${cliColors.FgCyan}>> Shard ${cl
 console.log(cliColors.FgBlue + "\n---=[Loading Shards...]=---" + cliColors.Reset);
 
 manager.spawn();
-
-
-
-/*
-
-        if (!message.member.permissions.has("MANAGE_MESSAGES")) {
-            message.channel.send({
-                embed: new MessageEmbed()
-                    .setAuthor(language.errorTitle, client.user.avatarURL())
-                    .setColor(process.env.EMBED_COLOR)
-                    .setDescription(language.insufficientPermissions
-                        .replace(/<Permission>/g, "MANAGE_MESSAGES"))
-                    .setTimestamp()
-                    .setFooter(process.env.EMBED_FOOTER)
-            });
-            return;
-        }
-
-        */

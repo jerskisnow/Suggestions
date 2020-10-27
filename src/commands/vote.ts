@@ -1,8 +1,8 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
-import { cmdCache } from '../app';
+import { botCache } from '../app';
 
-cmdCache.set('vote', {
+botCache.commands.set('vote', {
     helpMessage: 'Obtain a link in order to vote for the bot.',
     exec: (client: Client, message: Message, language: any) => {
         message.channel.send({

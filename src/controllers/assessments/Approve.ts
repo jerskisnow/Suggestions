@@ -22,7 +22,7 @@ export default async (client: Client, msg: Message, language: any): Promise<void
 	const deleteApproved = await get(msg.guild.id, 'delete_approved') as boolean;
 
 	if (deleteApproved) {
-		DeleteController(msg);
+		await DeleteController(msg);
 	} else {
 
 		// const shard_result = await client.shard.broadcastEval(`this.users.cache.get('${res.rows[0].author}')`);
