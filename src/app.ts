@@ -15,7 +15,8 @@ export const botCache = {
     languages: new Map<string, any>()
 }
 
-if (process.env.ADVANCED_LOGS) {
+// Enable advanced logging, if enabled
+if (process.env.ADVANCED_LOGS === 'true') {
     client.on("error", (e) => console.error(e));
     client.on("warn", (e) => console.warn(e));
     client.on("debug", e => console.info(e));
