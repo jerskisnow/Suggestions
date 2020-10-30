@@ -1,6 +1,7 @@
-import { Client, MessageReaction, Message } from 'discord.js';
+import { Client, MessageReaction } from 'discord.js';
 
 import { exists, get, cache } from '../structures/CacheManager';
+import { botCache } from '../app';
 
 import ApproveController from '../controllers/assessments/Approve';
 import RejectController from '../controllers/assessments/Reject';
@@ -32,12 +33,14 @@ export default async (client: Client, reaction: MessageReaction): Promise<void> 
 	const auto_reject = await get(reaction.message.guild.id, 'auto_reject') as number;
 
 	if (auto_approve !== -1 && positiveCount >= auto_approve) {
-		const languageCodeString = await get(reaction.message.guild.id, 'language') as string;
-		await ApproveController(client, reaction.message as Message, require(`../languages/${languageCodeString}.utf8.js`).default);
+		const languageCode = await get(reaction.message.guild.id, 'language') as string;
+        const language = botCache.languages.get(languageCode);
+		await ApproveController(client, reaction.message, language);
 	}
 	else if (auto_reject !== -1 && negativeCount >= auto_reject) {
-		const languageCodeString = await get(reaction.message.guild.id, 'language') as string;
-		await RejectController(client, reaction.message as Message, require(`../languages/${languageCodeString}.utf8.js`).default);
+		const languageCode = await get(reaction.message.guild.id, 'language') as string;
+        const language = botCache.languages.get(languageCode);
+		await RejectController(client, reaction.message, language);
 	}
 
 }
