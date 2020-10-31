@@ -68,18 +68,27 @@ botCache.commands.set('report', {
                 .setFooter(process.env.EMBED_FOOTER)
         });
 
-        try {
-            message.author.send({
+        message.author.send({
+            embed: new MessageEmbed()
+                .setAuthor(language.commands.report.title, client.user.avatarURL())
+                .setColor(process.env.EMBED_COLOR)
+                .setDescription(language.commands.report.sent)
+                .setTimestamp()
+                .setFooter(process.env.EMBED_FOOTER)
+        }).catch(() =>
+            message.channel.send({
                 embed: new MessageEmbed()
                     .setAuthor(language.commands.report.title, client.user.avatarURL())
                     .setColor(process.env.EMBED_COLOR)
                     .setDescription(language.commands.report.sent)
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
-            });
-        } catch (ex) {
-            // throw ex;
-        }
+            }).then(msg =>
+                msg.delete({
+                    timeout: 8000
+                })
+            )
+        );
 
         await pgClient.query('INSERT INTO reports (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::text)', [desc, message.author.id, message.guild.id, channel.id, msg.id, 'Open']);
 

@@ -15,18 +15,14 @@ import { botCache } from '../../app';
  */
 export default async (client: Client, message: Message, language: any, msg: Message): Promise<void> => {
 
-    const list: any = botCache.languages.keys();
-    const languages: string[] = [];
-
-    for (const language of list)
-        languages.push(language.split('.utf8')[0]);
+    const languages: string[] = Array.from(botCache.languages.keys());
 
     await msg.edit({
         embed: new MessageEmbed()
             .setAuthor(language.commands.config.title, client.user.avatarURL())
             .setColor(process.env.EMBED_COLOR)
             .setDescription(language.commands.config.language.description)
-            .addField(language.commands.config.language.availableTitle, languages.join(', '), false)
+            .addField(language.commands.config.language.availableTitle, Array.from(botCache.languages.keys()).join(', '), false)
             .setTimestamp()
             .setFooter(process.env.EMBED_FOOTER)
     });
