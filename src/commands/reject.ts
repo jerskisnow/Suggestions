@@ -3,7 +3,7 @@ import PostgreSQL from '../structures/PostgreSQL';
 
 import RejectController from '../controllers/assessments/Reject';
 
-import { botCache } from '../index';
+import { botCache } from '../app';
 
 botCache.commands.set('reject', {
     permission: 'MANAGE_MESSAGES',

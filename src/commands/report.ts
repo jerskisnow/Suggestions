@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
 import PostgreSQL from '../structures/PostgreSQL';
 
-import { botCache } from '../index';
+import { botCache } from '../app';
 
 botCache.commands.set('report', {
     helpMessage: 'Create a report.',

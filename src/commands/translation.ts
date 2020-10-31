@@ -2,7 +2,7 @@ import { Client, Message, MessageEmbed } from 'discord.js';
 
 import { get } from '../structures/CacheManager';
 
-import { botCache } from '../index';
+import { botCache } from '../app';
 
 botCache.commands.set('translation', {
     helpMessage: 'Receive information about the translations of the bot.',

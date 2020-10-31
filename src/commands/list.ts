@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 import PostgreSQL from '../structures/PostgreSQL';
 
-import { botCache } from '../index';
+import { botCache } from '../app';
 
 botCache.commands.set('list', {
     helpMessage: 'Obtain a list of all active suggestions.',

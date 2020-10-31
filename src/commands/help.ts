@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
 import { get } from '../structures/CacheManager';
-import { botCache } from '../index';
+import { botCache } from '../app';
 
 botCache.commands.set('help', {
     helpMessage: 'Obtain a list of all commands with a description and a link to the support discord.',

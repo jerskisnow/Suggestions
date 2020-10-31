@@ -1,7 +1,7 @@
 import { Client, MessageReaction } from 'discord.js';
 
 import { exists, get, cache } from '../structures/CacheManager';
-import { botCache } from '../index';
+import { botCache } from '../app';
 
 import ApproveController from '../controllers/assessments/Approve';
 import RejectController from '../controllers/assessments/Reject';

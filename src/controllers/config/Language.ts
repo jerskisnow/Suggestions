@@ -3,7 +3,7 @@ import { Client, Message, MessageEmbed } from 'discord.js';
 import PostgreSQL from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
 
-import { botCache } from '../../index';
+import { botCache } from '../../app';
 
 /**
  * The language controller function handles the language part

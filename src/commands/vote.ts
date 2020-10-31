@@ -1,6 +1,6 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
-import { botCache } from '../index';
+import { botCache } from '../app';
 
 botCache.commands.set('vote', {
     helpMessage: 'Obtain a link in order to vote for the bot.',
