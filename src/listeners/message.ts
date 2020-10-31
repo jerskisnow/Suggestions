@@ -2,7 +2,7 @@ import { Client, Message, MessageEmbed } from 'discord.js';
 import Command from '../types/Command';
 
 import { exists, get, cache } from '../structures/CacheManager';
-import { botCache } from '../app';
+import { botCache } from '../index';
 
 export default async (client: Client, message: Message): Promise<void> => {
 

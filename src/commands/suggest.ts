@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
 import PostgreSQL from '../structures/PostgreSQL';
 
-import { botCache } from '../app';
+import { botCache } from '../index';
 
 botCache.commands.set('suggest', {
     helpMessage: 'Create a suggestion.',

@@ -10,7 +10,7 @@ import AutoRejectController from '../controllers/config/AutoReject';
 import DeleteApprovedController from '../controllers/config/DeleteAproved';
 import DeleteRejectedController from '../controllers/config/DeleteRejected';
 
-import { botCache } from '../app';
+import { botCache } from '../index';
 
 botCache.commands.set('config', {
     permission: 'ADMINISTRATOR',

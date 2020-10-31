@@ -3,7 +3,7 @@ import PostgreSQL from '../structures/PostgreSQL';
 
 import ResolveController from '../controllers/assessments/Resolve';
 
-import { botCache } from '../app';
+import { botCache } from '../index';
 
 botCache.commands.set('resolve', {
     permission: 'MANAGE_MESSAGES',

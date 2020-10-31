@@ -1,6 +1,6 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 
-import { botCache } from '../app';
+import { botCache } from '../index';
 
 botCache.commands.set('premium', {
     helpMessage: 'Receive information about the Suggestion\'s premium plan.',
