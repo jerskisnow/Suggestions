@@ -6,7 +6,7 @@ import { botCache } from '../app';
 botCache.commands.set('list', {
     helpMessage: 'Obtain a list of all active suggestions.',
     exec: async (client: Client, message: Message, language: any) => {
-        PostgreSQL.query('SELECT id, context, author, guild, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::text', [message.guild.id, 'Open'], (error, result) => {
+        PostgreSQL.query('SELECT id, context, author, guild, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::text', [message.guild.id, 'Open'], async (error, result) => {
             if (error || !result.rows.length) {
                 message.channel.send({
                     embed: new MessageEmbed()
@@ -30,17 +30,31 @@ botCache.commands.set('list', {
                 if (i === 9) {
                     break;
                 }
-                const user = message.guild.members.cache.get(result.rows[i].author) ?
-                    message.guild.members.cache.get(result.rows[i].author).user.tag :
-                    "User Left ~ Suggestions";
 
-                listEmbed.addField(user,
+                let member = null;
+                try {
+                    member = await message.guild.members.fetch(result.rows[i].author);
+                } catch(ex) {
+                    // Log error if the error is not a Unknown Member error
+                    if (ex.code !== 10007) {
+                        console.error(ex);
+                    }
+                } finally {
+                    if (member == null) {
+                        member = "User Left ~ Suggestions";
+                    } else {
+                        member = member.user.tag;
+                    }  
+                }
+
+                listEmbed.addField(member,
                     language.commands.list.suggestionDescription
                         .replace(/<Description>/g, result.rows[i].context)
                         .replace(/<ID>/g, result.rows[i].id)
                         .replace(/<Url>/g, `https://canary.discordapp.com/channels/${result.rows[i].guild}/${result.rows[i].channel}/${result.rows[i].message}`),
                     false);
             }
+
             message.channel.send({ embed: listEmbed });
         });
     }
