@@ -3,6 +3,7 @@ import Command from '../types/Command';
 
 import { exists, get, cache } from '../structures/CacheManager';
 import { botCache } from '../app';
+import { parseCommand, hasPermission } from '../structures/CommandHandler';
 
 export default async (client: Client, message: Message): Promise<void> => {
 
@@ -29,14 +30,10 @@ export default async (client: Client, message: Message): Promise<void> => {
         const languageCode = await get(message.guild.id, 'language') as string;
         const language = botCache.languages.get(languageCode);
 
-        const cmd: Command = botCache.commands.get(command);
-        if (cmd === undefined) {
-            return;
-        }
+        const cmd: Command = parseCommand(command);
+        if (cmd === null) return;
 
-        if (cmd.permission !== null &&
-            !message.member.permissions.has(cmd.permission as any)
-        ) {
+        if (!hasPermission(message.member, cmd)) {
             message.channel.send({
                 embed: new MessageEmbed()
                     .setAuthor(language.errorTitle, client.user.avatarURL())
@@ -46,10 +43,9 @@ export default async (client: Client, message: Message): Promise<void> => {
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
             });
-            return;
+        } else {
+            cmd.exec(client, message, language, args);
         }
-
-        botCache.commands.get(command).exec(client, message, language, args);
     }
 
 }

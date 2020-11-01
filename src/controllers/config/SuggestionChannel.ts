@@ -92,14 +92,6 @@ export default async (client: Client, message: Message, language: any, msg: Mess
             .setFooter(process.env.EMBED_FOOTER)
     });
 
-    const pgClient = await PostgreSQL.getPool().connect();
-
-    try {
-        await pgClient.query('UPDATE servers SET suggestion_channel = $1::text WHERE id = $2::text', [newChannelObject.id, message.guild.id]);
-    } finally {
-        pgClient.release();
-    }
-
+    PostgreSQL.query('UPDATE servers SET suggestion_channel = $1::text WHERE id = $2::text', [newChannelObject.id, message.guild.id]);
     await set(message.guild.id, 'suggestion_channel', newChannelObject.id);
-
 }

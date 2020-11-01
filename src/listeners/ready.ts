@@ -7,9 +7,8 @@ export default async (client: Client): Promise<void> => {
     const dbl = new DBL(process.env.APIS_DBL_TOKEN, client);
 
     setInterval(async () => {
-        const guilds_result = await client.shard.fetchClientValues('guilds.cache.size');
         dbl.postStats(
-            guilds_result.reduce((prev, guildCount) => prev + guildCount, 0),
+            client.guilds.cache.size,
             client.guilds.cache.first().shardID,
             client.shard.count
         );

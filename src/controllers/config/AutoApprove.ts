@@ -99,14 +99,6 @@ export default async (client: Client, message: Message, language: any, msg: Mess
 			.setFooter(process.env.EMBED_FOOTER)
 	});
 
-	const pgClient = await PostgreSQL.getPool().connect();
-
-	try {
-		await pgClient.query('UPDATE servers SET auto_approve = $1::int WHERE id = $2::text', [newAmount, message.guild.id]);
-	} finally {
-		pgClient.release();
-	}
-
+	PostgreSQL.query('UPDATE servers SET auto_approve = $1::int WHERE id = $2::text', [newAmount, message.guild.id]);
 	await set(message.guild.id, 'auto_approve', newAmount);
-
 }

@@ -129,10 +129,6 @@ export default {
             description: "U kunt alle openstaande suggesties hieronder bekijken.",
             suggestionDescription: "**Beschrijving:** <Description>\n**ID:** <ID>\n**Link:** [Klik hier](<Url>)"
         },
-        uptime: {
-            title: "Suggestions - Uptime",
-            description: "Ik ben online geweest voor <Days> dagen, <Hours> uren, <Minutes> minuten en <Seconds> seconden!"
-        },
         help: {
             title: "Suggestions - Help",
             commandTitle: "Command Help",

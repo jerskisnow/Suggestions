@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { Pool, QueryResult } from 'pg';
 
 export default class PostgreSQL {
 
@@ -17,8 +17,15 @@ export default class PostgreSQL {
         });
     }
 
-    public static getPool(): Pool {
-        return this.pool;
+    public static query(txt: string, values: any[], callback?: (arg0: Error, arg1: QueryResult<any>) => void) {
+        this.pool.connect((err, client, done) => {
+            client.query(txt, values, (err, result) => {
+                done();
+                if (callback && typeof callback === 'function') {
+                    callback(err, result);
+                }
+            });
+        });
     }
 
 }

@@ -3,14 +3,8 @@ import PostgreSQL from '../structures/PostgreSQL';
 
 export default async (client: Client, guild: Guild): Promise<void> => {
 
-    // We're creating the server in the database to relieve some pressure of the message event, since that one also create a guild when it doesn't exist
-    const pgClient = await PostgreSQL.getPool().connect();
-
-    try {
-        await pgClient.query('INSERT INTO servers (id, prefix, language, is_premium) VALUES ($1::text, $2::text, $3::text, $4::boolean)', [guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE, false]);
-    } finally {
-        pgClient.release();
-    }
+    // Insert the new server into the database to take away some pressure of guild registration in the cache function
+    PostgreSQL.query('INSERT INTO servers (id, prefix, language, is_premium) VALUES ($1::text, $2::text, $3::text, $4::boolean)', [guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE, false]);
 
     // Predefine the invite code
     let inviteCode;
@@ -48,17 +42,12 @@ export default async (client: Client, guild: Guild): Promise<void> => {
 
     const guilds_result = await client.shard.fetchClientValues('guilds.cache.size');
     const users_result = await client.shard.fetchClientValues('users.cache.size');
+    console.log(users_result)
     const channels_result = await client.shard.fetchClientValues('channels.cache.size');
 
     const guildCount = guilds_result.reduce((prev, count) => prev + count, 0);
     const userCount = users_result.reduce((prev, count) => prev + count, 0);
     const channelCount = channels_result.reduce((prev, count) => prev + count, 0);
-
-    console.log(guild)
-    console.log(guild.owner)
-    console.log(guild.owner.id)
-    console.log(guild.owner.user.id)
-    console.log(guild.owner.user.tag)
 
     const embed: MessageEmbed = new MessageEmbed()
         .setColor(process.env.EMBED_COLOR)
@@ -68,7 +57,7 @@ export default async (client: Client, guild: Guild): Promise<void> => {
             `**Name:** ${guild.name}\n**ID:** ${guild.id}\n**Membercount:** ${guild.memberCount}\n**Region:** ${guild.region}\n**Invite:** ${inviteCode}`,
             false
         )
-        .addField("OwnerInfo", `**Name:** ${guild.owner.user.tag}\n**ID:** ${guild.ownerID}`, false)
+        .addField("OwnerInfo", `**Name:** ${client.users.cache.get(guild.ownerID).tag}\n**ID:** ${guild.ownerID}`, false)
         .addField(
             "Other Information",
             `Suggestions is now in \`${guildCount}\` guilds and those contain \`${userCount}\` members and \`${channelCount}\` channels.`,

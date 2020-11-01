@@ -129,10 +129,6 @@ export default {
             description: "Všechny otevřené návrhy můžeš vidět přímo tady níže.",
             suggestionDescription: "**Popis:** <Description>\n**ID:** <ID>\n**Link:** [Click here](<Url>)"
         },
-        uptime: {
-            title: "Suggestions - Uptime",
-            description: "Bot je online <Days> dní, <Hours> hodin, <Minutes> minut a <Seconds> sekund!"
-        },
         help: {
             title: "Suggestions - Help",
             commandTitle: "Command Help",
