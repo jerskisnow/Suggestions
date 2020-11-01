@@ -81,7 +81,7 @@ export default async (client: Client, guild: Guild): Promise<void> => {
         .setTimestamp()
         .setFooter(process.env.EMBED_FOOTER);
 
-    client.shard.broadcastEval(`
+    await client.shard.broadcastEval(`
         (async () => {
             const channel = await this.channels.cache.get('${process.env.CHANNELS_LOGS}');
             if (channel) {

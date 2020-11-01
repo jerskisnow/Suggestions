@@ -23,7 +23,7 @@ export default async (client: Client, reaction: MessageReaction): Promise<void> 
 	if (!reaction.message.reactions.cache.get("✅") || !reaction.message.reactions.cache.get("❎"))
 		return;
 
-	if (!exists(reaction.message.guild.id))
+	if (!await exists(reaction.message.guild.id))
 		await cache(reaction.message.guild.id);
 
 	const positiveCount = reaction.message.reactions.cache.get("✅").count - 1;

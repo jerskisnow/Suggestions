@@ -11,7 +11,7 @@ const client = new Client({
     partials: ['MESSAGE', 'REACTION']
 });
 
-// We create the botcache here so it doesn't get created multiple times due to the sharding
+// We create the bot cache here so it doesn't get created multiple times due to the sharding
 export const botCache = {
     commands: new Map<string, Command>(),
     languages: new Map<string, any>()

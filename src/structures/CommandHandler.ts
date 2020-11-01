@@ -18,6 +18,5 @@ export const parseCommand = (cmdName: string): Command => {
 
 export const hasPermission = (member: GuildMember, command: Command): boolean => {
     if (command.permission === null) return true;
-    if (member.hasPermission(command.permission as any)) return true;
-    return false;
+    return member.hasPermission(command.permission as any);
 }

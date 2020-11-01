@@ -4,5 +4,5 @@ export default interface Command {
     permission?: string,
     aliases?: string[],
     helpMessage: string,
-    exec: (client: Client, mesasge: Message, language: any, args?: string[]) => unknown
+    exec: (client: Client, message: Message, language: any, args?: string[]) => unknown
 }

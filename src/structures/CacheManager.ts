@@ -6,8 +6,7 @@ import Redis from './Redis';
  * @return {Promise<Boolean>} the setting of the guild or null when the guild is not cached
  */
 const exists = async function (guild_id: string): Promise<boolean> {
-    const result: boolean = await (Redis.getClient() as any).existsAsync(guild_id);
-    return result;
+    return await (Redis.getClient() as any).existsAsync(guild_id);
 };
 
 /**
@@ -22,11 +21,6 @@ const get = async function (guild_id: string, guild_setting: string): Promise<st
     return JSON.parse(output)[guild_setting];
 };
 
-/**
- * Add data from a guild into the cache
- * 
- * TODO: Make this dynamic once
- */
 const cache = async function (guild_id: string): Promise<void>{
 
     PostgreSQL.query('SELECT prefix, language, suggestion_channel, report_channel, auto_approve, auto_reject, delete_approved, delete_rejected, is_premium FROM servers WHERE id = $1::text', [guild_id], async (error, result) => {
@@ -40,7 +34,7 @@ const cache = async function (guild_id: string): Promise<void>{
                     auto_approve: -1,
                     auto_reject: -1,
                     delete_approved: false,
-                    delete_rjected: false,
+                    delete_rejected: false,
                     is_premium: false
                 }  
             ]

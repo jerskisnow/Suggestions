@@ -65,7 +65,7 @@ botCache.commands.set('reportbug', {
             .setTimestamp()
             .setFooter(process.env.EMBED_FOOTER);
 
-        client.shard.broadcastEval(`
+        await client.shard.broadcastEval(`
             (async () => {
                 const channel = await this.channels.cache.get('${process.env.CHANNELS_BUG_REPORTS}');
                 if (channel) {

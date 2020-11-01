@@ -8,6 +8,6 @@ export default async (client: Client, guild: Guild): Promise<void> => {
 
     const existsInCache = await exists(guild.id);
     if (existsInCache) {
-        remove(guild.id);
+        await remove(guild.id);
     }
 }

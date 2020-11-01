@@ -17,7 +17,7 @@ export default class PostgreSQL {
         });
     }
 
-    public static query(txt: string, values: any[], callback?: (arg0: Error, arg1: QueryResult<any>) => void) {
+    public static query(txt: string, values: any[], callback?: (arg0: Error, arg1: QueryResult) => void) {
         this.pool.connect((err, client, done) => {
             client.query(txt, values, (err, result) => {
                 done();
