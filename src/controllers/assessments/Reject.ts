@@ -18,23 +18,29 @@ export default async (client: Client, msg: Message, language: any): Promise<void
 		if (deleteRejected) {
 			await DeleteController(msg);
 		} else {
-			// const shard_result = await client.shard.broadcastEval(`this.users.cache.get('${res.rows[0].author}')`);
-			// const user = shard_result[0];
-			const user = await msg.guild.members.fetch(result.rows[0].author);
-
-			let title = "User Left ~ Suggestions";
-			let picture = client.user.avatarURL();
-
-			if (user != null) {
-				// title = user.tag;
-				// picture = user.avatarURL;
-				title = user.user.tag;
-				picture = user.user.avatarURL();
+			let member = null;
+			let picture = null;
+			try {
+				member = await msg.guild.members.fetch(result.rows[0].author);
+			} catch(ex) {
+				// Log error if the error is not a Unknown Member
+				if (ex.code !== 10007) {
+					console.error(ex);
+				}
+			} finally {
+				if (member == null) {
+					picture = client.user.avatarURL();
+					member = "User Left ~ Suggestions";
+				} else {
+					// Set picture first
+					picture = member.user.avatarURL();
+					member = member.user.tag;
+				}  
 			}
 
 			await msg.edit({
 				embed: new MessageEmbed()
-					.setAuthor(title, picture)
+					.setAuthor(member, picture)
 					.setColor(process.env.REJECTED_EMBED_COLOR)
 					.setDescription(language.commands.suggest.description
 						.replace(/<Description>/g, result.rows[0].context)
