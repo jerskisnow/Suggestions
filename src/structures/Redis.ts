@@ -9,7 +9,7 @@ export default class Redis {
         // bluebird.promisifyAll(redis.RedisClient.prototype);
         // bluebird.promisifyAll(redis.Multi.prototype);
         bluebird.promisifyAll(redis);
-        
+
         this.client = redis.createClient();
     }
 

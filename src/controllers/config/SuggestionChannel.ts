@@ -4,10 +4,10 @@ import PostgreSQL from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
 
 /**
- * The prefix controller function handles the prefix part
+ * The prefix controller function handles the suggestion channel part
  * @param {Client}  client   The client supplied by discord
  * @param {Message} message  The message that was used to initiate the controller process
- * @param {Object}  language The language used on the server where the controller process got initated
+ * @param {Object}  language The language used on the server where the controller process got initiated
  * @param {Message} msg      The choose menu message used to activate the controller
  * @return                   Ends the function in an earlier stage
  */

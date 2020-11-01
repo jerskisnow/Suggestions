@@ -1,4 +1,4 @@
-import { botCache } from '../app';
+import botCache from '../structures/BotCache';
 import Command from '../types/Command';
 import { GuildMember } from 'discord.js';
 

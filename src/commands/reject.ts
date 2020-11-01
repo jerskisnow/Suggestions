@@ -3,7 +3,7 @@ import PostgreSQL from '../structures/PostgreSQL';
 
 import RejectController from '../controllers/assessments/Reject';
 
-import { botCache } from '../app';
+import botCache from '../structures/BotCache';
 
 botCache.commands.set('reject', {
     permission: 'MANAGE_MESSAGES',
@@ -33,13 +33,17 @@ botCache.commands.set('reject', {
                             .setTimestamp()
                             .setFooter(process.env.EMBED_FOOTER)
                     });
-                    return; 
+                    return;
                 }
 
                 for (let i = 0; i < result.rows.length; i++) {
                     const chn: TextChannel = message.guild.channels.cache.get(result.rows[i].channel) as TextChannel;
                     if (chn) {
-                        chn.messages.fetch(result.rows[i].message, false).then(msg => RejectController(client, msg, language))
+                        if (args.length > 1) {
+                            chn.messages.fetch(result.rows[i].message).then(msg => RejectController(client, msg, language, args.splice(1).join(' ')));
+                        } else {
+                            chn.messages.fetch(result.rows[i].message).then(msg => RejectController(client, msg, language));
+                        }
                     }
                 }
 
@@ -76,7 +80,11 @@ botCache.commands.set('reject', {
 
                 const chn: TextChannel = message.guild.channels.cache.get(result.rows[0].channel) as TextChannel;
                 if (chn) {
-                    chn.messages.fetch(result.rows[0].message, false).then(msg => RejectController(client, msg, language));
+                    if (args.length > 1) {
+                        chn.messages.fetch(result.rows[0].message).then(msg => RejectController(client, msg, language, args.splice(1).join(' ')));
+                    } else {
+                        chn.messages.fetch(result.rows[0].message).then(msg => RejectController(client, msg, language));
+                    }
                 }
             });
 

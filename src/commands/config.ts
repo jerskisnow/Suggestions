@@ -1,16 +1,16 @@
-import { Client, Message, MessageReaction, User, MessageEmbed } from 'discord.js';
+import { Client, Message, MessageEmbed, MessageReaction, User } from 'discord.js';
 
 // Controller imports
 import PrefixController from '../controllers/config/Prefix';
 import LanguageController from '../controllers/config/Language';
 import SuggestionChannelController from '../controllers/config/SuggestionChannel';
 import ReportChannelController from '../controllers/config/ReportChannel';
-import AutoAproveController from '../controllers/config/AutoApprove';
+import AutoApproveController from '../controllers/config/AutoApprove';
 import AutoRejectController from '../controllers/config/AutoReject';
 import DeleteApprovedController from '../controllers/config/DeleteAproved';
 import DeleteRejectedController from '../controllers/config/DeleteRejected';
 
-import { botCache } from '../app';
+import botCache from '../structures/BotCache';
 
 botCache.commands.set('config', {
     permission: 'ADMINISTRATOR',
@@ -39,7 +39,7 @@ botCache.commands.set('config', {
             '2️⃣': LanguageController,
             '3️⃣': SuggestionChannelController,
             '4️⃣': ReportChannelController,
-            '5️⃣': AutoAproveController,
+            '5️⃣': AutoApproveController,
             '6️⃣': AutoRejectController,
             '7️⃣': DeleteApprovedController,
             '8️⃣': DeleteRejectedController

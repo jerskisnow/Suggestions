@@ -2,7 +2,7 @@ import { Client, Message, MessageEmbed } from 'discord.js';
 
 import { get } from '../structures/CacheManager';
 
-import { botCache } from '../app';
+import botCache from '../structures/BotCache';
 
 botCache.commands.set('translation', {
     aliases: ['translations', 'translate', 'language', 'languages'],

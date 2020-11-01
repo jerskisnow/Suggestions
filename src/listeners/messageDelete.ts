@@ -5,10 +5,10 @@ import DeleteController from '../controllers/assessments/Delete';
 
 export default async (message: Message): Promise<void> => {
 
-	PostgreSQL.query('SELECT * FROM suggestions WHERE message = $1::text', [message.id], async (error, result) => {
-		if (!error && result.rows.length) {
-			await DeleteController(message);
-		}
-	});
+    PostgreSQL.query('SELECT * FROM suggestions WHERE message = $1::text', [message.id], async (error, result) => {
+        if (!error && result.rows.length) {
+            await DeleteController(message);
+        }
+    });
 
 }

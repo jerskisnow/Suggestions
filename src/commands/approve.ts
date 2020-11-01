@@ -3,7 +3,7 @@ import PostgreSQL from '../structures/PostgreSQL';
 
 import ApproveController from '../controllers/assessments/Approve';
 
-import { botCache } from '../app';
+import botCache from '../structures/BotCache';
 
 botCache.commands.set('approve', {
     permission: 'MANAGE_MESSAGES',
@@ -39,7 +39,11 @@ botCache.commands.set('approve', {
                 for (let i = 0; i < result.rows.length; i++) {
                     const chn: TextChannel = message.guild.channels.cache.get(result.rows[i].channel) as TextChannel;
                     if (chn) {
-                        chn.messages.fetch(result.rows[i].message, false).then(msg => ApproveController(client, msg, language));
+                        if (args.length > 1) {
+                            chn.messages.fetch(result.rows[i].message).then(msg => ApproveController(client, msg, language, args.splice(1).join(' ')));
+                        } else {
+                            chn.messages.fetch(result.rows[i].message).then(msg => ApproveController(client, msg, language));
+                        }
                     }
                 }
 
@@ -47,7 +51,6 @@ botCache.commands.set('approve', {
         } else {
 
             const sID = parseInt(args[0]);
-
             if (isNaN(sID)) {
                 message.channel.send({
                     embed: new MessageEmbed()
@@ -75,7 +78,11 @@ botCache.commands.set('approve', {
 
                 const chn: TextChannel = message.guild.channels.cache.get(result.rows[0].channel) as TextChannel;
                 if (chn) {
-                    chn.messages.fetch(result.rows[0].message, false).then(msg => ApproveController(client, msg, language));
+                    if (args.length > 1) {
+                        chn.messages.fetch(result.rows[0].message).then(msg => ApproveController(client, msg, language, args.splice(1).join(' ')));
+                    } else {
+                        chn.messages.fetch(result.rows[0].message).then(msg => ApproveController(client, msg, language));
+                    }
                 }
             });
 

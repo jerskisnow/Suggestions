@@ -1,9 +1,9 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 import Command from '../types/Command';
 
-import { exists, get, cache } from '../structures/CacheManager';
-import { botCache } from '../app';
-import { parseCommand, hasPermission } from '../structures/CommandHandler';
+import { cache, exists, get } from '../structures/CacheManager';
+import botCache from '../structures/BotCache';
+import { hasPermission, parseCommand } from '../structures/CommandHandler';
 
 export default async (client: Client, message: Message): Promise<void> => {
 

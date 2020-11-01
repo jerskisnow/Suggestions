@@ -51,7 +51,7 @@ export default async (client: Client, guild: Guild): Promise<void> => {
     let guildOwner = null;
     try {
         guildOwner = await guild.members.fetch(guild.ownerID);
-    } catch(ex) {
+    } catch (ex) {
         // Log error if the error is not a Unknown Member error
         if (ex.code !== 10007) {
             console.error(ex);

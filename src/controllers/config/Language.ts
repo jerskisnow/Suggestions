@@ -3,13 +3,13 @@ import { Client, Message, MessageEmbed } from 'discord.js';
 import PostgreSQL from '../../structures/PostgreSQL';
 import { set } from '../../structures/CacheManager';
 
-import { botCache } from '../../app';
+import botCache from '../../structures/BotCache';
 
 /**
  * The language controller function handles the language part
  * @param {Client}  client   The client supplied by discord
  * @param {Message} message  The message that was used to initiate the controller process
- * @param {Object}  language The language used on the server where the controller process got initated
+ * @param {Object}  language The language used on the server where the controller process got initiated
  * @param {Message} msg      The choose menu message used to activate the controller
  * @return                   Ends the function in an earlier stage
  */
@@ -59,8 +59,8 @@ export default async (client: Client, message: Message, language: any, msg: Mess
         timeout: 125
     });
 
-    const splittedInput: string[] = input.split('_');
-    const languageCode: string = splittedInput[0].toLowerCase() + "_" + splittedInput[1].toUpperCase();
+    const inputArray: string[] = input.split('_');
+    const languageCode: string = inputArray[0].toLowerCase() + "_" + inputArray[1].toUpperCase();
 
     if (input.indexOf("_") !== 2 || !languages.includes(languageCode)) {
         await msg.edit({

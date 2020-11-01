@@ -2,7 +2,7 @@ import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
 import PostgreSQL from '../structures/PostgreSQL';
 
 import { get } from '../structures/CacheManager';
-import { botCache } from '../app';
+import botCache from '../structures/BotCache';
 
 botCache.commands.set('suggest', {
     helpMessage: 'Create a suggestion.',
@@ -19,8 +19,8 @@ botCache.commands.set('suggest', {
                     .setDescription(language.commands.suggest.invalidChannel)
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
-            }).then(msg => msg.delete({ timeout: 8000 }));
-            return; 
+            }).then(msg => msg.delete({timeout: 8000}));
+            return;
         }
 
         if (!args.length) {
@@ -31,7 +31,7 @@ botCache.commands.set('suggest', {
                     .setDescription(language.commands.suggest.descriptionRequired)
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
-            }).then(msg => msg.delete({ timeout: 8000 }));
+            }).then(msg => msg.delete({timeout: 8000}));
 
             return;
         }

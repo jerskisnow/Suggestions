@@ -21,7 +21,7 @@ const get = async function (guild_id: string, guild_setting: string): Promise<st
     return JSON.parse(output)[guild_setting];
 };
 
-const cache = async function (guild_id: string): Promise<void>{
+const cache = async function (guild_id: string): Promise<void> {
 
     PostgreSQL.query('SELECT prefix, language, suggestion_channel, report_channel, auto_approve, auto_reject, delete_approved, delete_rejected, is_premium FROM servers WHERE id = $1::text', [guild_id], async (error, result) => {
         if (error || !result.rows.length) {
@@ -36,7 +36,7 @@ const cache = async function (guild_id: string): Promise<void>{
                     delete_approved: false,
                     delete_rejected: false,
                     is_premium: false
-                }  
+                }
             ]
         }
 
@@ -51,7 +51,7 @@ const cache = async function (guild_id: string): Promise<void>{
             delete_rejected: result.rows[0].delete_rejected === null ? false : result.rows[0].delete_rejected,
             is_premium: result.rows[0].is_premium // Not null
         }
-    
+
         await (Redis.getClient() as any).setAsync(
             guild_id, // key
             JSON.stringify(cacheObject), // value
@@ -78,7 +78,7 @@ const set = async function (guild_id: string, guild_setting: string, setting_val
  * Remove a specific guild
  * @param guild_id the id of the specific guild
  */
-const remove = async function (guild_id: string): Promise<void>  {
+const remove = async function (guild_id: string): Promise<void> {
     await (Redis.getClient() as any).delAsync(guild_id);
 }
 

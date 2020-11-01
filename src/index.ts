@@ -1,8 +1,10 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import { ShardingManager } from 'discord.js';
+import { readdir } from 'fs';
 
-import cliColors from './structures/CLIColors';
+import Logger, { LogType } from './structures/Logger';
+import botCache from "./structures/BotCache";
 
 // Register dotenv
 dotenv.config({
@@ -10,13 +12,21 @@ dotenv.config({
 });
 
 // Main startup message
-console.log(cliColors.FgCyan + `\n ██████╗ ██████╗ ██████╗ ███████╗██████╗ ███████╗███╗   ██╗ ██████╗ ██╗    ██╗
-██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗██╔════╝████╗  ██║██╔═══██╗██║    ██║
-██║     ██║   ██║██║  ██║█████╗  ██║  ██║███████╗██╔██╗ ██║██║   ██║██║ █╗ ██║
-██║     ██║   ██║██║  ██║██╔══╝  ██║  ██║╚════██║██║╚██╗██║██║   ██║██║███╗██║
-╚██████╗╚██████╔╝██████╔╝███████╗██████╔╝███████║██║ ╚████║╚██████╔╝╚███╔███╔╝
- ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝ ╚══════╝╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝
-                                                                              ` + cliColors.FgBlue + "\n==============================================================================\n" + cliColors.Reset);
+Logger.printStartup();
+
+// Initiate all command files, which basically means that they will execute and get added to the bot cache
+readdir('./commands/', (_err, files) =>
+    files.forEach(file => require(`./commands/${file}`))
+);
+
+// Store all languages including the imports in the bot cache
+readdir('./languages/', (_err, files) =>
+    files.forEach(file =>
+        botCache.languages.set(
+            file.split(".")[0], require(`./languages/${file}`).default
+        )
+    )
+);
 
 // The actual sharding part starts here
 const manager = new ShardingManager('app.js', {
@@ -26,7 +36,5 @@ const manager = new ShardingManager('app.js', {
 // Spawn the sharding manager
 manager.spawn();
 
-// Print that the shards are being loaded
-console.log(cliColors.FgBlue + "\n---=[Loading Shards...]=---" + cliColors.Reset);
 // Log the shards being loaded
-manager.on('shardCreate', shard => console.log(`${cliColors.FgCyan}>> Shard ${cliColors.FgYellow + shard.id + cliColors.FgCyan} has been launched.`));
+manager.on('shardCreate', shard => Logger.log(`Shard ${shard.id} has been launched.`, LogType.INFO));

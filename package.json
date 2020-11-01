@@ -1,6 +1,6 @@
 {
   "name": "suggestions",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "Official Suggestions Discord-Bot",
   "main": "lib/index.js",
   "author": "jerskisnow",

@@ -68,5 +68,5 @@ export default async (client: Client, message: Message, language: any, msg: Mess
     });
 
     PostgreSQL.query('UPDATE servers SET prefix = $1::text WHERE id = $2::text', [utf8.encode(newPrefix), message.guild.id]);
-    set(message.guild.id, 'prefix', newPrefix);
+    await set(message.guild.id, 'prefix', newPrefix);
 }

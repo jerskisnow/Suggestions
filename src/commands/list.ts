@@ -1,7 +1,7 @@
 import { Client, Message, MessageEmbed } from 'discord.js';
 import PostgreSQL from '../structures/PostgreSQL';
 
-import { botCache } from '../app';
+import botCache from '../structures/BotCache';
 
 botCache.commands.set('list', {
     helpMessage: 'Obtain a list of all active suggestions.',
@@ -34,7 +34,7 @@ botCache.commands.set('list', {
                 let member = null;
                 try {
                     member = await message.guild.members.fetch(result.rows[i].author);
-                } catch(ex) {
+                } catch (ex) {
                     // Log error if the error is not a Unknown Member error
                     if (ex.code !== 10007) {
                         console.error(ex);
@@ -44,7 +44,7 @@ botCache.commands.set('list', {
                         member = "User Left ~ Suggestions";
                     } else {
                         member = member.user.tag;
-                    }  
+                    }
                 }
 
                 listEmbed.addField(member,
@@ -55,7 +55,7 @@ botCache.commands.set('list', {
                     false);
             }
 
-            message.channel.send({ embed: listEmbed });
+            message.channel.send({embed: listEmbed});
         });
     }
 });

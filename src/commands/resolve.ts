@@ -3,7 +3,7 @@ import PostgreSQL from '../structures/PostgreSQL';
 
 import ResolveController from '../controllers/assessments/Resolve';
 
-import { botCache } from '../app';
+import botCache from '../structures/BotCache';
 
 botCache.commands.set('resolve', {
     permission: 'MANAGE_MESSAGES',
@@ -34,14 +34,18 @@ botCache.commands.set('resolve', {
                             .setTimestamp()
                             .setFooter(process.env.EMBED_FOOTER)
                     });
-    
+
                     return;
                 }
 
                 for (let i = 0; i < result.rows.length; i++) {
                     const chn: TextChannel = message.guild.channels.cache.get(result.rows[i].channel) as TextChannel;
                     if (chn) {
-                        chn.messages.fetch(result.rows[i].message, false).then(msg => ResolveController(client, msg, language))
+                        if (args.length > 1) {
+                            chn.messages.fetch(result.rows[i].message).then(msg => ResolveController(client, msg, language, args.splice(1).join(' ')))
+                        } else {
+                            chn.messages.fetch(result.rows[i].message).then(msg => ResolveController(client, msg, language))
+                        }
                     }
                 }
             });
@@ -72,12 +76,16 @@ botCache.commands.set('resolve', {
                             .setTimestamp()
                             .setFooter(process.env.EMBED_FOOTER)
                     });
-                    return;    
+                    return;
                 }
 
                 const chn: TextChannel = message.guild.channels.cache.get(result.rows[0].channel) as TextChannel;
                 if (chn) {
-                    chn.messages.fetch(result.rows[0].message, false).then(msg => ResolveController(client, msg, language))
+                    if (args.length > 1) {
+                        chn.messages.fetch(result.rows[0].message).then(msg => ResolveController(client, msg, language, args.splice(1).join(' ')));
+                    } else {
+                        chn.messages.fetch(result.rows[0].message).then(msg => ResolveController(client, msg, language));
+                    }
                 }
             });
         }

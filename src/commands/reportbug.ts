@@ -1,6 +1,6 @@
 import { Client, Message, MessageEmbed, MessageReaction, User } from 'discord.js';
 
-import { botCache } from '../app';
+import botCache from '../structures/BotCache';
 
 botCache.commands.set('reportbug', {
     helpMessage: 'Report a bug to the developer of this bot.',
