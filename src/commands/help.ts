@@ -12,7 +12,6 @@ botCache.commands.set('help', {
 
         for (const key of Array.from(botCache.commands.keys())) {
             stringArray.push(prefix + key + " >> " + botCache.commands.get(key).helpMessage);
-            
         }
 
         message.channel.send({

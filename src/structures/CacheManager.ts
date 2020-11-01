@@ -29,51 +29,42 @@ const get = async function (guild_id: string, guild_setting: string): Promise<st
  */
 const cache = async function (guild_id: string): Promise<void>{
 
-    const pgClient = await PostgreSQL.getPool().connect();
-
-    let result;
-
-    try {
-        result = await pgClient.query('SELECT prefix, language, suggestion_channel, report_channel, auto_approve, auto_reject, delete_approved, delete_rejected, is_premium FROM servers WHERE id = $1::text', [guild_id]);
-        if (!result.rows.length) {
-            await pgClient.query('INSERT INTO servers (id, prefix, language, is_premium) VALUES ($1::text, $2::text, $3::text, $4::boolean)', [guild_id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE, false]);
-            result = {
-                rows: [
-                    {
-                        prefix: process.env.COMMAND_PREFIX,
-                        language: process.env.DEFAULT_LANGUAGE,
-                        suggestion_channel: null,
-                        report_channel: null,
-                        auto_approve: -1,
-                        auto_reject: -1,
-                        delete_approved: false,
-                        delete_rjected: false,
-                        is_premium: false
-                    }
-                ]
-            }
+    PostgreSQL.query('SELECT prefix, language, suggestion_channel, report_channel, auto_approve, auto_reject, delete_approved, delete_rejected, is_premium FROM servers WHERE id = $1::text', [guild_id], async (error, result) => {
+        if (error || !result.rows.length) {
+            result.rows = [
+                {
+                    prefix: process.env.COMMAND_PREFIX,
+                    language: process.env.DEFAULT_LANGUAGE,
+                    suggestion_channel: null,
+                    report_channel: null,
+                    auto_approve: -1,
+                    auto_reject: -1,
+                    delete_approved: false,
+                    delete_rjected: false,
+                    is_premium: false
+                }  
+            ]
         }
-    } finally {
-        pgClient.release();
-    }
 
-    const cacheObject = {
-        prefix: result.rows[0].prefix, // Not null
-        language: result.rows[0].language, // Not null
-        suggestion_channel: result.rows[0].suggestion_channel, // Can be null
-        report_channel: result.rows[0].report_channel, // Can be null
-        auto_approve: result.rows[0].auto_approve === null ? -1 : result.rows[0].auto_approve,
-        auto_reject: result.rows[0].auto_reject === null ? -1 : result.rows[0].auto_reject,
-        delete_approved: result.rows[0].delete_approved === null ? false : result.rows[0].delete_approved,
-        delete_rejected: result.rows[0].delete_rejected === null ? false : result.rows[0].delete_rejected,
-        is_premium: result.rows[0].is_premium // Not null
-    }
+        const cacheObject = {
+            prefix: result.rows[0].prefix, // Not null
+            language: result.rows[0].language, // Not null
+            suggestion_channel: result.rows[0].suggestion_channel, // Can be null
+            report_channel: result.rows[0].report_channel, // Can be null
+            auto_approve: result.rows[0].auto_approve === null ? -1 : result.rows[0].auto_approve,
+            auto_reject: result.rows[0].auto_reject === null ? -1 : result.rows[0].auto_reject,
+            delete_approved: result.rows[0].delete_approved === null ? false : result.rows[0].delete_approved,
+            delete_rejected: result.rows[0].delete_rejected === null ? false : result.rows[0].delete_rejected,
+            is_premium: result.rows[0].is_premium // Not null
+        }
+    
+        await (Redis.getClient() as any).setAsync(
+            guild_id, // key
+            JSON.stringify(cacheObject), // value
+            'EX', 28800 // expiration in seconds (8 hours)
+        );
 
-    await (Redis.getClient() as any).setAsync(
-        guild_id, // key
-        JSON.stringify(cacheObject), // value
-        'EX', 28800 // expiration in seconds (8 hours)
-    );
+    });
 };
 
 /**

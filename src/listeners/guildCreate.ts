@@ -3,14 +3,8 @@ import PostgreSQL from '../structures/PostgreSQL';
 
 export default async (client: Client, guild: Guild): Promise<void> => {
 
-    // We're creating the server in the database to relieve some pressure of the message event, since that one also create a guild when it doesn't exist
-    const pgClient = await PostgreSQL.getPool().connect();
-
-    try {
-        await pgClient.query('INSERT INTO servers (id, prefix, language, is_premium) VALUES ($1::text, $2::text, $3::text, $4::boolean)', [guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE, false]);
-    } finally {
-        pgClient.release();
-    }
+    // Insert the new server into the database to take away some pressure of guild registration in the cache function
+    PostgreSQL.query('INSERT INTO servers (id, prefix, language, is_premium) VALUES ($1::text, $2::text, $3::text, $4::boolean)', [guild.id, process.env.COMMAND_PREFIX, process.env.DEFAULT_LANGUAGE, false]);
 
     // Predefine the invite code
     let inviteCode;

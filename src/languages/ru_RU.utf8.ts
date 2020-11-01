@@ -130,10 +130,6 @@ export default {
             description: "Вы можете посмотреть все открытые предложения ниже.",
             suggestionDescription: "**Описание:** <Description>\n**ID:** <ID>\n**Ссылка:** [Нажать](<Url>)"
         },
-        uptime: {
-            title: "Suggestions - Время работы",
-            description: "Я в онлайне <Days> дней, <Hours> часов, <Minutes> минут и <Seconds> секунд!"
-        },
         help: {
             title: "Suggestions - Помощь",
             commandTitle: "Команда помощи",

@@ -1,24 +1,17 @@
 import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
 import PostgreSQL from '../structures/PostgreSQL';
 
+import { get } from '../structures/CacheManager';
 import { botCache } from '../app';
 
 botCache.commands.set('report', {
     helpMessage: 'Create a report.',
     exec: async (client: Client, message: Message, language: any, args: string[]) => {
-
         await message.delete();
 
-        const pgClient = await PostgreSQL.getPool().connect();
-
-        const res = await pgClient.query('SELECT report_channel FROM servers WHERE id = $1::text', [message.guild.id]);
-        if (res.rows.length === 0) {
-            pgClient.release();
-            return;
-        }
-
-        const channel: TextChannel = message.guild.channels.cache.get(res.rows[0].report_channel) as TextChannel;
-        if (!channel) {
+        const channelID: string = await get(message.guild.id, 'report_channel') as string;
+        const chn: TextChannel = message.guild.channels.cache.get(channelID) as TextChannel;
+        if (channelID === null || !chn) {
             message.channel.send({
                 embed: new MessageEmbed()
                     .setAuthor(language.errorTitle, client.user.avatarURL())
@@ -27,10 +20,7 @@ botCache.commands.set('report', {
                     .setTimestamp()
                     .setFooter(process.env.EMBED_FOOTER)
             }).then(msg => msg.delete({ timeout: 8000 }));
-
-            pgClient.release();
-
-            return;
+            return; 
         }
 
         if (!args.length) {
@@ -43,20 +33,19 @@ botCache.commands.set('report', {
                     .setFooter(process.env.EMBED_FOOTER)
             }).then(msg => msg.delete({ timeout: 8000 }));
 
-            pgClient.release();
-
             return;
         }
 
         const desc = args.slice(0).join(" ");
 
-        const result = await pgClient.query('SELECT id FROM reports ORDER BY id DESC LIMIT 1');
-        let id = 1;
-        if (result.rows.length)
-            id += result.rows[0].id;
+        PostgreSQL.query('SELECT id FROM reports ORDER BY id DESC LIMIT 1', [], (error, result) => {
+            let id = 1;
+            if (result.rows.length) {
+                id += result.rows[0].id;
+            }
 
-        const msg = await channel.send({
-            embed: new MessageEmbed()
+            chn.send({
+                embed: new MessageEmbed()
                 .setAuthor(message.author.tag, message.author.avatarURL())
                 .setColor(process.env.EMBED_COLOR)
                 .setDescription(language.commands.report.description
@@ -66,32 +55,31 @@ botCache.commands.set('report', {
                 )
                 .setTimestamp()
                 .setFooter(process.env.EMBED_FOOTER)
+            }).then(msg => {
+                message.author.send({
+                    embed: new MessageEmbed()
+                        .setAuthor(language.commands.report.title, client.user.avatarURL())
+                        .setColor(process.env.EMBED_COLOR)
+                        .setDescription(language.commands.report.sent)
+                        .setTimestamp()
+                        .setFooter(process.env.EMBED_FOOTER)
+                }).catch(() =>
+                    message.channel.send({
+                        embed: new MessageEmbed()
+                            .setAuthor(language.commands.report.title, client.user.avatarURL())
+                            .setColor(process.env.EMBED_COLOR)
+                            .setDescription(language.commands.report.sent)
+                            .setTimestamp()
+                            .setFooter(process.env.EMBED_FOOTER)
+                    }).then(msg =>
+                        msg.delete({
+                            timeout: 8000
+                        })
+                    )
+                );
+    
+                PostgreSQL.query('INSERT INTO reports (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::text)', [desc, message.author.id, message.guild.id, chn.id, msg.id, 'Open']);
+            });
         });
-
-        message.author.send({
-            embed: new MessageEmbed()
-                .setAuthor(language.commands.report.title, client.user.avatarURL())
-                .setColor(process.env.EMBED_COLOR)
-                .setDescription(language.commands.report.sent)
-                .setTimestamp()
-                .setFooter(process.env.EMBED_FOOTER)
-        }).catch(() =>
-            message.channel.send({
-                embed: new MessageEmbed()
-                    .setAuthor(language.commands.report.title, client.user.avatarURL())
-                    .setColor(process.env.EMBED_COLOR)
-                    .setDescription(language.commands.report.sent)
-                    .setTimestamp()
-                    .setFooter(process.env.EMBED_FOOTER)
-            }).then(msg =>
-                msg.delete({
-                    timeout: 8000
-                })
-            )
-        );
-
-        await pgClient.query('INSERT INTO reports (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::text)', [desc, message.author.id, message.guild.id, channel.id, msg.id, 'Open']);
-
-        pgClient.release();
     }
 });

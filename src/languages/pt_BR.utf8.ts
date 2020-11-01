@@ -129,10 +129,6 @@ export default {
             description: "Você pode ver todas as sugestões abertas logo abaixo.",
             suggestionDescription: "**Descrição:** <Description>\n**ID:** <ID>\n**Link:** [clique aqui](<Url>)"
         },
-        uptime: {
-            title: "Suggestions - Tempo de atividade",
-            description: "Estive online por <Days> dias, <Hours> horas, <Minutes> minutos e <Seconds> segundos!"
-        },
         help: {
             title: "Suggestions - Ajuda",
             commandTitle: "Comando Ajudar",
