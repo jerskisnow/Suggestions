@@ -165,7 +165,7 @@ export default {
      */
     suggestions: {
         open: "Abierta",
-        approved: "Aprovada",
+        approved: "Aprobada",
         rejected: "Rechazada"
     },
 
