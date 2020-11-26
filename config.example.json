@@ -19,11 +19,11 @@
     "blue": "#1680f0"
   },
   "links": {
-    "botInvite": "https://discord.com/oauth2/authorize?client_id=566616056165302282&scope=bot&permissions=8",
-    "serverInvite": "https://discord.gg/3SYg3M5",
-    "donateLink": "https://github.com/jerskisnow/Suggestions/wiki/Donating",
-    "voteLink": "https://top.gg/bot/566616056165302282/vote",
-    "languageListLink": "https://github.com/jerskisnow/Suggestions/wiki/Translations"
+    "botInvite": "",
+    "serverInvite": "",
+    "donateLink": "",
+    "voteLink": "",
+    "languageListLink": ""
   },
   "channels": {
     "devLogs": ""
