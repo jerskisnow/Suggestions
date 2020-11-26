@@ -14,7 +14,9 @@ botCache.commands.set('reject', {
 
         let suggestion = await getSuggestionData(args[0]);
         if (suggestion == null || suggestion.status === SuggestionStatus.DELETED as number) {
-            await sendPlainEmbed(message.channel, botCache.config.colors.red, commandData.language.reject.invalidSuggestion);
+            await sendPlainEmbed(message.channel, botCache.config.colors.red, commandData.language.reject.invalidSuggestion
+                + "\n\n(**Note:** If an existing message won't approve then it could be caused by the transfer from v3.5.0 to v4.0.0. We were forced to remove all current suggestions and reports from our database. You can safely delete the message and create a new one. Sorry for the inconvenience)"
+            );
             return;
         }
 
