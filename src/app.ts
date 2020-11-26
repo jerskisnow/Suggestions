@@ -30,7 +30,7 @@ readdir('./commands/', (_err, files) =>
 readdir('./languages/', (_err, files) =>
     files.forEach(file =>
         botCache.languages.set(
-            file.split(".")[0], require(`./languages/${file}`).default
+            file.split('.')[0], require(`./languages/${file}`).default
         )
     )
 );
@@ -38,11 +38,11 @@ readdir('./languages/', (_err, files) =>
 // Register all listeners to the client
 readdir('./listeners/', (_err, files) =>
     files.forEach(file =>
-        client.on(file.split(".")[0],
+        client.on(file.split('.')[0],
             require(`./listeners/${file}`).default.bind(null, client)
         )
     )
-)
+);
 
 // Login with the token
 client.login(process.env.CLIENT_TOKEN);
