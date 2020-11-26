@@ -1,0 +1,9 @@
+CREATE TABLE suggestions (
+    id INT GENERATED ALWAYS AS IDENTITY,
+    context TEXT NOT NULL,
+    author VARCHAR(18) NOT NULL,
+    guild VARCHAR(18) NOT NULL,
+	channel VARCHAR(18) NOT NULL,
+	message VARCHAR(18) NOT NULL,
+	status INT NOT NULL
+);

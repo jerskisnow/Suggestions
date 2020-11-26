@@ -1,34 +1,31 @@
 {
   "name": "suggestions",
-  "version": "3.5.0",
-  "description": "Official Suggestions Discord-Bot",
+  "version": "v4.0.0",
   "main": "lib/index.js",
   "author": "jerskisnow",
   "license": "GPL-3.0",
   "scripts": {
     "build": "tsc",
-    "dev": "tsc && cd lib/ && node index.js",
-    "prod": "cd lib/ && node index.js"
+    "dev": "cd src/ && ts-node app.ts"
   },
   "dependencies": {
     "bluebird": "^3.7.2",
     "dblapi.js": "^2.4.1",
     "discord.js": "^12.3.1",
-    "dotenv": "^8.2.0",
+    "ms": "^2.1.2",
+    "node-fetch": "^2.6.1",
     "pg": "^8.4.0",
-    "redis": "^3.0.2",
-    "utf8": "^3.0.0"
+    "redis": "^3.0.2"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.32",
-    "@types/node": "^14.11.5",
+    "@types/ms": "^0.7.31",
+    "@types/node": "^14.14.6",
+    "@types/node-fetch": "^2.5.7",
     "@types/pg": "^7.14.5",
     "@types/redis": "^2.8.27",
-    "@types/utf8": "^2.1.6",
-    "@types/ws": "^7.2.7",
-    "@typescript-eslint/eslint-plugin": "^4.5.0",
-    "@typescript-eslint/parser": "^4.5.0",
-    "eslint": "^7.12.0",
-    "typescript": "^4.0.3"
+    "@types/ws": "^7.4.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
   }
 }

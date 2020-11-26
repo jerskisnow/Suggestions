@@ -1,10 +1,10 @@
-﻿import { Client } from 'discord.js';
+import { Client } from 'discord.js';
 import DBL from 'dblapi.js';
+import botCache from '../structures/BotCache';
+import Logger, { LogType } from '../structures/CliLogger';
 
 export default async (client: Client): Promise<void> => {
-
-    // Api part
-    const dbl = new DBL(process.env.APIS_DBL_TOKEN, client);
+    const dbl = new DBL(botCache.config.apis.dblToken, client);
 
     setInterval(async () => {
         await dbl.postStats(
@@ -16,6 +16,8 @@ export default async (client: Client): Promise<void> => {
 
     setTimeout(async () => await setPresence(client), 25000);
     setInterval(async () => await setPresence(client), 3000000);
+
+    Logger.log('Successfully enabled the bot.', LogType.INFO);
 }
 
 const setPresence = async (client: Client) => {

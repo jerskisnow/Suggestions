@@ -1,27 +1,28 @@
 # Suggestions
-Hi, first of all, thanks for viewing this page! Suggestions is a discord bot that handles community made suggestions. People in your discord server can use the `suggest` command to suggest their ideas, other people can vote up or down. People with the `MANAGE_MESSAGES` permission are allowed to `approve` or `reject` people their ideas. Besides the suggest function Suggestion's also allows people to report bugs. For example, if your server is focussed on a game then people can sumbit bugs they find using the `report` command. You can also use this command to let people report user or whatever you want. People with the `MANAGE_MESSAGES` permission will be allowed to resolve the reports.
+Hi, first of all, thanks for viewing this page! Suggestions is a discord bot that handles community made suggestions and reports.
 
 # Features
 ### Commands:
-1. **approve** >> Approve a suggestion.
+1. **blacklist** >> Prevent someone from creating suggestions/reports.
 2. **config** >> Configure the bot.
-3. **help** >> Obtain a list of all commands with a description and a link to the support discord.
-5. **list** >> Obtain a list of all active suggestions.
-6. **premium** >> Receive information about the Suggestion's premium plan.
-7. **reject** >> Reject a suggestion.
-8. **report** >> Create a report. (10 second cooldown)
-9. **reportbug** >> Report a bug to the developer of this bot.
-10. **resolve** >> Resolve a report.
-11. **setup** >> Configure the essentials settings for the first time.
-12. **suggest** >> Create a suggestion. (10 second cooldown)
-13. **translation** >> Receive information about the translations of the bot.
-14. **vote** >> Obtain a link in order to vote for the bot.
+3. **report** >> Create a report.
+4. **resolve** >> Resolve a report.
+5. **approve** >> Approve a suggestion.
+6. **consider** >> Consider a suggestion.
+7. **list** >> List all active suggestions (for everyone) or reports (staff).
+8. **reject** >> Reject a suggestion.
+9. **suggest** >> Create a suggestion.
+10. **donate** >> Obtain information about donating.
+11. **help** >> Obtain the help message.
+12. **invite** >> Obtain the invite links.
+13. **vote** >> Obtain the vote link.
 
 ### Events
 1. **Auto Approval** >> An option to automatically approve suggestions when that specific suggestion received and `x` amount of approval reactions.
 2. **Auto Rejection** >> An option to automatically reject suggestions when that specific suggestion received and `x` amount of rejection reactions.
 3. **Delete Approved** >> An option to delete approved suggestions.
 4. **Delete Rejected** >> An option to delete rejected suggestions.
+5. **Logging** >> If you configure a log channel for Suggestions then it'll send mesasges when certain [actions](https://github.com/jerskisnow/Suggestions/wiki/Logging) are being executed.
 
 # Contributing
 ### Code

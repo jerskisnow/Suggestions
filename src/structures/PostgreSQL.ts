@@ -1,4 +1,5 @@
-import { Pool, QueryResult } from 'pg';
+import { Pool } from 'pg';
+import botCache from './BotCache';
 
 export default class PostgreSQL {
 
@@ -6,26 +7,22 @@ export default class PostgreSQL {
 
     public static setupPool(): void {
         this.pool = new Pool({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USERNAME,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_DATABASE,
-            port: parseInt(process.env.DB_PORT),
+            host: botCache.config.database.hostname,
+            user: botCache.config.database.username,
+            password: botCache.config.database.password,
+            database: botCache.config.database.database,
+            port: botCache.config.database.port,
             idleTimeoutMillis: 0,
             connectionTimeoutMillis: 0,
-            max: 20
+            max: 25
         });
     }
 
-    public static query(txt: string, values: any[], callback?: (arg0: Error, arg1: QueryResult) => void) {
-        this.pool.connect((err, client, done) => {
-            client.query(txt, values, (err, result) => {
-                done();
-                if (callback && typeof callback === 'function') {
-                    callback(err, result);
-                }
-            });
-        });
+    public static async runQuery(query: string, params?: any[]) {
+        const client = await this.pool.connect();
+        const result = !params ? await client.query(query) : await client.query(query, params);
+        client.release();
+        return result;
     }
 
 }
