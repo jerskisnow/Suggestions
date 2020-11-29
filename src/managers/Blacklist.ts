@@ -1,4 +1,4 @@
-import { GuildMember, Message } from 'discord.js';
+import { GuildMember, Message } from 'discord.js-light';
 import Language from '../types/Language';
 import { sendPlainEmbed } from './Commands';
 import botCache from '../structures/BotCache';

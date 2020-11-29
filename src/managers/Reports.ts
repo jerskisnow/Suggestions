@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, TextChannel } from 'discord.js';
+import { Message, MessageEmbed, TextChannel } from 'discord.js-light';
 import Language from '../types/Language';
 import { getConfigValues } from './ServerData';
 import PostgreSQL from '../structures/PostgreSQL';
@@ -16,7 +16,7 @@ export const handleReportCreation = async (message: Message, language: Language,
         return;
     }
 
-    const channel = message.guild.channels.cache.get(guildData.report_channel);
+    const channel = await message.guild.channels.fetch(guildData.report_channel);
 
     if (!channel || channel.type !== 'text') {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.report.invalidChannel)

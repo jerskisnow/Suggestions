@@ -2,6 +2,7 @@ import Redis from '../structures/Redis';
 import PostgreSQL from '../structures/PostgreSQL';
 import botCache from '../structures/BotCache';
 import fetch from 'node-fetch';
+import { Client, Guild } from 'discord.js-light';
 
 /**
  * Get whether a guild is cached or not (Deprecated)
@@ -76,7 +77,7 @@ export const cacheGuild = async function (guild_id: string): Promise<void> {
         reject_emoji: result.rows[0].reject_emoji == null ? botCache.config.emojis.reject : result.rows[0].reject_emoji,
         disabled: result.rows[0].disabled
     }
-    await Redis.getClient().setAsync(guild_id, JSON.stringify(cacheObject), 'EX', 7200);
+    await Redis.getClient().setAsync(guild_id, JSON.stringify(cacheObject), 'EX', 18000 /* 5 hours */);
 }
 
 /**
@@ -100,7 +101,15 @@ export const getConfigValue = async function (guild_id: string, guild_setting: s
         const output = await Redis.getClient().getAsync(guild_id);
         if (output == null) return null;
 
-        return JSON.parse(output)[guild_setting];
+        const setting = JSON.parse(output)[guild_setting];
+        if (setting == null) {
+            // I'm so sorry for this injection but there is not other way, also all the identifiers are set by the bot anyway and are not user input.
+            const result = await PostgreSQL.runQuery(`SELECT ${guild_setting} FROM servers WHERE id = $1::text`, [guild_id]);
+            if (!result.rows.length) return null;
+
+            return result.rows[0][guild_setting];
+        }
+        return setting;
     }
     // I'm so sorry for this injection but there is not other way, also all the identifiers are set by the bot anyway and are not user input.
     const result = await PostgreSQL.runQuery(`SELECT ${guild_setting} FROM servers WHERE id = $1::text`, [guild_id]);
@@ -121,6 +130,7 @@ export const getConfigValues = async function (guild_id: string, guild_settings:
         const parsedOutput = JSON.parse(output);
         const outputKeys = Object.keys(parsedOutput);
 
+        // After the loop this will contain all data that was salvageble from the cache
         const settings: any = {};
         for (let i = 0; i < outputKeys.length; i++) {
             // Get the key of the current iteration
@@ -131,14 +141,45 @@ export const getConfigValues = async function (guild_id: string, guild_settings:
                 settings[key] = parsedOutput[key];
             }
         }
+
+        let toFetch: string[] = [];
+        // Loop though the setings again
+        for (let i = 0; i < guild_settings.length; i++) {
+            const setting = settings[guild_settings[i]];
+            // Check if the setting is not in 'settings'
+            if (setting == null) {
+                toFetch.push(setting);
+            }
+        }
+
+        if (toFetch.length !== 0) {
+            // Add all values from toFetch to the injection string
+            let inj = toFetch[0];
+            for (let i = 1; i < toFetch.length; i++) {
+                inj += `, ${toFetch[i]}`;
+            }
+
+            const result = await PostgreSQL.runQuery(`SELECT ${inj} FROM servers WHERE id = $1::text`, [guild_id]);
+            if (result.rows.length) {
+                // Go over the result
+                for (let i = 0; i < result.rows.length; i++) {
+                    const setting = toFetch[i];
+                    // Set the values in 'settings'
+                    settings[setting] = result.rows[0][setting];
+                }
+            }
+        }
+
+        // Return the asked settings
         return settings;
     }
-    // I'm so sorry for this injection but there is not other way, also all the identifiers are set by the bot anyway and are not user input.
+
     let inj = guild_settings[0];
     for (let i = 1; i < guild_settings.length; i++) {
-        inj += `, ${guild_settings[i]}`
+        inj += `, ${guild_settings[i]}`;
     }
 
+    // I'm so sorry for this injection but there is not other way, also all the identifiers are set by the bot anyway and are not user input.
     const result = await PostgreSQL.runQuery(`SELECT ${inj} FROM servers WHERE id = $1::text`, [guild_id]);
     if (!result.rows.length) return null;
 
@@ -154,10 +195,20 @@ export const setConfigValue = async function (guild_id: string, identifier: stri
         const settings = JSON.parse(rawSettings);
 
         settings[identifier] = value;
-        await Redis.getClient().setAsync(guild_id, JSON.stringify(settings), 'EX', 7200 /* 2 hours */);
+        await Redis.getClient().setAsync(guild_id, JSON.stringify(settings), 'EX', 18000 /* 5 hours */);
     }
     // I'm so sorry for this injection but there is not other way, also all the identifiers are set by the bot anyway and are not user input.
     await PostgreSQL.runQuery(`UPDATE servers SET ${identifier} = $1 WHERE id = $2::text`, [value, guild_id]);
+}
+
+export const getServerCount = async (client: Client) => {
+    const req = await client.shard.fetchClientValues('guilds.cache.size');
+    return req.reduce((p, n) => p + n, 0);
+}
+
+export const getServer = async (client: Client, guildID: string): Promise<Guild> => {
+    const req = await client.shard.broadcastEval(`this.guilds.cache.get("${guildID}")`);
+    return req.find(res => !!res) || null;
 }
 
 type SettingResolvable = Uint8Array | string | number | boolean;

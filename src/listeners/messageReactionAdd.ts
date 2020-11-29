@@ -1,10 +1,10 @@
-import { Client, MessageReaction, User } from 'discord.js';
+import { Client, MessageReaction } from 'discord.js-light';
 import botCache from '../structures/BotCache';
 import { cacheGuild, getConfigValue, getConfigValues, isCached } from '../managers/ServerData';
 import { approveSuggestion, getSuggestionData, rejectSuggestion } from '../managers/Suggestions';
 import { log } from '../structures/Logging';
 
-export default async (client: Client, reaction: MessageReaction, user: User): Promise<void> => {
+export default async (client: Client, reaction: MessageReaction): Promise<void> => {
     if (reaction.partial) {
         try {
             await reaction.fetch();

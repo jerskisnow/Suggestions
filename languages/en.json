@@ -65,6 +65,12 @@
     "deleteApprovedUpdated": "Automatic deletion of approved suggetions is not turned `%new_value%`.",
     "deleteRejectedUpdated": "Automatic deletion of rejected suggetions is not turned `%new_value%`."
   },
+  "movereport": {
+    "helpDescription": "**Please use:** %prefix%movereport <ID/MessageID> <#channel>",
+    "invalidReport": "I can't move that report because it doesn't exist",
+    "invalidChannel": "I can't move the report because I couldn't find that channel.",
+    "reportMoved": "Successfully moved the report to %new_channel%."
+  },
   "report": {
     "helpDescription": "**Please use:** %prefix%report <Description>",
     "onBlacklist": "You've been blacklisted by the Administrators of this server, therefore you cannot create reports.",
@@ -94,6 +100,12 @@
     "suggestionListDescription": "There are `%amount%` open suggestions. I'm displaying the latest 10.",
     "reportListDescription": "There are `%amount%` open reports. I'm displaying the latest 10."
   },
+  "movesuggestion": {
+    "helpDescription": "**Please use:** %prefix%movesuggestion <ID/MessageID> <#channel>",
+    "invalidSuggestion": "I can't move that suggestion because it doesn't exist",
+    "invalidChannel": "I can't move the suggestion because I couldn't find that channel.",
+    "suggestionMoved": "Successfully moved the report to %new_channel%."
+  },
   "reject": {
     "helpDescription": "**Please use:** %prefix%reject <ID/MessageID> [Reason]",
     "invalidSuggestion": "I can't reject that suggestion because it doesn't exist",
@@ -118,7 +130,7 @@
       },
       {
         "title": "Staff",
-        "description": "%prefix%approve <SuggestionID/MessageID> [Reason]\n%prefix%reject <SuggestionID/MessageID> [Reason]\n%prefix%resolve <Report/MessageID> [Reason]\n\n%prefix%list [Suggestions/Reports]"
+        "description": "%prefix%approve <SuggestionID/MessageID> [Reason]\n%prefix%reject <SuggestionID/MessageID> [Reason]\n%prefix%resolve <Report/MessageID> [Reason]\n%prefix%list [Suggestions/Reports]\n%prefix%movesuggestion <SuggestionID/MessageID> <#channel>\n%prefix%movereport <ReportID/MessageID> <#channel>"
       },
       {
         "title": "Admin",
@@ -160,10 +172,12 @@
     "deleteRejectedUpdated": "`%user_tag%` changed delete rejected to %new_value%.",
     "reportCreated": "`%user_tag%` created a new report, you can find it [here](%message_url%).",
     "reportResolved": "`%user_tag%` changed to status of report `%report_id%` to resolved.",
+    "reportMoved": "`%user_tag%` moved report `%report_id%` to %channel%.",
     "suggestionApproved": "`%user_tag%` changed the status of suggestion `%suggestion_id%` to approved.",
     "suggestionUnderConsideration": "`%user_tag%` changed the status of suggestion `%suggestion_id%` to under consideration.",
     "suggestionRejected": "`%user_tag%` changed the status of suggestion `%suggestion_id%` to rejected.",
     "suggestionCreated": "`%user_tag%` created a new suggestion, you can find it [here](%message_url%).",
+    "suggestionMoved": "`%user_tag%` moved suggestion `%suggestion_id%` to %channel%.",
     "autoApproved": "The status of suggesiton `%suggestion_id%` was automatically updated to approved.",
     "autoRejected": "The status of suggesiton `%suggestion_id%` was automatically updated to rejected."
   },

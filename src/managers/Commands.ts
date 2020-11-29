@@ -11,7 +11,7 @@ import {
     Role,
     TextChannel,
     User
-} from 'discord.js';
+} from 'discord.js-light';
 import Language from '../types/Language';
 
 export const parseCommand = (cmdName: string): ICommand => {
@@ -43,14 +43,12 @@ export const getMemberFromArgs = (guild: Guild, input: string): GuildMember => {
     return member == null ? null : member;
 }
 
-export const getChannelFromArgs = (guild: Guild, input: string): MessageableChannel => {
+export const getChannelFromArgs = async (guild: Guild, input: string): Promise<MessageableChannel> => {
     if (input.startsWith('<#') && input.endsWith('>')) {
         input = input.slice(2, -1);
     }
-    if (isNaN(parseInt(input))) {
-        return (guild.channels.cache as Collection<string, TextChannel>).find(c => c.name === input);
-    }
-    const channel = guild.channels.cache.get(input) as MessageableChannel;
+    if (isNaN(parseInt(input))) return null;
+    const channel = await guild.channels.fetch(input) as MessageableChannel;
     if (channel.type !== 'text' && channel.type !== 'news') return null;
 
     return channel == null ? null : channel;

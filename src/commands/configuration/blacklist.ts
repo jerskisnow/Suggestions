@@ -1,6 +1,6 @@
 import botCache from '../../structures/BotCache';
 import { getMemberFromArgs, Permission, sendPlainEmbed } from '../../managers/Commands';
-import { Message, MessageEmbed } from "discord.js";
+import { Message, MessageEmbed } from 'discord.js-light';
 import Language from '../../types/Language';
 import { handleBlacklistAdd, handleBlacklistRemove, handleClearBlacklist } from '../../managers/Blacklist';
 

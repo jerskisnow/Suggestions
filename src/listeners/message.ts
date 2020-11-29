@@ -1,4 +1,4 @@
-import { Client, Message } from 'discord.js';
+import { Client, Message } from 'discord.js-light';
 
 import { parseCommand, Permission, sendPlainEmbed } from '../managers/Commands';
 import { cacheGuild, getConfigValue, getConfigValues, isCached, setConfigValue } from '../managers/ServerData';

@@ -1,6 +1,6 @@
 import botCache from '../../structures/BotCache';
 import { Permission } from '../../managers/Commands';
-import { MessageEmbed } from "discord.js";
+import { MessageEmbed } from 'discord.js-light';
 
 botCache.commands.set('help', {
     enabled: true,

@@ -4,7 +4,7 @@ import { MessageableChannel, sendPlainEmbed } from '../managers/Commands';
 import { getConfigValue } from '../managers/ServerData';
 
 export const log = async (guild: Guild, message: string) => {
-    const channel = guild.channels.cache.get(
+    const channel = await guild.channels.fetch(
         await getConfigValue(guild.id, 'log_channel', false) as string
     ) as MessageableChannel;
 

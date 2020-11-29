@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from 'discord.js';
+import { Message, MessageEmbed } from 'discord.js-light';
 import botCache from '../../structures/BotCache';
 import { getChannelFromArgs, getRoleFromArgs, Permission, sendPlainEmbed } from '../../managers/Commands';
 import Language from '../../types/Language';
@@ -85,7 +85,7 @@ const handleStaffrole = async (message: Message, language: Language, value: stri
 }
 
 const handleSuggestionChannel = async (message: Message, language: Language, value: string): Promise<void> => {
-    const channel = getChannelFromArgs(message.guild, value);
+    const channel = await getChannelFromArgs(message.guild, value);
     if (channel === null) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidChannel);
         return;
@@ -96,7 +96,7 @@ const handleSuggestionChannel = async (message: Message, language: Language, val
 }
 
 const handleReportChannel = async (message: Message, language: Language, value: string): Promise<void> => {
-    const channel = getChannelFromArgs(message.guild, value);
+    const channel = await getChannelFromArgs(message.guild, value);
     if (channel === null) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidChannel);
         return;
@@ -107,7 +107,7 @@ const handleReportChannel = async (message: Message, language: Language, value: 
 }
 
 const handleLogChannel = async (message: Message, language: Language, value: string): Promise<void> => {
-    const channel = getChannelFromArgs(message.guild, value);
+    const channel = await getChannelFromArgs(message.guild, value);
     if (channel === null) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidChannel);
         return;

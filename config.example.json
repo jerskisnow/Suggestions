@@ -29,8 +29,11 @@
     "devLogs": ""
   },
   "apis": {
-    "dblToken": ""
+    "dblToken": "",
+    "dbggToken": "",
+    "bfdToken": ""
   },
+  "serverPort": 8080,
   "oldGuildDataBackend": "",
   "developerID": "",
   "advancedLogging": false

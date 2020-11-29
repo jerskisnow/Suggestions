@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, TextChannel } from 'discord.js';
+import { Message, MessageEmbed, TextChannel } from 'discord.js-light';
 import Language from '../types/Language';
 import { getConfigValue, getConfigValues } from './ServerData';
 import PostgreSQL from '../structures/PostgreSQL';
@@ -18,7 +18,7 @@ export const handleSuggestionCreation = async (message: Message, language: Langu
         return;
     }
 
-    const channel = message.guild.channels.cache.get(guildData.suggestion_channel);
+    const channel = await message.guild.channels.fetch(guildData.suggestion_channel);
 
     if (!channel || channel.type !== 'text') {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.suggest.invalidChannel)

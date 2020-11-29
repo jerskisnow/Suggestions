@@ -30,6 +30,8 @@ interface Links {
 
 interface Apis {
     dblToken: string;
+    dbggToken: string;
+    bfdToken: string;
 }
 
 interface Channels {
@@ -46,6 +48,7 @@ export default interface Config {
     links: Links;
     apis: Apis;
     channels: Channels;
+    serverPort: number;
     oldGuildDataBackend: string;
     developerID: string;
     advancedLogging: boolean;

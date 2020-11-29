@@ -1,13 +1,56 @@
-import { Client } from 'discord.js';
+import { Client } from 'discord.js-light';
 import { promises as fs } from 'fs';
 import botCache from './structures/BotCache';
 import PostgreSQL from './structures/PostgreSQL';
 import Redis from './structures/Redis';
 import { unCacheGuild } from './managers/ServerData';
+import Server from './api/server';
 
 const client = new Client({
+    cacheGuilds: true,
+    cacheRoles: true,
+    fetchAllMembers: true,
+    disabledEvents: [
+        'channelCreate',
+        'channelDelete',
+        'channelPinsUpdate',
+        'channelUpdate',
+        'emojiCreate',
+        'emojiDelete',
+        'emojiUpdate',
+        'guildBanAdd',
+        'guildBanRemove',
+        'guildIntegrationsUpdate',
+        'guildMemberAdd',
+        'guildMemberAvailable',
+        'guildMemberRemove',
+        'guildMembersChunk',
+        'guildMemberSpeaking',
+        'guildMemberUpdate',
+        'guildUnavailable',
+        'guildUpdate',
+        'invalidated',
+        'inviteCreate',
+        'inviteDelete',
+        'messageDeleteBulk',
+        'messageReactionRemove',
+        'messageReactionRemoveAll',
+        'messageReactionRemoveEmoji',
+        'messageUpdate',
+        'presenceUpdate',
+        'rateLimit',
+        'roleCreate',
+        'roleDelete',
+        'roleUpdate',
+        'typingStart',
+        'userUpdate',
+        'voiceStateUpdate',
+        'webhookUpdate'
+    ],
     partials: ['MESSAGE', 'REACTION']
 });
+
+const server = new Server(client);
 
 (async () => {
     botCache.config = JSON.parse((await fs.readFile('../config.json')).toString());
@@ -23,6 +66,8 @@ const client = new Client({
 
     await PostgreSQL.setupPool();
     await Redis.setupClient();
+
+    server.register();
 
     (await fs.readdir('./listeners/')).forEach((file: any) =>
         client.on(file.split('.')[0], require(`./listeners/${file}`).default.bind(null, client))
