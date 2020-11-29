@@ -23,7 +23,6 @@ export default class Server {
         });
     }
 
-    // Return guild count, or the config of a guild
     private globalRoutes = (app: Express) => {
         app.get('/guilds/count', async (req, res) => {
             res.send({
