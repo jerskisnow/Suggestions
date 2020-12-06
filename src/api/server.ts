@@ -1,8 +1,9 @@
-import { Client } from 'discord.js-light';
+import { Client, TextChannel } from 'discord.js-light';
 import express, { Express } from 'express';
 import { getServerCount, getServer, getConfigValues } from '../managers/ServerData';
 import PostgreSQL from '../structures/PostgreSQL';
 import botCache from '../structures/BotCache';
+import Redis from '../structures/Redis';
 
 // TODO: Add cors
 export default class Server {
@@ -34,7 +35,7 @@ export default class Server {
     private serverRoutes = (app: Express) => {
         app.get('/data/:guild_id', async (req, res) => {
             const { guild_id } = req.params;
-            if (await this.isInGuild(guild_id)) {
+            if (!await this.isInGuild(guild_id)) {
                 res.status(404);
             } else {
                 let suggestionData: any = [];
@@ -75,7 +76,7 @@ export default class Server {
 
         app.get('/configs/:guild_id', async (req, res) => {
             const { guild_id } = req.params;
-            if (await this.isInGuild(guild_id)) {
+            if (!await this.isInGuild(guild_id)) {
                 res.status(404);
             } else {
                 const data = await getConfigValues(guild_id, ['prefix',
@@ -94,9 +95,44 @@ export default class Server {
                     'report_blacklist',
                     'disabled',
                     'disable_reason'
-                ]);
+                ]) as any;
+
+                const guild = await this.client.guilds.fetch(guild_id);
+                const role = guild.roles.cache.get(data.staff_role);
+
+                data.staff_role = {
+                    id: role.id,
+                    name: role.name
+                }
+
+                const sChannel = await this.client.channels.fetch(data.suggestion_channel) as TextChannel;
+                data.suggestion_channel = {
+                    id: sChannel.id,
+                    name: sChannel.name
+                }
+
+                const rChannel = await this.client.channels.fetch(data.report_channel) as TextChannel;
+                data.report_channel = {
+                    id: rChannel.id,
+                    name: rChannel.name
+                }
+
+                const lChannel = await this.client.channels.fetch(data.log_channel) as TextChannel;
+                data.log_channel = {
+                    id: lChannel.id,
+                    name: lChannel.name
+                }
+
                 res.send({ data }).status(200);
             }
+        });
+
+        app.post('/configs/update/:guild_id', async (req, res) => {
+            const { guild_id } = req.params;
+            const json = await req.body.json();
+
+            await Redis.getClient().setAsync(guild_id, JSON.stringify(json), 'EX', 18000 /* 5 hours */);
+            // TODO: Update database
         });
     }
 

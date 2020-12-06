@@ -2,7 +2,7 @@ import { Message, MessageEmbed, TextChannel } from 'discord.js-light';
 import Language from '../types/Language';
 import { getConfigValue, getConfigValues } from './ServerData';
 import PostgreSQL from '../structures/PostgreSQL';
-import { sendPlainEmbed, sendPrivateMessage } from './Commands';
+import { MessageableChannel, sendPlainEmbed, sendPrivateMessage } from './Commands';
 import botCache from '../structures/BotCache';
 import { log } from '../structures/Logging';
 
@@ -137,6 +137,28 @@ export const considerSuggestion = async (message: Message, language: Language, s
     embed.color = parseInt(botCache.config.colors.green.slice(1), 16);
 
     await msg.edit({embed: embed});
+}
+
+export const moveSuggestion = async (message: Message, language: Language, suggestion: SuggestionData, newChannel: MessageableChannel) => {
+    const oldChannel = message.guild.channels.cache.get(suggestion.channel) as TextChannel;
+    if (!oldChannel) {
+        await sendPlainEmbed(message.channel, botCache.config.colors.red, language.movesuggestion.invalidMessage)
+        await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
+        return;
+    }
+
+    const msg = await oldChannel.messages.fetch(suggestion.message);
+    if (!msg || msg.deleted) {
+        await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
+        return;
+    }
+
+    await msg.delete();
+    await newChannel.send({
+        embed: msg.embeds[0]
+    });
+
+    await PostgreSQL.runQuery('UPDATE suggestions SET channel = $1::text WHERE id = $2::int', [newChannel.id, suggestion.id]);
 }
 
 export const getSuggestionData = async (resolvable: string): Promise<SuggestionData> => {

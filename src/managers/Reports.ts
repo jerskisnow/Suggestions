@@ -2,7 +2,7 @@ import { Message, MessageEmbed, TextChannel } from 'discord.js-light';
 import Language from '../types/Language';
 import { getConfigValues } from './ServerData';
 import PostgreSQL from '../structures/PostgreSQL';
-import { sendPlainEmbed, sendPrivateMessage } from './Commands';
+import { MessageableChannel, sendPlainEmbed, sendPrivateMessage } from './Commands';
 import botCache from '../structures/BotCache';
 import { log } from '../structures/Logging';
 
@@ -11,7 +11,7 @@ export const handleReportCreation = async (message: Message, language: Language,
 
     const blacklist: string[] = JSON.parse(guildData.report_blacklist);
     if (blacklist.includes(message.author.id)) {
-        await sendPlainEmbed(message.channel, botCache.config.colors.red, language.suggest.onBlacklist);
+        await sendPlainEmbed(message.channel, botCache.config.colors.red, language.report.onBlacklist);
         await log(message.guild, language.logs.blacklistLogs.isOnReport.replace('%user_tag%', message.author.tag));
         return;
     }
@@ -69,6 +69,28 @@ export const resolveReport = async (message: Message, language: Language, report
     embed.color = parseInt(botCache.config.colors.green.slice(1), 16);
 
     await msg.edit({embed: embed});
+}
+
+export const moveReport = async (message: Message, language: Language, report: ReportData, newChannel: MessageableChannel) => {
+    const oldChannel = message.guild.channels.cache.get(report.channel) as TextChannel;
+    if (!oldChannel) {
+        await sendPlainEmbed(message.channel, botCache.config.colors.red, language.movereport.invalidMessage)
+        await PostgreSQL.runQuery('UPDATE reports SET status = $1::int WHERE id = $2::int', [ReportStatus.DELETED, report.id]);
+        return;
+    }
+
+    const msg = await oldChannel.messages.fetch(report.message);
+    if (!msg || msg.deleted) {
+        await PostgreSQL.runQuery('UPDATE reports SET status = $1::int WHERE id = $2::int', [ReportStatus.DELETED, report.id]);
+        return;
+    }
+
+    await msg.delete();
+    await newChannel.send({
+        embed: msg.embeds[0]
+    });
+
+    await PostgreSQL.runQuery('UPDATE reports SET channel = $1::text WHERE id = $2::int', [newChannel.id, report.id]);
 }
 
 export const getReportData = async (resolvable: string): Promise<ReportData> => {

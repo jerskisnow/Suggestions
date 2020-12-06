@@ -67,9 +67,10 @@
   },
   "movereport": {
     "helpDescription": "**Please use:** %prefix%movereport <ID/MessageID> <#channel>",
-    "invalidReport": "I can't move that report because it doesn't exist",
+    "invalidReport": "I can't move that report because it doesn't exist.",
     "invalidChannel": "I can't move the report because I couldn't find that channel.",
-    "reportMoved": "Successfully moved the report to %new_channel%."
+    "invalidMessage": "I can't move that report because I wasn't able to find the original message.",
+    "locationUpdated": "Successfully moved the report to %new_channel%."
   },
   "report": {
     "helpDescription": "**Please use:** %prefix%report <Description>",
@@ -102,9 +103,10 @@
   },
   "movesuggestion": {
     "helpDescription": "**Please use:** %prefix%movesuggestion <ID/MessageID> <#channel>",
-    "invalidSuggestion": "I can't move that suggestion because it doesn't exist",
+    "invalidSuggestion": "I can't move that suggestion because it doesn't exist.",
     "invalidChannel": "I can't move the suggestion because I couldn't find that channel.",
-    "suggestionMoved": "Successfully moved the report to %new_channel%."
+    "invalidMessage": "I can't move that suggestion because I wasn't able to find the original message.",
+    "locationUpdated": "Successfully moved the report to %new_channel%."
   },
   "reject": {
     "helpDescription": "**Please use:** %prefix%reject <ID/MessageID> [Reason]",
