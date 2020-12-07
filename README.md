@@ -29,4 +29,4 @@ Hi, first of all, thanks for viewing this page! Suggestions is a discord bot tha
 Feel free to contribute, not much to say here yet. If you want to add a new feature, create a pull request. If you feel like you want to improve some code that is currently being used, go ahead create a pull request.
 
 ### Translations
-We are always looking for people to translate our bot. If you want to translate the messages for the bot or if you want to edit someone's translation please go to en_US.utf8.js and read the instructions. The next step is to fork the bot and create a pull request with your new/edited file in it.
+We are always looking for people to translate our bot. If you want to translate the messages for the bot or if you want to edit someone's translation please copy en.json from the languages folder, copy the text, create a new text file and then save it with the name of your language. The next step is to fork the bot and create a pull request with your new/edited file in it.
