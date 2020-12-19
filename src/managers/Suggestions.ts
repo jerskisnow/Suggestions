@@ -161,6 +161,37 @@ export const moveSuggestion = async (message: Message, language: Language, sugge
     await PostgreSQL.runQuery('UPDATE suggestions SET channel = $1::text WHERE id = $2::int', [newChannel.id, suggestion.id]);
 }
 
+export const handleSuggestionList = async (message: Message, language: Language) => {
+    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::int', [message.guild.id, SuggestionStatus.OPEN]);
+
+    if (!result.rows.length) {
+        await sendPlainEmbed(message.channel, botCache.config.colors.red, language.list.noSuggestionsFound);
+        return;
+    }
+
+    const embed = new MessageEmbed()
+        .setColor(botCache.config.colors.blue)
+        .setDescription(language.list.suggestionListDescription.replace('%amount%', String(result.rowCount)));
+
+    for (let i = 0; i < result.rows.length; i++) {
+        if (i === 7) {
+            break;
+        }
+        let member = null;
+        try {
+            member = await message.guild.members.fetch(result.rows[i].author);
+        } catch (ex) {
+            // Log error if the error is not a Unknown Member error
+            if (ex.code !== 10007) {
+                console.error(ex);
+            }
+        }
+        embed.addField(member == null ? 'User Left ~ Suggestions' : member.user.tag, `${result.rows[i].context}\n\n**ID:** ${result.rows[i].id}`, false);
+    }
+
+    await message.channel.send({ embed: embed });
+}
+
 export const getSuggestionData = async (resolvable: string): Promise<SuggestionData> => {
     let result = await PostgreSQL.runQuery('SELECT context, author, guild, channel, message, status FROM suggestions WHERE id = $1::int', [parseInt(resolvable)]);
     if (!result.rows.length) {
@@ -170,6 +201,11 @@ export const getSuggestionData = async (resolvable: string): Promise<SuggestionD
         }
     }
     return result.rows[0];
+}
+
+export const getLatestSuggestions = async (guild_id: string, limit: number): Promise<SuggestionData[]> => {
+    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::int LIMIT $3::int', [guild_id, SuggestionStatus.OPEN, limit]);
+    return result.rows;
 }
 
 interface SuggestionData {

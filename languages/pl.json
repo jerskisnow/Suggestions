@@ -5,14 +5,14 @@
     "th0nk#3262"
   ],
   "blacklist": {
-    "helpDescription": "Prosze u¿ywaæ komend w nastêpuj¹cy sposób.",
+    "helpDescription": "Prosze uï¿½ywaï¿½ komend w nastï¿½pujï¿½cy sposï¿½b.",
     "helpFields": [
       {
         "title": "Dodaj",
         "description": "%prefix%blacklist add <Uzytkownik> <Suggestion/Report/All>"
       },
       {
-        "title": "Usuñ",
+        "title": "Usuï¿½",
         "description": "%prefix%blacklist remove <Uzytkownik> <Suggestion/Report/All>"
       },
       {
@@ -20,22 +20,22 @@
         "description": "%prefix%blacklist clear <suggesiton/Report/All>"
       }
     ],
-    "alreadyOnBlacklist": "Ten u¿ytkownik posiada juz blackliste.",
-    "notOnBlacklist": "Ten u¿ytkownik nie posiada blacklisty.",
-    "invalidMember": "Ten u¿ytkownik nie istnieje.",
-    "invalidBlacklist": "Mo¿esz wybieraæ tylko pomiêdzy Suggestion, Report albo All.",
+    "alreadyOnBlacklist": "Ten uï¿½ytkownik posiada juz blackliste.",
+    "notOnBlacklist": "Ten uï¿½ytkownik nie posiada blacklisty.",
+    "invalidMember": "Ten uï¿½ytkownik nie istnieje.",
+    "invalidBlacklist": "Moï¿½esz wybieraï¿½ tylko pomiï¿½dzy Suggestion, Report albo All.",
     "blacklistUpdated": "Zaktualizowano blackliste.",
     "blacklistsUpdated": "Zaktualizowano wszystkie blacklisty.."
   },
   "config": {
-    "helpDescription": "Prosze uzywaæ komend w nastêpuj¹cy sposób.",
+    "helpDescription": "Prosze uzywaï¿½ komend w nastï¿½pujï¿½cy sposï¿½b.",
     "helpFields": [
       {
         "title": "Generalne",
         "description": "%prefix%config prefix <NewPrefix>\n%prefix%config language <Newlanguage>\n%prefix%config staffrole <@role>"
       },
       {
-        "title": "Kana³y",
+        "title": "Kanaï¿½y",
         "description": "%prefix%config suggestionchannel <#channel>\n%prefix%config reportchannel <#channel>\n%prefix%config logchannel <#channel>"
       },
       {
@@ -48,86 +48,86 @@
       }
     ],
     "prefixUpdated": "Zmieniono prefix na `%new_prefix%`.",
-    "invalidLanguage": "Ten jêzyk jest niewspierany. Mo¿esz znaleŸæ listê wspieranych jêzyków [tutaj](%language_list_link%).",
-    "languageUpdated": "Zmieniono jêzyk na `%new_language_name% (%new_language_country%)`.",
-    "invalidRole": "Nie mog³em znaleŸæ tej roli.",
-    "roleUpdated": "`%user_tag%` zmieni³ jêzyk na `%new_role%`.",
-    "invalidChannel": "Nie mog³em znaleŸæ takiego kana³u.",
-    "suggestionChannelUpdated": "Zmieniono kana³ z sugestiami na %new_channel%.",
-    "reportChannelUpdated": "Zmieniono kana³ z zg³oszeniami na %new_channel%.",
-    "logChannelUpdated": "Zmieniono kana³ z Logami na %new_channel%.",
-    "approveEmojiUpdated": "Zmieniono zatwierdzaj¹ce Emoji na %new_emoji%.",
-    "rejectEmojiUpdated": "Zmieniono odrzucaj¹ce emoji na %new_emoji%.",
-    "invalidNumberOption": "Mo¿esz wpisaæ tylko -1 (aby wy³¹czyæ) lub wy¿sze (aby w³¹czyæ).",
-    "autoApproveUpdated": "Otwarte sugestie bêd¹ automatycznie przyjête je¿eli maj¹ `%new_amount%` pozytywnych reakcji.",
-    "autoRejectUpdated": "Otwarte sugestie bêd¹ automatycznie odrzucane je¿eli maj¹ `%new_amount%` negatywnych reakcji.",
-    "invalidToggleOption": "Mo¿esz wybieraæ tylko pomiêdzy `On` a `Off`.",
+    "invalidLanguage": "Ten jï¿½zyk jest niewspierany. Moï¿½esz znaleï¿½ï¿½ listï¿½ wspieranych jï¿½zykï¿½w [tutaj](%language_list_link%).",
+    "languageUpdated": "Zmieniono jï¿½zyk na `%new_language_name% (%new_language_country%)`.",
+    "invalidRole": "Nie mogï¿½em znaleï¿½ï¿½ tej roli.",
+    "roleUpdated": "`%user_tag%` zmieniï¿½ jï¿½zyk na `%new_role%`.",
+    "invalidChannel": "Nie mogï¿½em znaleï¿½ï¿½ takiego kanaï¿½u.",
+    "suggestionChannelUpdated": "Zmieniono kanaï¿½ z sugestiami na %new_channel%.",
+    "reportChannelUpdated": "Zmieniono kanaï¿½ z zgï¿½oszeniami na %new_channel%.",
+    "logChannelUpdated": "Zmieniono kanaï¿½ z Logami na %new_channel%.",
+    "approveEmojiUpdated": "Zmieniono zatwierdzajï¿½ce Emoji na %new_emoji%.",
+    "rejectEmojiUpdated": "Zmieniono odrzucajï¿½ce emoji na %new_emoji%.",
+    "invalidNumberOption": "Moï¿½esz wpisaï¿½ tylko -1 (aby wyï¿½ï¿½czyï¿½) lub wyï¿½sze (aby wï¿½ï¿½czyï¿½).",
+    "autoApproveUpdated": "Otwarte sugestie bï¿½dï¿½ automatycznie przyjï¿½te jeï¿½eli majï¿½ `%new_amount%` pozytywnych reakcji.",
+    "autoRejectUpdated": "Otwarte sugestie bï¿½dï¿½ automatycznie odrzucane jeï¿½eli majï¿½ `%new_amount%` negatywnych reakcji.",
+    "invalidToggleOption": "Moï¿½esz wybieraï¿½ tylko pomiï¿½dzy `On` a `Off`.",
     "deleteApprovedUpdated": "Automatic deletion of approved suggetions is not turned `%new_value%`.",
     "deleteRejectedUpdated": "Automatic deletion of rejected suggetions is not turned `%new_value%`."
   },
   "movereport": {
-    "helpDescription": "**Prosze u¿yæ:** %prefix%movereport <ID/MessageID> <#channel>",
-    "invalidReport": "Nie mogê przenieœæ tego zg³oszenia, poniewa¿ ono nie istnieje.",
-    "invalidChannel": "Nie mogê przenieœæ tego zg³oszenia, poniewa¿ nie mog³em znaleŸæ takiego kana³u.",
-    "invalidMessage": "Nie mogê przenieœæ tego zg³oszenia, poniewa¿ nie mog³em znaleŸæ oryginalniej wiadomoœci.",
-    "locationUpdated": "Przeniesiono to zg³oszenie do %new_channel%."
+    "helpDescription": "**Prosze uï¿½yï¿½:** %prefix%movereport <ID/MessageID> <#channel>",
+    "invalidReport": "Nie mogï¿½ przenieï¿½ï¿½ tego zgï¿½oszenia, poniewaï¿½ ono nie istnieje.",
+    "invalidChannel": "Nie mogï¿½ przenieï¿½ï¿½ tego zgï¿½oszenia, poniewaï¿½ nie mogï¿½em znaleï¿½ï¿½ takiego kanaï¿½u.",
+    "invalidMessage": "Nie mogï¿½ przenieï¿½ï¿½ tego zgï¿½oszenia, poniewaï¿½ nie mogï¿½em znaleï¿½ï¿½ oryginalniej wiadomoï¿½ci.",
+    "locationUpdated": "Przeniesiono to zgï¿½oszenie do %new_channel%."
   },
   "report": {
-    "helpDescription": "**Proszê u¿yæ:** %prefix%report <Description>",
-    "onBlacklist": "Posiadasz Blacklistê, któr¹ nadali ci administratorzy i nie mo¿esz u¿ywaæ tej komendy.",
-    "invalidChannel": "Proszê siê upewniæ ¿e w³aœciciel serwera poprawnie ustawi³ bota.",
+    "helpDescription": "**Proszï¿½ uï¿½yï¿½:** %prefix%report <Description>",
+    "onBlacklist": "Posiadasz Blacklistï¿½, ktï¿½rï¿½ nadali ci administratorzy i nie moï¿½esz uï¿½ywaï¿½ tej komendy.",
+    "invalidChannel": "Proszï¿½ siï¿½ upewniï¿½ ï¿½e wï¿½aï¿½ciciel serwera poprawnie ustawiï¿½ bota.",
     "reportDescription": "**Opis:** %description%\n\n**Status:** <Status>\n**ID:** <ID>",
-    "reportSent": "Twoje zg³oszenie w %guild_name% zosta³o wys³ane."
+    "reportSent": "Twoje zgï¿½oszenie w %guild_name% zostaï¿½o wysï¿½ane."
   },
   "resolve": {
-    "helpDescription": "**Proszê u¿yæ:** %prefix%resolve <ID/MessageID> [Reason]",
-    "invalidReport": "Nie mogê rozwi¹zaæ tego zg³oszenia, poniewa¿ ono nie istnieje.",
-    "statusUpdated": "Zmieniono status tego zg³oszenia."
+    "helpDescription": "**Proszï¿½ uï¿½yï¿½:** %prefix%resolve <ID/MessageID> [Reason]",
+    "invalidReport": "Nie mogï¿½ rozwiï¿½zaï¿½ tego zgï¿½oszenia, poniewaï¿½ ono nie istnieje.",
+    "statusUpdated": "Zmieniono status tego zgï¿½oszenia."
   },
   "approve": {
-    "helpDescription": "**Proszê u¿yæ:** %prefix%approve <ID/MessageID> [Reason]",
-    "invalidSuggestion": "Nie mogê zatwierdziæ tej sugestii, poniewa¿ ona nie istnieje.",
+    "helpDescription": "**Proszï¿½ uï¿½yï¿½:** %prefix%approve <ID/MessageID> [Reason]",
+    "invalidSuggestion": "Nie mogï¿½ zatwierdziï¿½ tej sugestii, poniewaï¿½ ona nie istnieje.",
     "statusUpdated": "Zmieniono status sugestii."
   },
   "consider": {
-    "helpDescription": "**Proszê u¿yæ:** %prefix%consider <ID/MessageID> [Reason]",
-    "invalidSuggestion": "Nie mogê rozwa¿aæ tej sugestii, poniewa¿ ona nie istnieje",
+    "helpDescription": "**Proszï¿½ uï¿½yï¿½:** %prefix%consider <ID/MessageID> [Reason]",
+    "invalidSuggestion": "Nie mogï¿½ rozwaï¿½aï¿½ tej sugestii, poniewaï¿½ ona nie istnieje",
     "statusUpdated": "Zmieniono status sugestii."
   },
   "list": {
-    "helpDescription": "**Proszê u¿yæ:** %prefix%list [Suggestions/Reports]",
+    "helpDescription": "**Proszï¿½ uï¿½yï¿½:** %prefix%list [Suggestions/Reports]",
     "noSuggestionsFound": "Jest `0` otwartych sugestii.",
-    "noReportsFound": "Jest `0` otwartych zg³oszeñ.",
-    "suggestionListDescription": "Jest `%amount%` otwartych sugestii. Wyœwietlam ostatnie 10.",
-    "reportListDescription": "Jest `%amount%` otwartych zg³oszeñ. Wyœwietlam ostatnie 10."
+    "noReportsFound": "Jest `0` otwartych zgï¿½oszeï¿½.",
+    "suggestionListDescription": "Jest `%amount%` otwartych sugestii. Wyï¿½wietlam ostatnie 8.",
+    "reportListDescription": "Jest `%amount%` otwartych zgï¿½oszeï¿½. Wyï¿½wietlam ostatnie 8."
   },
   "movesuggestion": {
-    "helpDescription": "**Proszê u¿yæ:** %prefix%movesuggestion <ID/MessageID> <#channel>",
-    "invalidSuggestion": "Nie mogê przenieœæ tej sugestii, poniewa¿ ona nie istnieje",
-    "invalidChannel": "Nie mogê przenieœæ tej sugestii, poniewa¿ nie mogê znaleŸæ takiego kana³u.",
-    "invalidMessage": "Nie mogê przenieœæ tej sugestii, poniewa¿ nie mogê znaleŸæ oryginalnej wiadomoœci.",
+    "helpDescription": "**Proszï¿½ uï¿½yï¿½:** %prefix%movesuggestion <ID/MessageID> <#channel>",
+    "invalidSuggestion": "Nie mogï¿½ przenieï¿½ï¿½ tej sugestii, poniewaï¿½ ona nie istnieje",
+    "invalidChannel": "Nie mogï¿½ przenieï¿½ï¿½ tej sugestii, poniewaï¿½ nie mogï¿½ znaleï¿½ï¿½ takiego kanaï¿½u.",
+    "invalidMessage": "Nie mogï¿½ przenieï¿½ï¿½ tej sugestii, poniewaï¿½ nie mogï¿½ znaleï¿½ï¿½ oryginalnej wiadomoï¿½ci.",
     "locationUpdated": "Successfully moved the report to %new_channel%."
   },
   "reject": {
-    "helpDescription": "**Proszê u¿yæ:** %prefix%reject <ID/MessageID> [Reason]",
-    "invalidSuggestion": "Nie mogê odrzuciæ tej sugestii poniewa¿ ona nie istnieje",
+    "helpDescription": "**Proszï¿½ uï¿½yï¿½:** %prefix%reject <ID/MessageID> [Reason]",
+    "invalidSuggestion": "Nie mogï¿½ odrzuciï¿½ tej sugestii poniewaï¿½ ona nie istnieje",
     "statusUpdated": "Zmieniono status sugestii."
   },
   "suggest": {
-    "helpDescription": "**Proszê u¿yæ:** %prefix%suggest <Description>",
-    "onBlacklist": "Posiadasz Blacklistê, któr¹ nadali ci administratorzy i nie mo¿esz u¿ywaæ tej komendy.",
-    "invalidChannel": "Proszê siê upewniæ, ¿e w³aœciciel serwera poprawnie ustawi³ bota.",
+    "helpDescription": "**Proszï¿½ uï¿½yï¿½:** %prefix%suggest <Description>",
+    "onBlacklist": "Posiadasz Blacklistï¿½, ktï¿½rï¿½ nadali ci administratorzy i nie moï¿½esz uï¿½ywaï¿½ tej komendy.",
+    "invalidChannel": "Proszï¿½ siï¿½ upewniï¿½, ï¿½e wï¿½aï¿½ciciel serwera poprawnie ustawiï¿½ bota.",
     "suggestionDescription": "**Opis:** %description%\n\n**Status:** %status%\n**ID:** %id%",
-    "suggestionSent": "Twoja sugestia w %guild_name% zosta³a stworzona, mo¿esz j¹ znaleŸæ [tutaj](%message_url%)."
+    "suggestionSent": "Twoja sugestia w %guild_name% zostaï¿½a stworzona, moï¿½esz jï¿½ znaleï¿½ï¿½ [tutaj](%message_url%)."
   },
   "donate": {
-    "description": "Nie czuj siê zmuszonym do dotacji, ale pomaga ona nam zarz¹dzaæ naszymi projektami w tym Suggestions.\n\nJe¿eli zdecydowa³eœ, ¿e z³o¿ysz dotacjê, zkontaktuj siê z `jerskisnow#8214` je¿eli chcesz otrzymaæ rangê premium, bazuj¹c na tym jak du¿¹ dotacjê wys³a³eœ, na tym serwerze discord! Kiedy otrzymasz rangê premium dostaniesz kilka extra perków i w³aœciciel bota ci podziêkuje!\n\nMo¿esz znaleŸæ wiêcej informacji, w tym informacje do p³atnoœci [tutaj](%donate_link%)."
+    "description": "Nie czuj siï¿½ zmuszonym do dotacji, ale pomaga ona nam zarzï¿½dzaï¿½ naszymi projektami w tym Suggestions.\n\nJeï¿½eli zdecydowaï¿½eï¿½, ï¿½e zï¿½oï¿½ysz dotacjï¿½, zkontaktuj siï¿½ z `jerskisnow#8214` jeï¿½eli chcesz otrzymaï¿½ rangï¿½ premium, bazujï¿½c na tym jak duï¿½ï¿½ dotacjï¿½ wysï¿½aï¿½eï¿½, na tym serwerze discord! Kiedy otrzymasz rangï¿½ premium dostaniesz kilka extra perkï¿½w i wï¿½aï¿½ciciel bota ci podziï¿½kuje!\n\nMoï¿½esz znaleï¿½ï¿½ wiï¿½cej informacji, w tym informacje do pï¿½atnoï¿½ci [tutaj](%donate_link%)."
   },
   "help": {
-    "description": "Wszystkie komendy dla u¿ytkowników, moderacji i administracji mog¹ byæ znalezione poni¿ej.",
+    "description": "Wszystkie komendy dla uï¿½ytkownikï¿½w, moderacji i administracji mogï¿½ byï¿½ znalezione poniï¿½ej.",
     "fields": [
       {
-        "title": "U¿ytkownik",
+        "title": "Uï¿½ytkownik",
         "description": "%prefix%suggest <Description>\n%prefix%report <Description>\n%prefix%list [Suggestions]\n%prefix%donate\n%prefix%invite\n%prefix%vote\n%prefix%help"
       },
       {
@@ -141,57 +141,57 @@
     ]
   },
   "invite": {
-    "description": "Je¿eli chcesz zaprosiæ Suggestions do twojego serwera, [kliknij tutaj](%bot_invite%). Je¿eli szukasz serwera pomocy, albo chcesz pogadaæ z innymi, [kliknij tutaj](%server_invite%)."
+    "description": "Jeï¿½eli chcesz zaprosiï¿½ Suggestions do twojego serwera, [kliknij tutaj](%bot_invite%). Jeï¿½eli szukasz serwera pomocy, albo chcesz pogadaï¿½ z innymi, [kliknij tutaj](%server_invite%)."
   },
   "vote": {
-    "description": "G³osowanie za Suggestions sprawia ¿e jest wy¿ej w liœcie DiscordBot, mo¿esz zag³osowaæ [tutaj](%vote_link%)."
+    "description": "Gï¿½osowanie za Suggestions sprawia ï¿½e jest wyï¿½ej w liï¿½cie DiscordBot, moï¿½esz zagï¿½osowaï¿½ [tutaj](%vote_link%)."
   },
   "logs": {
     "blacklistLogs": {
-      "addedToSuggestion": "%admin_tag% doda³ %user_tag% do blacklisty sugestii.",
-      "removedFromSuggestion": "%admin_tag% usun¹³ %user_tag% z blacklisty sugestii.",
-      "addedToReport": "%admin_tag% doda³ %user_tag% do blacklisty zg³oszeñ.",
-      "removedFromReport": "%admin_tag% usun¹³ %user_tag% z blacklisty zg³oszeñ.",
-      "addedToAll": "%admin_tag% doda³ %user_tag% do wszystkich blacklist.",
-      "removedFromAll": "%admin_tag% usun¹³ %user_tag% ze wszystkich blacklist.",
-      "clearedSuggestion": "%admin_tag% wyczyœci³ wszystkich z blacklisty sugestii.",
-      "clearedReport": "%admin_tag% wyczyœci³ wszystkich z blacklisty zg³oszeñ.",
-      "clearedAll": "%admin_tag% wyczyœci³ wszystkich ze wszystkich blacklist.",
-      "isOnSuggestion": "%user_tag% próbowa³ stworzyæ sugestiê, ale jest na blackliœcie.",
-      "isOnReport": "%user_tag% próbowa³ stworzyæ zg³oszenie, ale jest na blackliœcie."
+      "addedToSuggestion": "%admin_tag% dodaï¿½ %user_tag% do blacklisty sugestii.",
+      "removedFromSuggestion": "%admin_tag% usunï¿½ï¿½ %user_tag% z blacklisty sugestii.",
+      "addedToReport": "%admin_tag% dodaï¿½ %user_tag% do blacklisty zgï¿½oszeï¿½.",
+      "removedFromReport": "%admin_tag% usunï¿½ï¿½ %user_tag% z blacklisty zgï¿½oszeï¿½.",
+      "addedToAll": "%admin_tag% dodaï¿½ %user_tag% do wszystkich blacklist.",
+      "removedFromAll": "%admin_tag% usunï¿½ï¿½ %user_tag% ze wszystkich blacklist.",
+      "clearedSuggestion": "%admin_tag% wyczyï¿½ciï¿½ wszystkich z blacklisty sugestii.",
+      "clearedReport": "%admin_tag% wyczyï¿½ciï¿½ wszystkich z blacklisty zgï¿½oszeï¿½.",
+      "clearedAll": "%admin_tag% wyczyï¿½ciï¿½ wszystkich ze wszystkich blacklist.",
+      "isOnSuggestion": "%user_tag% prï¿½bowaï¿½ stworzyï¿½ sugestiï¿½, ale jest na blackliï¿½cie.",
+      "isOnReport": "%user_tag% prï¿½bowaï¿½ stworzyï¿½ zgï¿½oszenie, ale jest na blackliï¿½cie."
     },
-    "prefixUpdated": "`%user_tag%` zmieni³ prefix na `%new_prefix%`.",
-    "languageUpdated": "`%user_tag%` zmieni³ jêzyk na `%new_language_name%`.",
-    "roleUpdated": "`%user_tag%` zmieni³ role na `%new_role%`.",
-    "suggestionChannelUpdated": "`%user_tag%` zmieni³ kana³ sugestii na %new_channel%.",
-    "reportChannelUpdated": "`%user_tag%` zmieni³ kana³ zg³oszeñ na %new_channel%.",
-    "logChannelUpdated": "`%user_tag%` zmieni³ kana³ z logami na %new_channel%.",
-    "approveEmojiUpdated": "`%user_tag%` zmieni³ zatwierdzaj¹ce Emoji na %new_emoji%.",
-    "rejectEmojiUpdated": "`%user_tag%` zmieni³ odrzucaj¹ce Emoji na %new_emoji%.",
-    "autoApproveUpdated": "`%user_tag%` zmieni³ liczbê auto-zatwierdzania na %new_amount%.",
-    "autoRejectUpdated": "`%user_tag%` zmieni³ liczbê auto-odrzucania na %new_amount%.",
-    "deleteApprovedUpdated": "`%user_tag%` zmieni³ usuwanie zatwierdzonych na %new_value%.",
-    "deleteRejectedUpdated": "`%user_tag%` zmieni³ usuwanie odrzuconych na %new_value%.",
-    "reportCreated": "`%user_tag%` stworzy³ nowe zg³oszenie, mo¿na je znaleŸæ [tutaj](%message_url%).",
-    "reportResolved": "`%user_tag%` zmieni³ status zg³oszenia o ID `%report_id%` na rozwi¹zany.",
-    "reportMoved": "`%user_tag%` przeniós³ zg³oszenie o ID `%report_id%` do %channel%.",
-    "suggestionApproved": "`%user_tag%` zmieni³ status sugestii z ID `%suggestion_id%` na zatwierdzony.",
-    "suggestionUnderConsideration": "`%user_tag%` zmieni³ status sugestii z ID `%suggestion_id%` na Rozwa¿anie.",
-    "suggestionRejected": "`%user_tag%` zmieni³ status sugestii o ID `%suggestion_id%` na odrzucony.",
-    "suggestionCreated": "`%user_tag%` stworzy³ now¹ sugestiê, mo¿na j¹ znaleŸæ [tutaj](%message_url%).",
-    "suggestionMoved": "`%user_tag%` przeniós³ sugestiê o ID `%suggestion_id%` do %channel%.",
-    "autoApproved": "Status sugestii o ID `%suggestion_id%` zosta³ automatycznie zmieniony na zatwierdzony.",
-    "autoRejected": "Status sugestii o ID `%suggestion_id%` zosta³ automatycznie zmieniony na odrzucony."
+    "prefixUpdated": "`%user_tag%` zmieniï¿½ prefix na `%new_prefix%`.",
+    "languageUpdated": "`%user_tag%` zmieniï¿½ jï¿½zyk na `%new_language_name%`.",
+    "roleUpdated": "`%user_tag%` zmieniï¿½ role na `%new_role%`.",
+    "suggestionChannelUpdated": "`%user_tag%` zmieniï¿½ kanaï¿½ sugestii na %new_channel%.",
+    "reportChannelUpdated": "`%user_tag%` zmieniï¿½ kanaï¿½ zgï¿½oszeï¿½ na %new_channel%.",
+    "logChannelUpdated": "`%user_tag%` zmieniï¿½ kanaï¿½ z logami na %new_channel%.",
+    "approveEmojiUpdated": "`%user_tag%` zmieniï¿½ zatwierdzajï¿½ce Emoji na %new_emoji%.",
+    "rejectEmojiUpdated": "`%user_tag%` zmieniï¿½ odrzucajï¿½ce Emoji na %new_emoji%.",
+    "autoApproveUpdated": "`%user_tag%` zmieniï¿½ liczbï¿½ auto-zatwierdzania na %new_amount%.",
+    "autoRejectUpdated": "`%user_tag%` zmieniï¿½ liczbï¿½ auto-odrzucania na %new_amount%.",
+    "deleteApprovedUpdated": "`%user_tag%` zmieniï¿½ usuwanie zatwierdzonych na %new_value%.",
+    "deleteRejectedUpdated": "`%user_tag%` zmieniï¿½ usuwanie odrzuconych na %new_value%.",
+    "reportCreated": "`%user_tag%` stworzyï¿½ nowe zgï¿½oszenie, moï¿½na je znaleï¿½ï¿½ [tutaj](%message_url%).",
+    "reportResolved": "`%user_tag%` zmieniï¿½ status zgï¿½oszenia o ID `%report_id%` na rozwiï¿½zany.",
+    "reportMoved": "`%user_tag%` przeniï¿½sï¿½ zgï¿½oszenie o ID `%report_id%` do %channel%.",
+    "suggestionApproved": "`%user_tag%` zmieniï¿½ status sugestii z ID `%suggestion_id%` na zatwierdzony.",
+    "suggestionUnderConsideration": "`%user_tag%` zmieniï¿½ status sugestii z ID `%suggestion_id%` na Rozwaï¿½anie.",
+    "suggestionRejected": "`%user_tag%` zmieniï¿½ status sugestii o ID `%suggestion_id%` na odrzucony.",
+    "suggestionCreated": "`%user_tag%` stworzyï¿½ nowï¿½ sugestiï¿½, moï¿½na jï¿½ znaleï¿½ï¿½ [tutaj](%message_url%).",
+    "suggestionMoved": "`%user_tag%` przeniï¿½sï¿½ sugestiï¿½ o ID `%suggestion_id%` do %channel%.",
+    "autoApproved": "Status sugestii o ID `%suggestion_id%` zostaï¿½ automatycznie zmieniony na zatwierdzony.",
+    "autoRejected": "Status sugestii o ID `%suggestion_id%` zostaï¿½ automatycznie zmieniony na odrzucony."
   },
   "additional": {
-    "invalidStaffRole": "Proszê siê upewniæ ¿e w³aœciciel serwera poprawnie skonfigurowa³ role",
-    "roleRequired": "Musisz posiadaæ rolê `%role_name%` aby u¿yæ tej komendy.",
-    "permRequired": "Musisz posiadaæ uprawnienie `%perm_name% aby u¿yæ tej komendy.`",
+    "invalidStaffRole": "Proszï¿½ siï¿½ upewniï¿½ ï¿½e wï¿½aï¿½ciciel serwera poprawnie skonfigurowaï¿½ role",
+    "roleRequired": "Musisz posiadaï¿½ rolï¿½ `%role_name%` aby uï¿½yï¿½ tej komendy.",
+    "permRequired": "Musisz posiadaï¿½ uprawnienie `%perm_name% aby uï¿½yï¿½ tej komendy.`",
     "openStatus": "Otwarte",
-    "considerstatus": "Trwa rozwa¿anie",
-    "approvedStatus": "Przyjête",
+    "considerstatus": "Trwa rozwaï¿½anie",
+    "approvedStatus": "Przyjï¿½te",
     "rejectedStatus": "Odrzucone",
-    "resolvedStatus": "Rozwi¹zany",
-    "guildDisabled": "Ten serwer zosta³ zblacklistowany przez w³aœciciela bota.\n\n**Powod: %reason%**"
+    "resolvedStatus": "Rozwiï¿½zany",
+    "guildDisabled": "Ten serwer zostaï¿½ zblacklistowany przez wï¿½aï¿½ciciela bota.\n\n**Powod: %reason%**"
   }
 }

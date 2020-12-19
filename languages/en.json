@@ -85,7 +85,7 @@
     "statusUpdated": "Successfully updated the status of that report."
   },
   "approve": {
-    "helpDescription": "**Please use:** %prefix%approve <ID/MessageID> [Reason]",
+    "helpDescription": "**Please use:** %prefix%resolve <ID/MessageID> [Reason]",
     "invalidSuggestion": "I can't approve that suggestion because it doesn't exist",
     "statusUpdated": "Successfully updated the status of that suggestion."
   },
@@ -98,8 +98,8 @@
     "helpDescription": "**Please use:** %prefix%list [Suggestions/Reports]",
     "noSuggestionsFound": "There are `0` open suggestions.",
     "noReportsFound": "There are `0` open reports.",
-    "suggestionListDescription": "There are `%amount%` open suggestions. I'm displaying the latest 10.",
-    "reportListDescription": "There are `%amount%` open reports. I'm displaying the latest 10."
+    "suggestionListDescription": "There are `%amount%` open suggestions. I'm displaying the latest 8.",
+    "reportListDescription": "There are `%amount%` open reports. I'm displaying the latest 8."
   },
   "movesuggestion": {
     "helpDescription": "**Please use:** %prefix%movesuggestion <ID/MessageID> <#channel>",
