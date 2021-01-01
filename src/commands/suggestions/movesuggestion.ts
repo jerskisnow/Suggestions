@@ -28,7 +28,7 @@ botCache.commands.set('movesuggestion', {
 
         await moveSuggestion(message, commandData.language, suggestion, channel);
 
-        await sendPlainEmbed(message.channel, botCache.config.colors.green, commandData.language.movesuggestion.locationUpdated);
-        await log(message.guild, commandData.language.logs.suggestionMoved.replace('%user_tag%', message.author.tag).replace('%suggestion_id%', String(suggestion.id).replace('%channel%', channel.name)));
+        await sendPlainEmbed(message.channel, botCache.config.colors.green, commandData.language.movesuggestion.locationUpdated.replace('%new_channel%', `<#${channel.id}>`));
+        await log(message.guild, commandData.language.logs.suggestionMoved.replace('%user_tag%', message.author.tag).replace('%suggestion_id%', String(suggestion.id).replace('%new_channel%', `<#${channel.id}>`)));
     }
 });

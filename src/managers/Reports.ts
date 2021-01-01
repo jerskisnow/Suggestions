@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, TextChannel } from 'discord.js-light';
+import { Message, MessageEmbed, TextChannel, Constants } from 'discord.js-light';
 import Language from '../types/Language';
 import { getConfigValues } from './ServerData';
 import PostgreSQL from '../structures/PostgreSQL';
@@ -68,33 +68,40 @@ export const resolveReport = async (message: Message, language: Language, report
         .replace('%id%', String(report.id));
     embed.color = parseInt(botCache.config.colors.green.slice(1), 16);
 
-    await msg.edit({embed: embed});
+    await msg.edit({ embed: embed });
 }
 
 export const moveReport = async (message: Message, language: Language, report: ReportData, newChannel: MessageableChannel) => {
-    const oldChannel = message.guild.channels.cache.get(report.channel) as TextChannel;
+    const oldChannel = await message.guild.channels.fetch(report.channel) as TextChannel;
     if (!oldChannel) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.movereport.invalidMessage)
         await PostgreSQL.runQuery('UPDATE reports SET status = $1::int WHERE id = $2::int', [ReportStatus.DELETED, report.id]);
         return;
     }
 
-    const msg = await oldChannel.messages.fetch(report.message);
+    let msg;
+    try {
+        msg = await oldChannel.messages.fetch(report.message);
+    } catch (ex) {
+        if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
+            console.error('An error occured', ex)
+        }
+    }
     if (!msg || msg.deleted) {
         await PostgreSQL.runQuery('UPDATE reports SET status = $1::int WHERE id = $2::int', [ReportStatus.DELETED, report.id]);
         return;
     }
 
     await msg.delete();
-    await newChannel.send({
+    const newMsg = await newChannel.send({
         embed: msg.embeds[0]
     });
 
-    await PostgreSQL.runQuery('UPDATE reports SET channel = $1::text WHERE id = $2::int', [newChannel.id, report.id]);
+    await PostgreSQL.runQuery('UPDATE reports SET channel = $1::text, message = $2::text WHERE id = $3::int', [newChannel.id, newMsg.id, report.id]);
 }
 
 export const handleReportList = async (message: Message, language: Language) => {
-    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message FROM reports WHERE guild = $1::text AND status = $2::int', [message.guild.id, ReportStatus.OPEN]);
+    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message FROM reports WHERE guild = $1::text AND status = $2::int ORDER BY id DESC', [message.guild.id, ReportStatus.OPEN]);
 
     if (!result.rows.length) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.list.noReportsFound);
@@ -106,28 +113,25 @@ export const handleReportList = async (message: Message, language: Language) => 
         .setDescription(language.list.reportListDescription.replace('%amount%', String(result.rowCount)));
 
     for (let i = 0; i < result.rows.length; i++) {
-        if (i === 7) {
-            break;
-        }
         let member = null;
         try {
             member = await message.guild.members.fetch(result.rows[i].author);
         } catch (ex) {
-            // Log error if the error is not a Unknown Member error
-            if (ex.code !== 10007) {
+            if (ex.code !== Constants.APIErrors.UNKNOWN_MEMBER) {
                 console.error(ex);
             }
         }
-        embed.addField(member == null ? 'User Left ~ Suggestions' : member.user.tag, `${result.rows[i].context}\n\n**ID:** ${result.rows[i].id}`, false);
+        embed.addField(member == null ? 'User Left ~ Suggestions' : member.user.tag, `${result.rows[i].context}\n**ID:** ${result.rows[i].id}`, false);
+        if (i === 7) break;
     }
 
     await message.channel.send({ embed: embed });
 }
 
 export const getReportData = async (resolvable: string): Promise<ReportData> => {
-    let result = await PostgreSQL.runQuery('SELECT context, author, guild, channel, message, status FROM reports WHERE id = $1::int', [parseInt(resolvable)]);
+    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM reports WHERE id = $1::int', [parseInt(resolvable)]);
     if (!result.rows.length) {
-        result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, status FROM reports WHERE message = $1::text', [resolvable]);
+        result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM reports WHERE message = $1::text', [resolvable]);
         if (!result.rows.length) {
             result = null;
         }

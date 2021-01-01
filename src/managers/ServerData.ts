@@ -75,7 +75,7 @@ export const cacheGuild = async function (guild_id: string): Promise<void> {
         auto_reject: result.rows[0].auto_reject == null ? -1 : result.rows[0].auto_reject,
         approve_emoji: result.rows[0].approve_emoji == null ? botCache.config.emojis.approve : result.rows[0].approve_emoji,
         reject_emoji: result.rows[0].reject_emoji == null ? botCache.config.emojis.reject : result.rows[0].reject_emoji,
-        disabled: result.rows[0].disabled
+        disabled: result.rows[0].disabled != null
     }
     await Redis.getClient().setAsync(guild_id, JSON.stringify(cacheObject), 'EX', 18000 /* 5 hours */);
 }
@@ -148,7 +148,7 @@ export const getConfigValues = async function (guild_id: string, guild_settings:
             const setting = settings[guild_settings[i]];
             // Check if the setting is not in 'settings'
             if (setting == null) {
-                toFetch.push(setting);
+                toFetch.push(guild_settings[i]);
             }
         }
 

@@ -57,7 +57,7 @@ botCache.commands.set('config', {
 const handlePrefix = async (message: Message, language: Language, value: string): Promise<void> => {
     await setConfigValue(message.guild.id, 'prefix', value);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.prefixUpdated.replace('%new_prefix%', value));
-    await log(message.guild, language.logs.prefixUpdated.replace('%new_prefix%', value));
+    await log(message.guild, language.logs.prefixUpdated.replace('%user_tag%', message.author.tag).replace('%new_prefix%', value));
 }
 
 const handleLanguage = async (message: Message, language: Language, value: string): Promise<void> => {
@@ -69,7 +69,7 @@ const handleLanguage = async (message: Message, language: Language, value: strin
 
     const newLanguage = botCache.languages.get(value);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, newLanguage.config.languageUpdated.replace('%new_language_name%', newLanguage.name).replace('%new_language_country%', newLanguage.country));
-    await log(message.guild, newLanguage.logs.languageUpdated.replace('%new_language_name%', value));
+    await log(message.guild, newLanguage.logs.languageUpdated.replace('%user_tag%', message.author.tag).replace('%new_language_name%', value));
 }
 
 const handleStaffrole = async (message: Message, language: Language, value: string): Promise<void> => {
@@ -81,7 +81,7 @@ const handleStaffrole = async (message: Message, language: Language, value: stri
     await setConfigValue(message.guild.id, 'staff_role', role.id);
 
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.roleUpdated.replace('%role_name%', role.name));
-    await log(message.guild, language.logs.roleUpdated.replace('%new_role%', role.name));
+    await log(message.guild, language.logs.roleUpdated.replace('%user_tag%', message.author.tag).replace('%new_role%', role.name));
 }
 
 const handleSuggestionChannel = async (message: Message, language: Language, value: string): Promise<void> => {
@@ -92,7 +92,7 @@ const handleSuggestionChannel = async (message: Message, language: Language, val
     }
     await setConfigValue(message.guild.id, 'suggestion_channel', channel.id, false);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.suggestionChannelUpdated.replace('%new_channel%', channel.name));
-    await log(message.guild, language.logs.suggestionChannelUpdated.replace('%new_channel%', channel.name));
+    await log(message.guild, language.logs.suggestionChannelUpdated.replace('%user_tag%', message.author.tag).replace('%new_channel%', `<#${channel.id}>`));
 }
 
 const handleReportChannel = async (message: Message, language: Language, value: string): Promise<void> => {
@@ -103,7 +103,7 @@ const handleReportChannel = async (message: Message, language: Language, value: 
     }
     await setConfigValue(message.guild.id, 'report_channel', channel.id, false);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.reportChannelUpdated.replace('%new_channel%', channel.name));
-    await log(message.guild, language.logs.reportChannelUpdated.replace('%new_channel%', channel.name));
+    await log(message.guild, language.logs.reportChannelUpdated.replace('%user_tag%', message.author.tag).replace('%new_channel%', `<#${channel.id}>`));
 }
 
 const handleLogChannel = async (message: Message, language: Language, value: string): Promise<void> => {
@@ -114,19 +114,19 @@ const handleLogChannel = async (message: Message, language: Language, value: str
     }
     await setConfigValue(message.guild.id, 'log_channel', channel.id);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.logChannelUpdated.replace('%new_channel%', channel.name));
-    await log(message.guild, language.logs.logChannelUpdated.replace('%new_channel%', channel.name));
+    await log(message.guild, language.logs.logChannelUpdated.replace('%user_tag%', message.author.tag).replace('%new_channel%', `<#${channel.id}>`));
 }
 
 const handleApproveEmoji = async (message: Message, language: Language, value: string): Promise<void> => {
     await setConfigValue(message.guild.id, 'approve_emoji', value);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.approveEmojiUpdated.replace('%new_emoji%', value));
-    await log(message.guild, language.logs.approveEmojiUpdated.replace('%new_emoji%', value));
+    await log(message.guild, language.logs.approveEmojiUpdated.replace('%user_tag%', message.author.tag).replace('%new_emoji%', value));
 }
 
 const handleRejectEmoji = async (message: Message, language: Language, value: string): Promise<void> => {
     await setConfigValue(message.guild.id, 'reject_emoji', value);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.rejectEmojiUpdated.replace('%new_emoji%', value));
-    await log(message.guild, language.logs.rejectEmojiUpdated.replace('%new_emoji%', value));
+    await log(message.guild, language.logs.rejectEmojiUpdated.replace('%user_tag%', message.author.tag).replace('%new_emoji%', value));
 }
 
 const handleAutoApprove = async (message: Message, language: Language, value: string): Promise<void> => {
@@ -137,7 +137,7 @@ const handleAutoApprove = async (message: Message, language: Language, value: st
     }
     await setConfigValue(message.guild.id, 'auto_approve', value);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.autoApproveUpdated.replace('%new_amount%', value));
-    await log(message.guild, language.logs.autoApproveUpdated.replace('%new_amount%', value));
+    await log(message.guild, language.logs.autoApproveUpdated.replace('%user_tag%', message.author.tag).replace('%new_amount%', value));
 }
 
 const handleAutoReject = async (message: Message, language: Language, value: string): Promise<void> => {
@@ -148,7 +148,7 @@ const handleAutoReject = async (message: Message, language: Language, value: str
     }
     await setConfigValue(message.guild.id, 'auto_reject', value);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.autoRejectUpdated.replace('%new_amount%', value));
-    await log(message.guild, language.logs.autoRejectUpdated.replace('%new_amount%', value));
+    await log(message.guild, language.logs.autoRejectUpdated.replace('%user_tag%', message.author.tag).replace('%new_amount%', value));
 }
 
 const handleDeleteApproved = async (message: Message, language: Language, value: string): Promise<void> => {
@@ -166,7 +166,7 @@ const handleDeleteApproved = async (message: Message, language: Language, value:
     }
     await setConfigValue(message.guild.id, 'delete_approved', bool);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.deleteApprovedUpdated.replace('%new_value%', bool ? 'On' : 'Off'));
-    await log(message.guild, language.logs.deleteApprovedUpdated.replace('%new_value%', bool ? 'On' : 'Off'));
+    await log(message.guild, language.logs.deleteApprovedUpdated.replace('%user_tag%', message.author.tag).replace('%new_value%', bool ? 'On' : 'Off'));
 }
 
 const handleDeleteRejected = async (message: Message, language: Language, value: string): Promise<void> => {
@@ -184,7 +184,7 @@ const handleDeleteRejected = async (message: Message, language: Language, value:
     }
     await setConfigValue(message.guild.id, 'delete_rejected', bool);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.deleteRejectedUpdated.replace('%new_value%', bool ? 'On' : 'Off'));
-    await log(message.guild, language.logs.deleteRejectedUpdated.replace('%new_value%', bool ? 'On' : 'Off'));
+    await log(message.guild, language.logs.deleteRejectedUpdated.replace('%user_tag%', message.author.tag).replace('%new_value%', bool ? 'On' : 'Off'));
 }
 
 const sendHelp = async (message: Message, commandData: { prefix: string, language: Language }) => {

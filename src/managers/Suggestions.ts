@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, TextChannel } from 'discord.js-light';
+import { Message, MessageEmbed, TextChannel, Constants } from 'discord.js-light';
 import Language from '../types/Language';
 import { getConfigValue, getConfigValues } from './ServerData';
 import PostgreSQL from '../structures/PostgreSQL';
@@ -7,7 +7,7 @@ import botCache from '../structures/BotCache';
 import { log } from '../structures/Logging';
 
 export const handleSuggestionCreation = async (message: Message, language: Language, description: string) => {
-    const guildData = await getConfigValues(message.guild.id, ['suggestion_blacklist', 'suggestion_channel'], false);
+    const guildData = await getConfigValues(message.guild.id, ['suggestion_blacklist', 'suggestion_channel', 'approve_emoji', 'reject_emoji'], false);
 
     // I did this here so we can don't have to get configuration from the database twice.
     if (guildData.suggestion_blacklist != null &&
@@ -18,7 +18,7 @@ export const handleSuggestionCreation = async (message: Message, language: Langu
         return;
     }
 
-    const channel = await message.guild.channels.fetch(guildData.suggestion_channel);
+    const channel = await message.guild.channels.fetch(guildData.suggestion_channel); // FIXME: Produced unknown channel exception
 
     if (!channel || channel.type !== 'text') {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.suggest.invalidChannel)
@@ -40,10 +40,8 @@ export const handleSuggestionCreation = async (message: Message, language: Langu
             .setFooter('Suggestions© 2020 - 2021')
     });
 
-    const emojis = await getConfigValues(message.guild.id, ['approve_emoji', 'reject_emoji']);
-
-    await sMessage.react(emojis.approve_emoji);
-    await sMessage.react(emojis.reject_emoji);
+    await sMessage.react(guildData.approve_emoji);
+    await sMessage.react(guildData.reject_emoji);
 
     await PostgreSQL.runQuery('INSERT INTO suggestions (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::int)', [description, message.author.id, message.guild.id, channel.id, sMessage.id, SuggestionStatus.OPEN]);
 
@@ -136,33 +134,41 @@ export const considerSuggestion = async (message: Message, language: Language, s
         .replace('%id%', String(suggestion.id));
     embed.color = parseInt(botCache.config.colors.green.slice(1), 16);
 
-    await msg.edit({embed: embed});
+    await msg.edit({ embed: embed });
 }
 
 export const moveSuggestion = async (message: Message, language: Language, suggestion: SuggestionData, newChannel: MessageableChannel) => {
-    const oldChannel = message.guild.channels.cache.get(suggestion.channel) as TextChannel;
+    const oldChannel = await message.guild.channels.fetch(suggestion.channel) as TextChannel;
     if (!oldChannel) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.movesuggestion.invalidMessage)
         await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
         return;
     }
 
-    const msg = await oldChannel.messages.fetch(suggestion.message);
+    let msg;
+    try {
+        msg = await oldChannel.messages.fetch(suggestion.message);
+    } catch (ex) {
+        if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
+            console.error('An error occured', ex)
+        }
+    }
+
     if (!msg || msg.deleted) {
         await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
         return;
     }
 
     await msg.delete();
-    await newChannel.send({
+    const newMsg = await newChannel.send({
         embed: msg.embeds[0]
     });
 
-    await PostgreSQL.runQuery('UPDATE suggestions SET channel = $1::text WHERE id = $2::int', [newChannel.id, suggestion.id]);
+    await PostgreSQL.runQuery('UPDATE suggestions SET channel = $1::text, message = $2::text WHERE id = $3::int', [newChannel.id, newMsg.id, suggestion.id]);
 }
 
 export const handleSuggestionList = async (message: Message, language: Language) => {
-    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::int', [message.guild.id, SuggestionStatus.OPEN]);
+    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::int ORDER BY id DESC', [message.guild.id, SuggestionStatus.OPEN]);
 
     if (!result.rows.length) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.list.noSuggestionsFound);
@@ -174,28 +180,25 @@ export const handleSuggestionList = async (message: Message, language: Language)
         .setDescription(language.list.suggestionListDescription.replace('%amount%', String(result.rowCount)));
 
     for (let i = 0; i < result.rows.length; i++) {
-        if (i === 7) {
-            break;
-        }
         let member = null;
         try {
             member = await message.guild.members.fetch(result.rows[i].author);
         } catch (ex) {
-            // Log error if the error is not a Unknown Member error
-            if (ex.code !== 10007) {
+            if (ex.code !== Constants.APIErrors.UNKNOWN_MEMBER) {
                 console.error(ex);
             }
         }
-        embed.addField(member == null ? 'User Left ~ Suggestions' : member.user.tag, `${result.rows[i].context}\n\n**ID:** ${result.rows[i].id}`, false);
+        embed.addField(member == null ? 'User Left ~ Suggestions' : member.user.tag, `${result.rows[i].context}\n**ID:** ${result.rows[i].id}`, false);
+        if (i === 7) break;
     }
 
     await message.channel.send({ embed: embed });
 }
 
 export const getSuggestionData = async (resolvable: string): Promise<SuggestionData> => {
-    let result = await PostgreSQL.runQuery('SELECT context, author, guild, channel, message, status FROM suggestions WHERE id = $1::int', [parseInt(resolvable)]);
+    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM suggestions WHERE id = $1::int', [parseInt(resolvable)]);
     if (!result.rows.length) {
-        result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, status FROM suggestions WHERE message = $1::text', [resolvable]);
+        result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM suggestions WHERE message = $1::text', [resolvable]);
         if (!result.rows.length) {
             result = null;
         }

@@ -1,11 +1,11 @@
 import { Client, TextChannel } from 'discord.js-light';
 import express, { Express } from 'express';
+import cors from 'cors';
 import { getServerCount, getServer, getConfigValues } from '../managers/ServerData';
 import PostgreSQL from '../structures/PostgreSQL';
 import botCache from '../structures/BotCache';
 import Redis from '../structures/Redis';
 
-// TODO: Add cors
 export default class Server {
     private readonly client: Client;
 
@@ -15,6 +15,11 @@ export default class Server {
 
     public register = () => {
         const app = express();
+
+        app.use(cors({
+            origin: `http://localhost:${botCache.config.serverPort}`,
+            optionsSuccessStatus: 200 // For legacy browser support
+        }))
 
         this.globalRoutes(app);
         this.serverRoutes(app);

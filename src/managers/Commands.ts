@@ -1,7 +1,7 @@
+import { Constants } from 'discord.js-light';
 import botCache from '../structures/BotCache';
 import {
     Client,
-    Collection,
     DMChannel,
     Guild,
     GuildMember,
@@ -74,15 +74,16 @@ export const sendPrivateMessage = async (user: User | GuildMember, embed: Messag
     try {
         msg = await user.send({embed: embed});
     } catch (ex) {
-        if (ex.code !== 50007) {
+        if (ex.code !== Constants.APIErrors.CANNOT_MESSAGE_USER) {
             console.error('An error occured', ex)
         }
     }
     return msg;
 }
 
-export const sendPlainEmbed = async (channel: TextChannel | DMChannel | NewsChannel, color: string, description: string): Promise<Message> =>
-    await channel.send({embed: new MessageEmbed().setColor(color).setDescription(description)});
+export const sendPlainEmbed = async (channel: MessageableChannel | DMChannel, color: string, description: string): Promise<Message> => {
+    return await channel.send({embed: new MessageEmbed().setColor(color).setDescription(description)});
+}
 
 export interface ICommand {
     enabled: boolean,

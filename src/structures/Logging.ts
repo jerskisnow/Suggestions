@@ -4,9 +4,10 @@ import { MessageableChannel, sendPlainEmbed } from '../managers/Commands';
 import { getConfigValue } from '../managers/ServerData';
 
 export const log = async (guild: Guild, message: string) => {
-    const channel = await guild.channels.fetch(
-        await getConfigValue(guild.id, 'log_channel', false) as string
-    ) as MessageableChannel;
+    const channel_id = await getConfigValue(guild.id, 'log_channel', false) as string;
+    if (channel_id == null) return;
+
+    const channel = await guild.channels.fetch(channel_id) as MessageableChannel; // FIXME: Might produce unknown channel exception
 
     if (!channel || channel.deleted) return;
 

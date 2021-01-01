@@ -37,7 +37,7 @@ export default async (client: Client, message: Message): Promise<void> => {
         }
     }
 
-    const cacheData = await getConfigValues(message.guild.id, ['disabled', 'prefix', 'language']);
+    const cacheData = await getConfigValues(message.guild.id, ['prefix', 'disabled', 'language', 'staff_role']);
     const prefix = cacheData.prefix;
 
     if (message.content.toLowerCase().startsWith(prefix) || message.content.toLowerCase().startsWith(`<@${client.user.id}> `)) {
@@ -62,13 +62,12 @@ export default async (client: Client, message: Message): Promise<void> => {
         }
 
         if (command.permission === Permission.STAFF) {
-            const role_id = await getConfigValue(message.guild.id, 'staff_role') as string;
-            if (role_id == null) {
+            if (cacheData.staff_role == null) {
                 await sendPlainEmbed(message.channel, botCache.config.colors.red, language.additional.invalidStaffRole);
                 return;
             }
-            if (!message.member.roles.cache.has(role_id)) {
-                const roleName = message.guild.roles.cache.get(role_id).name;
+            if (!message.member.roles.cache.has(cacheData.staff_role)) {
+                const roleName = message.guild.roles.cache.get(cacheData.staff_role).name;
                 await sendPlainEmbed(message.channel, botCache.config.colors.red, language.additional.roleRequired.replace('%role_name%', roleName));
                 return;
             }

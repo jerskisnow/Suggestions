@@ -14,6 +14,8 @@ export default async (client: Client, reaction: MessageReaction): Promise<void> 
         }
     }
 
+    if (reaction.me) return;
+
     if (!await isCached(reaction.message.guild.id)) {
         await cacheGuild(reaction.message.guild.id)
     }

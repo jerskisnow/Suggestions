@@ -28,7 +28,7 @@ botCache.commands.set('movereport', {
 
         await moveReport(message, commandData.language, report, channel);
 
-        await sendPlainEmbed(message.channel, botCache.config.colors.green, commandData.language.movereport.locationUpdated);
-        await log(message.guild, commandData.language.logs.reportMoved.replace('%user_tag%', message.author.tag).replace('%report_id%', String(report.id).replace('%channel%', channel.name)));
+        await sendPlainEmbed(message.channel, botCache.config.colors.green, commandData.language.movereport.locationUpdated.replace('%new_channel%', `<#${channel.id}>`));
+        await log(message.guild, commandData.language.logs.reportMoved.replace('%user_tag%', message.author.tag).replace('%report_id%', String(report.id).replace('%new_channel%', channel.name)));
     }
 });
