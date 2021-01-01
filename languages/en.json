@@ -121,7 +121,7 @@
     "suggestionSent": "You're suggestion in %guild_name% was successfully created, you can find it [here](%message_url%)."
   },
   "donate": {
-    "description": "Don't feel obligated to donate! It isn't a requirement but it helps us to maintenance our projects including Suggestions.\n\nIf you decided to donate contact `jerskisnow#8214` if you want to receive a premium rank, based on the amount you donated, on this discord server! When you received a premium rank you'll get some extra perks and you'll be thanked gratefully!\n\nYou can find more information including payment details [here](%donate_link%)."
+    "description": "Don't feel obligated to donate! It isn't a requirement but it helps us to maintenance our projects including Suggestions.\n\nIf you decided to donate contact `jerskisnow#8214` if you want to receive a premium rank, based on the amount you donated, on the official CodedSnow discord server! When you received a premium rank you'll receive some extra perks and you'll be thanked gratefully!\n\nYou can find more information including payment details [here](%donate_link%)."
   },
   "help": {
     "description": "All commands for users, staffmembers and admins can be found below.",
