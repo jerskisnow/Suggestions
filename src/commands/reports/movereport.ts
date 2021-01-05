@@ -14,9 +14,7 @@ botCache.commands.set('movereport', {
 
         let report = await getReportData(args[0]);
         if (report == null || report.status === ReportStatus.DELETED as number) {
-            await sendPlainEmbed(message.channel, botCache.config.colors.red, commandData.language.movereport.invalidReport
-                + "\n\n(**Note:** If an existing message won't approve then it could be caused by the transfer from v3.5.0 to v4.0.0. We were forced to remove all current suggestions and reports from our database. You can safely delete the message and create a new one. Sorry for the inconvenience)"
-            );
+            await sendPlainEmbed(message.channel, botCache.config.colors.red, commandData.language.movereport.invalidReport);
             return;
         }
 
