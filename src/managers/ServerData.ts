@@ -12,23 +12,6 @@ export const isCached = async function (guild_id: string): Promise<boolean> {
     return await Redis.getClient().existsAsync(guild_id);
 };
 
-// --------- [This is a solution to transfer data from active guilds from the old database to the new one]
-const getOldData = async (guild_id: string): Promise<any> => {
-    const res = await fetch(botCache.config.oldGuildDataBackend + guild_id);
-    if (res.status === 404) return null;
-    const json = await res.json();
-    return {
-        prefix: json[0].prefix,
-        suggestion_channel: json[0].suggestion_channel,
-        report_channel: json[0].report_channel,
-        auto_approve: json[0].auto_approve,
-        auto_reject: json[0].auto_reject,
-        delete_approved: json[0].delete_approved,
-        delete_rejected: json[0].delete_rejected,
-    }
-}
-// ---------[This is a solution to transfer data from active guilds from the old database to the new one]
-
 /**
  * Remove a specific guild
  * @param guild_id the id of the specific guild
@@ -37,34 +20,17 @@ export const cacheGuild = async function (guild_id: string): Promise<void> {
     let result = await PostgreSQL.runQuery('SELECT prefix, language, staff_role, auto_approve, auto_reject, approve_emoji, reject_emoji FROM servers WHERE id = $1::text', [guild_id]);
     if (!result.rows.length) {
         // ---------
-        const oldData = await getOldData(guild_id);
-        if (oldData !== null) {
-            await PostgreSQL.runQuery('INSERT INTO servers (id, prefix, language, suggestion_channel, report_channel, auto_approve, auto_reject, approve_emoji, reject_emoji, delete_approved, delete_rejected) VALUES ($1::text, $2::text, $3::text, $4, $5, $6, $7, $8, $9, $10, $11)', [
-                guild_id, oldData.prefix, botCache.config.language, oldData.suggestion_channel, oldData.report_channel, oldData.auto_approve, oldData.auto_reject, '✅', '❎', oldData.delete_approved, oldData.delete_rejected
-            ]);
-            result.rows = [{
-                prefix: oldData.prefix,
-                language: botCache.config.language,
-                staff_role: null,
-                auto_approve: oldData.auto_approve,
-                auto_reject: oldData.auto_reject,
-                approve_emoji: '✅',
-                reject_emoji: '❎',
-                disabled: false
-            }];
-        } else {
-            await PostgreSQL.runQuery('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [guild_id, botCache.config.prefix, botCache.config.language]);
-            result.rows = [{
-                prefix: botCache.config.prefix,
-                language: botCache.config.language,
-                staff_role: null,
-                auto_approve: -1,
-                auto_reject: -1,
-                approve_emoji: botCache.config.emojis.approve,
-                reject_emoji: botCache.config.emojis.reject,
-                disabled: false
-            }];
-        }
+        await PostgreSQL.runQuery('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [guild_id, botCache.config.prefix, botCache.config.language]);
+        result.rows = [{
+            prefix: botCache.config.prefix,
+            language: botCache.config.language,
+            staff_role: null,
+            auto_approve: -1,
+            auto_reject: -1,
+            approve_emoji: botCache.config.emojis.approve,
+            reject_emoji: botCache.config.emojis.reject,
+            disabled: false
+        }];
         // ---------
     }
     const cacheObject = {
