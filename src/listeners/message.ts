@@ -1,7 +1,7 @@
 import { Client, Message } from 'discord.js-light';
 
 import { parseCommand, Permission, sendPlainEmbed } from '../managers/Commands';
-import { cacheGuild, getConfigValue, getConfigValues, isCached, setConfigValue } from '../managers/ServerData';
+import { cacheGuild, getConfigValue, getConfigValues, isCached } from '../managers/ServerData';
 import botCache from '../structures/BotCache';
 
 export default async (client: Client, message: Message): Promise<void> => {
@@ -11,30 +11,6 @@ export default async (client: Client, message: Message): Promise<void> => {
 
     if (!await isCached(message.guild.id)) {
         await cacheGuild(message.guild.id)
-    }
-
-    // Desperate time, desperate measures
-    if (message.author.id === botCache.config.developerID) {
-        if (message.content.startsWith('?disable')) {
-            await message.delete();
-
-            const split = message.content.split(' ');
-            const guild_id = !split.length ? message.guild.id : split[1];
-            const reason = split.length > 2 ? split.splice(2).join(' ') : 'Violation of Terms.';
-
-            await setConfigValue(guild_id, 'disabled', true);
-            await setConfigValue(guild_id, 'disable_reason', reason, false);
-            return;
-        } else if (message.content.startsWith('?enable')) {
-            await message.delete();
-
-            const split = message.content.split(' ');
-            const guild_id = !split.length ? message.guild.id : split[1];
-
-            await setConfigValue(guild_id, 'disabled', false);
-            await setConfigValue(guild_id, 'disable_reason', null, false);
-            return;
-        }
     }
 
     const cacheData = await getConfigValues(message.guild.id, ['prefix', 'disabled', 'language', 'staff_role']);

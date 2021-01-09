@@ -191,7 +191,6 @@
     "considerstatus": "Under consideration",
     "approvedStatus": "Approved",
     "rejectedStatus": "Rejected",
-    "resolvedStatus": "Resolved",
-    "guildDisabled": "This guild has been enabled by the developer of this bot.\n\n**Reason: %reason%**"
+    "resolvedStatus": "Resolved"
   }
 }

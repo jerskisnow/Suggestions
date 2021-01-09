@@ -13,7 +13,5 @@ CREATE TABLE servers (
     delete_approved BOOLEAN,
     delete_rejected BOOLEAN,
     suggestion_blacklist TEXT,
-    report_blacklist TEXT,
-    disabled BOOLEAN,
-    disable_reason TEXT
+    report_blacklist TEXT
 );
