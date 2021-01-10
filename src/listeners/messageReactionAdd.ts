@@ -1,6 +1,6 @@
 import { Client, MessageReaction } from 'discord.js-light';
 import botCache from '../structures/BotCache';
-import { cacheGuild, getConfigValue, getConfigValues, isCached } from '../managers/ServerData';
+import { cacheGuild, getConfigValue, getConfigValues } from '../managers/ServerData';
 import { approveSuggestion, getSuggestionData, rejectSuggestion } from '../managers/Suggestions';
 import { log } from '../structures/Logging';
 
@@ -16,23 +16,22 @@ export default async (client: Client, reaction: MessageReaction): Promise<void> 
 
     if (reaction.me) return;
 
-    if (!await isCached(reaction.message.guild.id)) {
-        await cacheGuild(reaction.message.guild.id)
+    let cache = await getConfigValues(reaction.message.guild.id, ['approve_emoji', 'reject_emoji', 'language']);
+    if (cache == null) {
+        cache = (await cacheGuild(reaction.message.guild.id)).filter((i: string) => i === 'approve_emoji' || i === 'reject_emoji' || i === 'language'); // This filter prevents 'useless' data from being processed.
     }
 
-    const cacheData = await getConfigValues(reaction.message.guild.id, ['approve_emoji', 'reject_emoji', 'language']);
+    if (reaction.emoji.name !== cache.approve_emoji && reaction.emoji.name !== cache.reject_emoji) return;
+    if (!reaction.message.reactions.cache.get(cache.approve_emoji) || !reaction.message.reactions.cache.get(cache.reject_emoji)) return;
 
-    if (reaction.emoji.name !== cacheData.approve_emoji && reaction.emoji.name !== cacheData.reject_emoji) return;
-    if (!reaction.message.reactions.cache.get(cacheData.approve_emoji) || !reaction.message.reactions.cache.get(cacheData.reject_emoji)) return;
-
-    const approveCount = reaction.message.reactions.cache.get(cacheData.approve_emoji).count - 1;
-    const rejectCount = reaction.message.reactions.cache.get(cacheData.reject_emoji).count - 1;
+    const approveCount = reaction.message.reactions.cache.get(cache.approve_emoji).count - 1;
+    const rejectCount = reaction.message.reactions.cache.get(cache.reject_emoji).count - 1;
 
     const autoApproveCount = await getConfigValue(reaction.message.guild.id, 'auto_approve') as number;
     const autoRejectCount = await getConfigValue(reaction.message.guild.id, 'auto_reject') as number;
 
     const suggestion = await getSuggestionData(reaction.message.id);
-    const language = botCache.languages.get(cacheData.language);
+    const language = botCache.languages.get(cache.language);
     if (autoApproveCount !== -1 && approveCount >= autoApproveCount) {
         await approveSuggestion(reaction.message, language, suggestion);
         await log(reaction.message.guild, language.logs.autoApproved.replace('%suggestion_id%', String(suggestion.id)));
