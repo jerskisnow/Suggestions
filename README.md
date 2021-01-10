@@ -5,17 +5,19 @@ Hi, first of all, thanks for viewing this page! Suggestions is a discord bot tha
 ### Commands:
 1. **blacklist** >> Prevent someone from creating suggestions/reports.
 2. **config** >> Configure the bot.
-3. **report** >> Create a report.
-4. **resolve** >> Resolve a report.
-5. **approve** >> Approve a suggestion.
-6. **consider** >> Consider a suggestion.
-7. **list** >> List all active suggestions (for everyone) or reports (staff).
-8. **reject** >> Reject a suggestion.
-9. **suggest** >> Create a suggestion.
-10. **donate** >> Obtain information about donating.
-11. **help** >> Obtain the help message.
-12. **invite** >> Obtain the invite links.
-13. **vote** >> Obtain the vote link.
+3. **movereport** >> Move a report to another channel.
+4. **report** >> Create a report.
+5. **resolve** >> Resolve a report.
+6. **approve** >> Approve a suggestion.
+7. **consider** >> Consider a suggestion.
+8. **list** >> List all active suggestions (for everyone) or reports (staff).
+9. **movesuggestion** >> Move a suggestion to another channel.
+10. **reject** >> Reject a suggestion.
+11. **suggest** >> Create a suggestion.
+12. **donate** >> Obtain information about donating.
+13. **help** >> Obtain the help message.
+14. **invite** >> Obtain the invite links.
+15. **vote** >> Obtain the vote link.
 
 ### Events
 1. **Auto Approval** >> An option to automatically approve suggestions when that specific suggestion received and `x` amount of approval reactions.
