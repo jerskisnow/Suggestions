@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, TextChannel, Constants } from 'discord.js-light';
+import { Constants, Message, MessageEmbed, TextChannel } from 'discord.js-light';
 import Language from '../types/Language';
 import { getConfigValues } from './ServerData';
 import PostgreSQL from '../structures/PostgreSQL';
@@ -9,8 +9,9 @@ import { log } from '../structures/Logging';
 export const handleReportCreation = async (message: Message, language: Language, description: string) => {
     const guildData = await getConfigValues(message.guild.id, ['report_blacklist', 'report_channel'], false);
 
-    const blacklist: string[] = JSON.parse(guildData.report_blacklist);
-    if (blacklist.includes(message.author.id)) {
+    if (guildData.report_blacklist != null &&
+        JSON.parse(guildData.report_blacklist).includes(message.author.id)
+    ) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.report.onBlacklist);
         await log(message.guild, language.logs.blacklistLogs.isOnReport.replace('%user_tag%', message.author.tag));
         return;
@@ -53,7 +54,14 @@ export const resolveReport = async (message: Message, language: Language, report
         return;
     }
 
-    const msg = await channel.messages.fetch(report.message);
+    let msg;
+    try {
+        msg = await channel.messages.fetch(report.message);
+    } catch (ex) {
+        if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
+            console.error('An error occured', ex)
+        }
+    }
     if (!msg || msg.deleted) {
         await PostgreSQL.runQuery('UPDATE reports SET status = $1::int WHERE id = $2::int', [ReportStatus.DELETED, report.id]);
         return;
@@ -68,7 +76,7 @@ export const resolveReport = async (message: Message, language: Language, report
         .replace('%id%', String(report.id));
     embed.color = parseInt(botCache.config.colors.green.slice(1), 16);
 
-    await msg.edit({ embed: embed });
+    await msg.edit({embed: embed});
 }
 
 export const moveReport = async (message: Message, language: Language, report: ReportData, newChannel: MessageableChannel) => {
@@ -125,7 +133,7 @@ export const handleReportList = async (message: Message, language: Language) => 
         if (i === 7) break;
     }
 
-    await message.channel.send({ embed: embed });
+    await message.channel.send({embed: embed});
 }
 
 export const getReportData = async (resolvable: string): Promise<ReportData> => {

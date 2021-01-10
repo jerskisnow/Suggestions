@@ -1,22 +1,13 @@
 import Redis from '../structures/Redis';
 import PostgreSQL from '../structures/PostgreSQL';
 import botCache from '../structures/BotCache';
-import fetch from 'node-fetch';
 import { Client, Guild } from 'discord.js-light';
-
-/**
- * Get whether a guild is cached or not (Deprecated)
- * @return {Promise<Boolean>} the setting of the guild or null when the guild is not cached
- */
-export const isCached = async function (guild_id: string): Promise<boolean> {
-    return await Redis.getClient().existsAsync(guild_id);
-};
 
 /**
  * Remove a specific guild
  * @param guild_id the id of the specific guild
  */
-export const cacheGuild = async function (guild_id: string): Promise<void> {
+export const cacheGuild = async function (guild_id: string): Promise<any> {
     let result = await PostgreSQL.runQuery('SELECT prefix, language, staff_role, auto_approve, auto_reject, approve_emoji, reject_emoji FROM servers WHERE id = $1::text', [guild_id]);
     if (!result.rows.length) {
         // ---------
@@ -28,8 +19,7 @@ export const cacheGuild = async function (guild_id: string): Promise<void> {
             auto_approve: -1,
             auto_reject: -1,
             approve_emoji: botCache.config.emojis.approve,
-            reject_emoji: botCache.config.emojis.reject,
-            disabled: false
+            reject_emoji: botCache.config.emojis.reject
         }];
         // ---------
     }
@@ -40,10 +30,10 @@ export const cacheGuild = async function (guild_id: string): Promise<void> {
         auto_approve: result.rows[0].auto_approve == null ? -1 : result.rows[0].auto_approve,
         auto_reject: result.rows[0].auto_reject == null ? -1 : result.rows[0].auto_reject,
         approve_emoji: result.rows[0].approve_emoji == null ? botCache.config.emojis.approve : result.rows[0].approve_emoji,
-        reject_emoji: result.rows[0].reject_emoji == null ? botCache.config.emojis.reject : result.rows[0].reject_emoji,
-        disabled: result.rows[0].disabled != null
+        reject_emoji: result.rows[0].reject_emoji == null ? botCache.config.emojis.reject : result.rows[0].reject_emoji
     }
     await Redis.getClient().setAsync(guild_id, JSON.stringify(cacheObject), 'EX', 18000 /* 5 hours */);
+    return cacheObject;
 }
 
 /**
@@ -193,6 +183,5 @@ interface GuildSettingOptions {
     delete_approved?: boolean,
     delete_rejected?: boolean,
     suggestion_blacklist?: string,
-    report_blacklist?: string,
-    disabled?: boolean
+    report_blacklist?: string
 }

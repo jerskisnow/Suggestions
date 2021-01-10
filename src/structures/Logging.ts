@@ -7,8 +7,7 @@ export const log = async (guild: Guild, message: string) => {
     const channel_id = await getConfigValue(guild.id, 'log_channel', false) as string;
     if (channel_id == null) return;
 
-    const channel = await guild.channels.fetch(channel_id) as MessageableChannel; // FIXME: Might produce unknown channel exception
-
+    const channel = await guild.channels.fetch(channel_id) as MessageableChannel;
     if (!channel || channel.deleted) return;
 
     await sendPlainEmbed(channel, botCache.config.colors.blue, message);

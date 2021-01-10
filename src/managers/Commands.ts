@@ -1,7 +1,6 @@
-import { Constants } from 'discord.js-light';
-import botCache from '../structures/BotCache';
 import {
     Client,
+    Constants,
     DMChannel,
     Guild,
     GuildMember,
@@ -12,6 +11,7 @@ import {
     TextChannel,
     User
 } from 'discord.js-light';
+import botCache from '../structures/BotCache';
 import Language from '../types/Language';
 
 export const parseCommand = (cmdName: string): ICommand => {

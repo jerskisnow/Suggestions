@@ -2,7 +2,6 @@ import redis, { RedisClient } from 'redis';
 import bluebird from 'bluebird';
 
 export default class Redis {
-
     private static client: RedisClient;
 
     public static setupClient(): void {
@@ -13,7 +12,6 @@ export default class Redis {
     public static getClient(): AsyncRedisClient {
         return this.client as AsyncRedisClient;
     }
-
 }
 
 interface AsyncRedisClient extends RedisClient {

@@ -22,15 +22,6 @@ export default async (client: Client, guild: Guild): Promise<void> => {
         )
         .addField("OwnerInfo", `**Name:** ${guildOwner.user.tag}\n**ID:** ${guild.id}`, false)
 
-    await client.channels.forge(botCache.config.channels.devLogs).send({ embed: embed });
-
-    // await client.shard.broadcastEval(`
-    //     (async () => {
-    //         const channel = await this.channels.cache.get('${botCache.config.channels.devLogs}');
-    //         if (channel) {
-    //             channel.send({ embed: ${JSON.stringify(embed)} });
-    //         }
-    //     })();
-    // `);
+    await client.channels.forge(botCache.config.channels.devLogs).send({embed: embed});
 
 }

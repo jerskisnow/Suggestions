@@ -21,7 +21,6 @@ export default async (client: Client, reaction: MessageReaction): Promise<void> 
     }
 
     const cacheData = await getConfigValues(reaction.message.guild.id, ['approve_emoji', 'reject_emoji', 'language']);
-    if (cacheData.disabled) return;
 
     if (reaction.emoji.name !== cacheData.approve_emoji && reaction.emoji.name !== cacheData.reject_emoji) return;
     if (!reaction.message.reactions.cache.get(cacheData.approve_emoji) || !reaction.message.reactions.cache.get(cacheData.reject_emoji)) return;

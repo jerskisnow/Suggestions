@@ -17,20 +17,20 @@ export default async (client: Client): Promise<void> => {
             shardID,
             client.shard.count
         );
-        await fetch ('https://discord.bots.gg/api/v1', {
+        await fetch('https://discord.bots.gg/api/v1', {
             method: 'POST',
             body: `{ "guildCount": ${client.guilds.cache.size}, "shardCount": ${client.shard.count}, "shardId": ${shardID} }`,
-            headers: { 'Content-Type': 'application/json', 'Authorization': botCache.config.apis.dbggToken }
+            headers: {'Content-Type': 'application/json', 'Authorization': botCache.config.apis.dbggToken}
         })
     }, 1800000);
 
     if (shardID === 0) {
         setInterval(async () => {
             const serverCount = await getServerCount(client);
-            await fetch (`https://botsfordiscord.com/api/bot/${client.user.id}`, {
+            await fetch(`https://botsfordiscord.com/api/bot/${client.user.id}`, {
                 method: 'POST',
                 body: `{ "server_count": ${serverCount} }`,
-                headers: { 'Content-Type': 'application/json', 'Authorization': botCache.config.apis.bfdToken }
+                headers: {'Content-Type': 'application/json', 'Authorization': botCache.config.apis.bfdToken}
             });
         }, 1800000);
     }

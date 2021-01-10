@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, TextChannel, Constants } from 'discord.js-light';
+import { Constants, Message, MessageEmbed, TextChannel } from 'discord.js-light';
 import Language from '../types/Language';
 import { getConfigValue, getConfigValues } from './ServerData';
 import PostgreSQL from '../structures/PostgreSQL';
@@ -18,8 +18,7 @@ export const handleSuggestionCreation = async (message: Message, language: Langu
         return;
     }
 
-    const channel = await message.guild.channels.fetch(guildData.suggestion_channel); // FIXME: Produced unknown channel exception
-
+    const channel = await message.guild.channels.fetch(guildData.suggestion_channel);
     if (!channel || channel.type !== 'text') {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.suggest.invalidChannel)
         return;
@@ -40,6 +39,9 @@ export const handleSuggestionCreation = async (message: Message, language: Langu
             .setFooter('Suggestions© 2020 - 2021')
     });
 
+    console.log(guildData.approve_emoji)
+    console.log(guildData.reject_emoji)
+
     await sMessage.react(guildData.approve_emoji);
     await sMessage.react(guildData.reject_emoji);
 
@@ -58,8 +60,15 @@ export const approveSuggestion = async (message: Message, language: Language, su
         return;
     }
 
-    const msg = await channel.messages.fetch(suggestion.message);
-    if (!msg || msg.deleted) {
+    let msg;
+    try {
+        msg = await channel.messages.fetch(suggestion.message);
+    } catch (ex) {
+        if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
+            console.error('An error occured', ex)
+        }
+    }
+    if (msg == null || msg.deleted) {
         await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
         return;
     }
@@ -89,7 +98,14 @@ export const rejectSuggestion = async (message: Message, language: Language, sug
         return;
     }
 
-    const msg = await channel.messages.fetch(suggestion.message);
+    let msg;
+    try {
+        msg = await channel.messages.fetch(suggestion.message);
+    } catch (ex) {
+        if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
+            console.error('An error occured', ex)
+        }
+    }
     if (!msg || msg.deleted) {
         await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
         return;
@@ -119,7 +135,14 @@ export const considerSuggestion = async (message: Message, language: Language, s
         return;
     }
 
-    const msg = await channel.messages.fetch(suggestion.message);
+    let msg;
+    try {
+        msg = await channel.messages.fetch(suggestion.message);
+    } catch (ex) {
+        if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
+            console.error('An error occured', ex)
+        }
+    }
     if (!msg || msg.deleted) {
         await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
         return;
@@ -134,7 +157,7 @@ export const considerSuggestion = async (message: Message, language: Language, s
         .replace('%id%', String(suggestion.id));
     embed.color = parseInt(botCache.config.colors.green.slice(1), 16);
 
-    await msg.edit({ embed: embed });
+    await msg.edit({embed: embed});
 }
 
 export const moveSuggestion = async (message: Message, language: Language, suggestion: SuggestionData, newChannel: MessageableChannel) => {
@@ -192,7 +215,7 @@ export const handleSuggestionList = async (message: Message, language: Language)
         if (i === 7) break;
     }
 
-    await message.channel.send({ embed: embed });
+    await message.channel.send({embed: embed});
 }
 
 export const getSuggestionData = async (resolvable: string): Promise<SuggestionData> => {
@@ -203,7 +226,7 @@ export const getSuggestionData = async (resolvable: string): Promise<SuggestionD
             result = null;
         }
     }
-    return result.rows[0];
+    return result == null ? null : result.rows[0];
 }
 
 export const getLatestSuggestions = async (guild_id: string, limit: number): Promise<SuggestionData[]> => {

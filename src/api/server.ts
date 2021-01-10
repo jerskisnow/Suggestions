@@ -1,11 +1,14 @@
 import { Client, TextChannel } from 'discord.js-light';
 import express, { Express } from 'express';
 import cors from 'cors';
-import { getServerCount, getServer, getConfigValues } from '../managers/ServerData';
+import { getConfigValues, getServer, getServerCount } from '../managers/ServerData';
 import PostgreSQL from '../structures/PostgreSQL';
 import botCache from '../structures/BotCache';
 import Redis from '../structures/Redis';
 
+/*
+ * This class is not ready for production yet.
+ */
 export default class Server {
     private readonly client: Client;
 
@@ -39,7 +42,7 @@ export default class Server {
 
     private serverRoutes = (app: Express) => {
         app.get('/data/:guild_id', async (req, res) => {
-            const { guild_id } = req.params;
+            const {guild_id} = req.params;
             if (!await this.isInGuild(guild_id)) {
                 res.status(404);
             } else {
@@ -80,7 +83,7 @@ export default class Server {
         });
 
         app.get('/configs/:guild_id', async (req, res) => {
-            const { guild_id } = req.params;
+            const {guild_id} = req.params;
             if (!await this.isInGuild(guild_id)) {
                 res.status(404);
             } else {
@@ -97,9 +100,7 @@ export default class Server {
                     'delete_approved',
                     'delete_rejected',
                     'suggestion_blacklist',
-                    'report_blacklist',
-                    'disabled',
-                    'disable_reason'
+                    'report_blacklist'
                 ]) as any;
 
                 const guild = await this.client.guilds.fetch(guild_id);
@@ -128,12 +129,12 @@ export default class Server {
                     name: lChannel.name
                 }
 
-                res.send({ data }).status(200);
+                res.send({data}).status(200);
             }
         });
 
         app.post('/configs/update/:guild_id', async (req, res) => {
-            const { guild_id } = req.params;
+            const {guild_id} = req.params;
             const json = await req.body.json();
 
             await Redis.getClient().setAsync(guild_id, JSON.stringify(json), 'EX', 18000 /* 5 hours */);

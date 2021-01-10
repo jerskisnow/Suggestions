@@ -4,12 +4,11 @@ import botCache from './structures/BotCache';
 import PostgreSQL from './structures/PostgreSQL';
 import Redis from './structures/Redis';
 import { unCacheGuild } from './managers/ServerData';
-import Server from './api/server';
 
 const client = new Client({
     cacheGuilds: true,
     cacheRoles: true,
-    fetchAllMembers: true,
+    fetchAllMembers: false,
     disabledEvents: [
         'channelCreate',
         'channelDelete',
@@ -50,8 +49,6 @@ const client = new Client({
     partials: ['MESSAGE', 'REACTION']
 });
 
-const server = new Server(client);
-
 (async () => {
     botCache.config = JSON.parse((await fs.readFile('../config.json')).toString());
 
@@ -66,8 +63,6 @@ const server = new Server(client);
 
     await PostgreSQL.setupPool();
     await Redis.setupClient();
-
-    server.register();
 
     (await fs.readdir('./listeners/')).forEach((file: any) =>
         client.on(file.split('.')[0], require(`./listeners/${file}`).default.bind(null, client))

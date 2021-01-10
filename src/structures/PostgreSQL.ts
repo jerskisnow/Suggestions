@@ -2,7 +2,6 @@ import { Pool } from 'pg';
 import botCache from './BotCache';
 
 export default class PostgreSQL {
-
     private static pool: Pool;
 
     public static setupPool(): void {
@@ -24,5 +23,4 @@ export default class PostgreSQL {
         client.release();
         return result;
     }
-
 }
