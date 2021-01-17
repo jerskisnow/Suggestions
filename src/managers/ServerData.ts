@@ -7,7 +7,7 @@ import { Client, Guild } from 'discord.js-light';
  * Remove a specific guild
  * @param guild_id the id of the specific guild
  */
-export const cacheGuild = async function (guild_id: string): Promise<any> {
+export const cacheGuild = async function (guild_id: string): Promise<GuildSettingOptions> {
     let result = await PostgreSQL.runQuery('SELECT prefix, language, staff_role, auto_approve, auto_reject, approve_emoji, reject_emoji FROM servers WHERE id = $1::text', [guild_id]);
     if (!result.rows.length) {
         // ---------

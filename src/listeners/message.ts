@@ -10,7 +10,7 @@ export default async (client: Client, message: Message): Promise<void> => {
 
     let cache = await getConfigValues(message.guild.id, ['prefix', 'language', 'staff_role']);
     if (cache == null) {
-        cache = (await cacheGuild(message.guild.id)).filter((i: string) => i === 'prefix' || i === 'language' || i === 'staff_role'); // This filter prevents 'useless' data from being processed.
+        cache = await cacheGuild(message.guild.id);
     }
 
     if (message.content.toLowerCase().startsWith(cache.prefix) || message.content.toLowerCase().startsWith(`<@${client.user.id}> `)) {

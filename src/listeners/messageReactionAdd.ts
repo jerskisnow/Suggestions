@@ -18,7 +18,7 @@ export default async (client: Client, reaction: MessageReaction): Promise<void> 
 
     let cache = await getConfigValues(reaction.message.guild.id, ['approve_emoji', 'reject_emoji', 'language']);
     if (cache == null) {
-        cache = (await cacheGuild(reaction.message.guild.id)).filter((i: string) => i === 'approve_emoji' || i === 'reject_emoji' || i === 'language'); // This filter prevents 'useless' data from being processed.
+        cache = await cacheGuild(reaction.message.guild.id);
     }
 
     if (reaction.emoji.name !== cache.approve_emoji && reaction.emoji.name !== cache.reject_emoji) return;
