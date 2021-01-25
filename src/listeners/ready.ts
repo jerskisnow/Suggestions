@@ -12,41 +12,54 @@ export default async (client: Client): Promise<void> => {
     const shardID = client.guilds.cache.first().shardID;
 
     setInterval(async () => {
-        await dbl.postStats(
-            client.guilds.cache.size,
-            shardID,
-            client.shard.count
-        );
-        await fetch('https://discord.bots.gg/api/v1', {
-            method: 'POST',
-            body: `{ "guildCount": ${client.guilds.cache.size}, "shardCount": ${client.shard.count}, "shardId": ${shardID} }`,
-            headers: {'Content-Type': 'application/json', 'Authorization': botCache.config.apis.dbggToken}
-        })
+        try {
+            await dbl.postStats(
+                client.guilds.cache.size,
+                shardID,
+                client.shard.count
+            );
+            await fetch('https://discord.bots.gg/api/v1', {
+                method: 'POST',
+                body: `{ "guildCount": ${client.guilds.cache.size}, "shardCount": ${client.shard.count}, "shardId": ${shardID} }`,
+                headers: {'Content-Type': 'application/json', 'Authorization': botCache.config.apis.dbggToken}
+            });
+        } catch (ex) {
+            console.log('Couldn\'t send a request to TopGG.');
+        }
     }, 1800000);
+
 
     if (shardID === 0) {
         setInterval(async () => {
-            const serverCount = await getServerCount(client);
-            await fetch(`https://botsfordiscord.com/api/bot/${client.user.id}`, {
-                method: 'POST',
-                body: `{ "server_count": ${serverCount} }`,
-                headers: {'Content-Type': 'application/json', 'Authorization': botCache.config.apis.bfdToken}
-            });
+            try {
+                const serverCount = await getServerCount(client);
+                await fetch(`https://botsfordiscord.com/api/bot/${client.user.id}`, {
+                    method: 'POST',
+                    body: `{ "server_count": ${serverCount} }`,
+                    headers: {'Content-Type': 'application/json', 'Authorization': botCache.config.apis.bfdToken}
+                });
+            } catch (ex) {
+                console.log('Couldn\'t send a request to BotsForDiscord.');
+            }
         }, 1800000);
     }
     // ----------------
 
-    setTimeout(async () => await setPresence(client), 25000);
-    setInterval(async () => await setPresence(client), 3000000);
-
-    Logger.log('Successfully enabled the bot.', LogType.INFO);
-}
-
-const setPresence = async (client: Client) => {
-    const guilds_result = await client.shard.fetchClientValues('guilds.cache.size');
-    const guildCount = guilds_result.reduce((prev, count) => prev + count, 0);
-
-    await client.user.setActivity(`${guildCount} guilds on ${client.shard.count} shards.`, {
+    await client.user.setActivity('Suggestions & Reports', {
         type: 'WATCHING'
-    });
+    })
+
+    // setTimeout(async () => await setPresence(client), 25000);
+    // setInterval(async () => await setPresence(client), 3000000);
+
+    Logger.log('Successfully enabled the client.', LogType.INFO);
 }
+
+// const setPresence = async (client: Client) => {
+//     const guilds_result = await client.shard.fetchClientValues('guilds.cache.size');
+//     const guildCount = guilds_result.reduce((prev, count) => prev + count, 0);
+//
+//     await client.user.setActivity(`${guildCount} guilds on ${client.shard.count} shards.`, {
+//         type: 'WATCHING'
+//     });
+// }

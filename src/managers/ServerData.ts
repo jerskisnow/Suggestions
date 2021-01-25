@@ -78,7 +78,7 @@ export const getConfigValue = async function (guild_id: string, guild_setting: s
  * Get multiple cached settings from a guild
  * @return the settings of the guild or null when the guild is not cached
  */
-export const getConfigValues = async function (guild_id: string, guild_settings: string[], searchCache = true): Promise<GuildSettingOptions> {
+export const getConfigValues = async function (guild_id: string, guild_settings: string[], searchCache: boolean): Promise<GuildSettingOptions> {
     if (searchCache) {
         const output = await Redis.getClient().getAsync(guild_id);
         if (output == null) return null;
@@ -87,28 +87,27 @@ export const getConfigValues = async function (guild_id: string, guild_settings:
         const outputKeys = Object.keys(parsedOutput);
 
         // After the loop this will contain all data that was salvageble from the cache
-        const settings: any = {};
+        const fetchedSettings: any = {};
         for (let i = 0; i < outputKeys.length; i++) {
             // Get the key of the current iteration
             const key = outputKeys[i];
             // Check if that's a key we need
             if (guild_settings.includes(key)) {
                 // Set the key with in value in the new settings object
-                settings[key] = parsedOutput[key];
+                fetchedSettings[key] = parsedOutput[key];
             }
         }
 
         let toFetch: string[] = [];
         // Loop though the setings again
         for (let i = 0; i < guild_settings.length; i++) {
-            const setting = settings[guild_settings[i]];
-            // Check if the setting is not in 'settings'
-            if (setting == null) {
+            // Check if key we're looking for is not in settings
+            if (!(guild_settings[i] in fetchedSettings)) {
                 toFetch.push(guild_settings[i]);
             }
         }
 
-        if (toFetch.length !== 0) {
+        if (toFetch.length > 0) {
             // Add all values from toFetch to the injection string
             let inj = toFetch[0];
             for (let i = 1; i < toFetch.length; i++) {
@@ -121,19 +120,22 @@ export const getConfigValues = async function (guild_id: string, guild_settings:
                 for (let i = 0; i < result.rows.length; i++) {
                     const setting = toFetch[i];
                     // Set the values in 'settings'
-                    settings[setting] = result.rows[0][setting];
+                    fetchedSettings[setting] = result.rows[0][setting];
                 }
             }
         }
 
         // Return the asked settings
-        return settings;
+        return fetchedSettings;
     }
 
     let inj = guild_settings[0];
     for (let i = 1; i < guild_settings.length; i++) {
         inj += `, ${guild_settings[i]}`;
     }
+
+    console.log('DEBUG INJ: ' + `SELECT ${inj} FROM servers WHERE id = $1::text`);
+    console.log('DEBUG GUILD_ID: ' + guild_id);
 
     // I'm so sorry for this injection but there is not other way, also all the identifiers are set by the bot anyway and are not user input.
     const result = await PostgreSQL.runQuery(`SELECT ${inj} FROM servers WHERE id = $1::text`, [guild_id]);

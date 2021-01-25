@@ -101,7 +101,7 @@ export default class Server {
                     'delete_rejected',
                     'suggestion_blacklist',
                     'report_blacklist'
-                ]) as any;
+                ], true) as any;
 
                 const guild = await this.client.guilds.fetch(guild_id);
                 const role = guild.roles.cache.get(data.staff_role);

@@ -39,11 +39,13 @@ export const handleSuggestionCreation = async (message: Message, language: Langu
             .setFooter('Suggestions© 2020 - 2021')
     });
 
-    console.log(guildData.approve_emoji)
-    console.log(guildData.reject_emoji)
-
-    await sMessage.react(guildData.approve_emoji);
-    await sMessage.react(guildData.reject_emoji);
+    try {
+        await sMessage.react(guildData.approve_emoji);
+        await sMessage.react(guildData.reject_emoji);
+    } catch (ex) {
+        console.log('DEBUG:' + guildData.approve_emoji);
+        console.log('DEBUG:' + guildData.reject_emoji);
+    }
 
     await PostgreSQL.runQuery('INSERT INTO suggestions (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::int)', [description, message.author.id, message.guild.id, channel.id, sMessage.id, SuggestionStatus.OPEN]);
 
@@ -65,7 +67,7 @@ export const approveSuggestion = async (message: Message, language: Language, su
         msg = await channel.messages.fetch(suggestion.message);
     } catch (ex) {
         if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
-            console.error('An error occured', ex)
+            console.error('An error occured', ex);
         }
     }
     if (msg == null || msg.deleted) {
@@ -103,7 +105,7 @@ export const rejectSuggestion = async (message: Message, language: Language, sug
         msg = await channel.messages.fetch(suggestion.message);
     } catch (ex) {
         if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
-            console.error('An error occured', ex)
+            console.error('An error occured', ex);
         }
     }
     if (!msg || msg.deleted) {
@@ -140,7 +142,7 @@ export const considerSuggestion = async (message: Message, language: Language, s
         msg = await channel.messages.fetch(suggestion.message);
     } catch (ex) {
         if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
-            console.error('An error occured', ex)
+            console.error('An error occured', ex);
         }
     }
     if (!msg || msg.deleted) {
@@ -173,7 +175,7 @@ export const moveSuggestion = async (message: Message, language: Language, sugge
         msg = await oldChannel.messages.fetch(suggestion.message);
     } catch (ex) {
         if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
-            console.error('An error occured', ex)
+            console.error('An error occured', ex);
         }
     }
 
@@ -219,9 +221,9 @@ export const handleSuggestionList = async (message: Message, language: Language)
 }
 
 export const getSuggestionData = async (resolvable: string): Promise<SuggestionData> => {
-    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM suggestions WHERE id = $1::int', [parseInt(resolvable)]);
+    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM suggestions WHERE message = $1::text', [resolvable]);
     if (!result.rows.length) {
-        result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM suggestions WHERE message = $1::text', [resolvable]);
+        result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM suggestions WHERE id = $1::int', [parseInt(resolvable)]);
         if (!result.rows.length) {
             result = null;
         }

@@ -9,14 +9,13 @@ export default async (client: Client, reaction: MessageReaction): Promise<void> 
         try {
             await reaction.fetch();
         } catch (ex) {
-            console.log('An error occurred: ', ex);
             return;
         }
     }
 
     if (reaction.me) return;
 
-    let cache = await getConfigValues(reaction.message.guild.id, ['approve_emoji', 'reject_emoji', 'language']);
+    let cache = await getConfigValues(reaction.message.guild.id, ['approve_emoji', 'reject_emoji', 'language'], true);
     if (cache == null) {
         cache = await cacheGuild(reaction.message.guild.id);
     }

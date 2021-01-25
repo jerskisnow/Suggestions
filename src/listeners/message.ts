@@ -8,7 +8,7 @@ export default async (client: Client, message: Message): Promise<void> => {
     if (message.author.bot) return;
     if (!message.guild) return;
 
-    let cache = await getConfigValues(message.guild.id, ['prefix', 'language', 'staff_role']);
+    let cache = await getConfigValues(message.guild.id, ['prefix', 'language', 'staff_role'], true);
     if (cache == null) {
         cache = await cacheGuild(message.guild.id);
     }

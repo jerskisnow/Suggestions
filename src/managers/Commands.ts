@@ -75,7 +75,7 @@ export const sendPrivateMessage = async (user: User | GuildMember, embed: Messag
         msg = await user.send({embed: embed});
     } catch (ex) {
         if (ex.code !== Constants.APIErrors.CANNOT_MESSAGE_USER) {
-            console.error('An error occured', ex)
+            console.error('An error occured', ex);
         }
     }
     return msg;

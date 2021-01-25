@@ -59,7 +59,7 @@ export const resolveReport = async (message: Message, language: Language, report
         msg = await channel.messages.fetch(report.message);
     } catch (ex) {
         if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
-            console.error('An error occured', ex)
+            console.error('An error occured', ex);
         }
     }
     if (!msg || msg.deleted) {
@@ -92,7 +92,7 @@ export const moveReport = async (message: Message, language: Language, report: R
         msg = await oldChannel.messages.fetch(report.message);
     } catch (ex) {
         if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
-            console.error('An error occured', ex)
+            console.error('An error occured', ex);
         }
     }
     if (!msg || msg.deleted) {
@@ -137,9 +137,9 @@ export const handleReportList = async (message: Message, language: Language) => 
 }
 
 export const getReportData = async (resolvable: string): Promise<ReportData> => {
-    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM reports WHERE id = $1::int', [parseInt(resolvable)]);
+    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM reports WHERE message = $1::text', [resolvable]);
     if (!result.rows.length) {
-        result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM reports WHERE message = $1::text', [resolvable]);
+        result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM reports WHERE id = $1::int', [parseInt(resolvable)]);
         if (!result.rows.length) {
             result = null;
         }
