@@ -125,7 +125,7 @@ export const rejectSuggestion = async (message: Message, language: Language, sug
         .replace('%description%', suggestion.context)
         .replace('%status%', reason ? `${language.additional.rejectedStatus} (${reason})` : language.additional.rejectedStatus)
         .replace('%id%', String(suggestion.id));
-    embed.color = parseInt(botCache.config.colors.green.slice(1), 16);
+    embed.color = parseInt(botCache.config.colors.red.slice(1), 16);
 
     await msg.edit({embed: embed});
 }
