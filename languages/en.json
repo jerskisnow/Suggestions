@@ -76,7 +76,7 @@
     "helpDescription": "**Please use:** %prefix%report <Description>",
     "onBlacklist": "You've been blacklisted by the Administrators of this server, therefore you cannot create reports.",
     "invalidChannel": "Please make sure that the owner of the server configured the report channel properly.",
-    "reportDescription": "**Description:** %description%\n\n**Status:** <Status>\n**ID:** <ID>",
+    "reportDescription": "**Description:** %description%\n\n**Status:** %status%\n**ID:** %id%",
     "reportSent": "You're report in %guild_name% was successfully created."
   },
   "resolve": {
