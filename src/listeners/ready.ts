@@ -45,10 +45,6 @@ export default async (client: Client): Promise<void> => {
     }
     // ----------------
 
-    await client.user.setActivity('Suggestions & Reports', {
-        type: 'WATCHING'
-    })
-
     // setTimeout(async () => await setPresence(client), 25000);
     // setInterval(async () => await setPresence(client), 3000000);
 
