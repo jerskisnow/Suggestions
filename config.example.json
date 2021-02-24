@@ -1,0 +1,40 @@
+{
+  "token": "",
+  "prefix": "?",
+  "language": "English",
+  "database": {
+    "hostname": "127.0.0.1",
+    "port": 5432,
+    "username": "root",
+    "password": "",
+    "database": "suggestions"
+  },
+  "emojis": {
+    "approve": "⬆️",
+    "reject": "⬇️"
+  },
+  "colors": {
+    "red": "#d42020",
+    "green": "#17d450",
+    "blue": "#1680f0"
+  },
+  "links": {
+    "botInvite": "",
+    "serverInvite": "",
+    "donateLink": "",
+    "voteLink": "",
+    "languageListLink": ""
+  },
+  "channels": {
+    "devLogs": ""
+  },
+  "apis": {
+    "dblToken": "",
+    "dbggToken": "",
+    "bfdToken": ""
+  },
+  "serverPort": 8080,
+  "oldGuildDataBackend": "",
+  "developerID": "",
+  "advancedLogging": false
+}

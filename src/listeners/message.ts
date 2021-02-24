@@ -1,51 +1,55 @@
-import { Client, Message, MessageEmbed } from 'discord.js';
-import Command from '../types/Command';
+import { Client, Message } from 'discord.js-light';
 
-import { cache, exists, get } from '../structures/CacheManager';
+import { parseCommand, Permission, sendPlainEmbed } from '../managers/Commands';
+import { cacheGuild, getConfigValues } from '../managers/ServerData';
 import botCache from '../structures/BotCache';
-import { hasPermission, parseCommand } from '../structures/CommandHandler';
 
 export default async (client: Client, message: Message): Promise<void> => {
-
     if (message.author.bot) return;
     if (!message.guild) return;
 
-    const bool = await exists(message.guild.id);
-    if (!bool) {
-        await cache(message.guild.id);
+    let cache = await getConfigValues(message.guild.id, ['prefix', 'language', 'staff_role'], true);
+    if (cache == null) {
+        cache = await cacheGuild(message.guild.id);
     }
 
-    const prefix = await get(message.guild.id, 'prefix') as string;
-
-    if (message.content.startsWith(prefix) || message.content.startsWith(`<@${client.user.id}> `)) {
-
+    if (message.content.toLowerCase().startsWith(cache.prefix) || message.content.toLowerCase().startsWith(`<@${client.user.id}> `)) {
         const args = message.content
-            .slice(prefix.length)
+            .slice(cache.prefix.length)
             .trim()
             .split(/ +/g);
 
-        const command = args.shift().toLowerCase();
-        if (command === '') return;
+        const input = args.shift().toLowerCase();
+        if (input === '') return;
 
-        const languageCode = await get(message.guild.id, 'language') as string;
-        const language = botCache.languages.get(languageCode);
+        const command = parseCommand(input);
+        if (command === null) return;
+        if (!command.enabled) return;
 
-        const cmd: Command = parseCommand(command);
-        if (cmd === null) return;
+        const language = botCache.languages.get(cache.language);
 
-        if (!hasPermission(message.member, cmd)) {
-            message.channel.send({
-                embed: new MessageEmbed()
-                    .setAuthor(language.errorTitle, client.user.avatarURL())
-                    .setColor(process.env.EMBED_COLOR)
-                    .setDescription(language.insufficientPermissions
-                        .replace(/<Permission>/g, cmd.permission))
-                    .setTimestamp()
-                    .setFooter(process.env.EMBED_FOOTER)
-            });
-        } else {
-            cmd.exec(client, message, language, args);
+        if (command.permission === Permission.STAFF) {
+            if (cache.staff_role == null) {
+                await sendPlainEmbed(message.channel, botCache.config.colors.red, language.additional.invalidStaffRole);
+                return;
+            }
+            const role = await message.guild.roles.fetch(cache.staff_role);
+            if (role == null) {
+                await sendPlainEmbed(message.channel, botCache.config.colors.red, language.additional.invalidStaffRole);
+                return;
+            }
+            if (!message.member.roles.cache.has(role.id)) {
+                await sendPlainEmbed(message.channel, botCache.config.colors.red, language.additional.roleRequired.replace('%role_name%', role.name));
+                return;
+            }
+        } else if (command.permission === Permission.ADMIN) {
+            if (!message.member.permissions.has("ADMINISTRATOR")) {
+                await sendPlainEmbed(message.channel, botCache.config.colors.red, language.additional.permRequired.replace('%perm_name%', 'ADMINISTRATOR'));
+                return;
+            }
         }
+
+        command.exec(client, message, {prefix: cache.prefix, language: language});
     }
 
 }

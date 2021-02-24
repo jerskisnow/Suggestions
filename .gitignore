@@ -1,6 +1,14 @@
+# Node/Typescript
 node_modules/
-.env
 lib/
+
+# Editors
 .vs/
-*.log
 .idea
+
+# Logs
+*.log
+*.txt
+
+# Config
+config.json

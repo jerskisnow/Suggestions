@@ -1,48 +1,85 @@
-import { Client } from 'discord.js';
-import { readdir } from 'fs';
+import { Client } from 'discord.js-light';
+import { promises as fs } from 'fs';
+import botCache from './structures/BotCache';
 import PostgreSQL from './structures/PostgreSQL';
 import Redis from './structures/Redis';
-import botCache from './structures/BotCache';
+import { unCacheGuild } from './managers/ServerData';
 
-// Instantiate the client
 const client = new Client({
+    cacheGuilds: true,
+    cacheRoles: true,
+    fetchAllMembers: false,
+    disabledEvents: [
+        'channelCreate',
+        'channelDelete',
+        'channelPinsUpdate',
+        'channelUpdate',
+        'emojiCreate',
+        'emojiDelete',
+        'emojiUpdate',
+        'guildBanAdd',
+        'guildBanRemove',
+        'guildIntegrationsUpdate',
+        'guildMemberAdd',
+        'guildMemberAvailable',
+        'guildMemberRemove',
+        'guildMembersChunk',
+        'guildMemberSpeaking',
+        'guildMemberUpdate',
+        'guildUnavailable',
+        'guildUpdate',
+        'invalidated',
+        'inviteCreate',
+        'inviteDelete',
+        'messageDeleteBulk',
+        'messageReactionRemove',
+        'messageReactionRemoveAll',
+        'messageReactionRemoveEmoji',
+        'messageUpdate',
+        'presenceUpdate',
+        'rateLimit',
+        'roleCreate',
+        'roleDelete',
+        'roleUpdate',
+        'typingStart',
+        'userUpdate',
+        'voiceStateUpdate',
+        'webhookUpdate'
+    ],
     partials: ['MESSAGE', 'REACTION']
 });
 
-// Enable advanced logging, if enabled
-if (process.env.ADVANCED_LOGS === 'true') {
-    client.on("error", (e) => console.error(e));
-    client.on("warn", (e) => console.warn(e));
-    client.on("debug", (e) => console.info(e));
-    client.on('shardError', (e) => console.error(e));
-}
+(async () => {
+    botCache.config = JSON.parse((await fs.readFile('../config.json')).toString());
 
-// Setup the the PostgreSQL pool and Redis client
-PostgreSQL.setupPool();
-Redis.setupClient();
-
-// Initiate all command files, which basically means that they will execute and get added to the bot cache
-readdir('./commands/', (_err, files) =>
-    files.forEach(file => require(`./commands/${file}`))
-);
-
-// Store all languages including the imports in the bot cache
-readdir('./languages/', (_err, files) =>
-    files.forEach(file =>
+    const lFiles = await fs.readdir('../languages/');
+    for (let i = 0; i < lFiles.length; i++) {
+        const lObject = JSON.parse((await fs.readFile(`../languages/${lFiles[i]}`)).toString());
         botCache.languages.set(
-            file.split('.')[0], require(`./languages/${file}`).default
+            lObject.name,
+            JSON.parse((await fs.readFile(`../languages/${lFiles[i]}`)).toString())
         )
-    )
-);
+    }
 
-// Register all listeners to the client
-readdir('./listeners/', (_err, files) =>
-    files.forEach(file =>
-        client.on(file.split('.')[0],
-            require(`./listeners/${file}`).default.bind(null, client)
-        )
-    )
-);
+    await PostgreSQL.setupPool();
+    await Redis.setupClient();
 
-// Login with the token
-client.login(process.env.CLIENT_TOKEN);
+    (await fs.readdir('./listeners/')).forEach((file: any) =>
+        client.on(file.split('.')[0], require(`./listeners/${file}`).default.bind(null, client))
+    );
+
+    client.on('guildDelete', async (g) => await unCacheGuild(g.id, true));
+
+    if (botCache.config.advancedLogging) {
+        client.on("error", (e) => console.error(e));
+        client.on("warn", (e) => console.warn(e));
+        client.on("debug", (e) => console.info(e));
+    }
+
+    (await fs.readdir('./commands/suggestions/')).forEach((file: any) => require(`./commands/suggestions/${file}`));
+    (await fs.readdir('./commands/reports/')).forEach((file: any) => require(`./commands/reports/${file}`));
+    (await fs.readdir('./commands/configuration/')).forEach((file: any) => require(`./commands/configuration/${file}`));
+    (await fs.readdir('./commands/support/')).forEach((file: any) => require(`./commands/support/${file}`));
+
+    await client.login(botCache.config.token);
+})();
