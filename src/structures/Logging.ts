@@ -8,7 +8,7 @@ export const log = async (guild: Guild, message: string) => {
     if (channel_id == null) return;
 
     const channel = await guild.channels.fetch(channel_id) as MessageableChannel;
-    if (!channel || channel.deleted) return;
+    if (channel == null || channel.deleted) return;
 
     await sendPlainEmbed(channel, botCache.config.colors.blue, message);
 }

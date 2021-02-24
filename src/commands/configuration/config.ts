@@ -73,8 +73,8 @@ const handleLanguage = async (message: Message, language: Language, value: strin
 }
 
 const handleStaffrole = async (message: Message, language: Language, value: string): Promise<void> => {
-    const role = getRoleFromArgs(message.guild, value);
-    if (role === null) {
+    const role = await getRoleFromArgs(message.guild, value);
+    if (role == null) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidRole);
         return;
     }
@@ -86,7 +86,7 @@ const handleStaffrole = async (message: Message, language: Language, value: stri
 
 const handleSuggestionChannel = async (message: Message, language: Language, value: string): Promise<void> => {
     const channel = await getChannelFromArgs(message.guild, value);
-    if (channel === null) {
+    if (channel == null) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidChannel);
         return;
     }
@@ -97,7 +97,7 @@ const handleSuggestionChannel = async (message: Message, language: Language, val
 
 const handleReportChannel = async (message: Message, language: Language, value: string): Promise<void> => {
     const channel = await getChannelFromArgs(message.guild, value);
-    if (channel === null) {
+    if (channel == null) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidChannel);
         return;
     }
@@ -108,7 +108,7 @@ const handleReportChannel = async (message: Message, language: Language, value: 
 
 const handleLogChannel = async (message: Message, language: Language, value: string): Promise<void> => {
     const channel = await getChannelFromArgs(message.guild, value);
-    if (channel === null) {
+    if (channel == null) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidChannel);
         return;
     }

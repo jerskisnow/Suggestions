@@ -18,7 +18,7 @@ botCache.commands.set('blacklist', {
                 await sendHelp(message, commandData);
                 return;
             }
-            const member = getMemberFromArgs(message.guild, args[1]);
+            const member = await getMemberFromArgs(message.guild, args[1]);
             if (member == null) {
                 await sendPlainEmbed(message.channel, botCache.config.colors.red, commandData.language.blacklist.invalidMember)
                 return;
@@ -29,7 +29,7 @@ botCache.commands.set('blacklist', {
                 await sendHelp(message, commandData);
                 return;
             }
-            const member = getMemberFromArgs(message.guild, args[1]);
+            const member = await getMemberFromArgs(message.guild, args[1]);
             if (member == null) {
                 await sendPlainEmbed(message.channel, botCache.config.colors.red, commandData.language.blacklist.invalidMember)
                 return;

@@ -88,7 +88,7 @@ export const approveSuggestion = async (message: Message, language: Language, su
         .replace('%id%', String(suggestion.id));
     embed.color = parseInt(botCache.config.colors.green.slice(1), 16);
 
-    await msg.edit({ embed: embed });
+    await msg.edit({embed: embed});
 
     await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.APPROVED, suggestion.id]);
 }
@@ -125,7 +125,7 @@ export const rejectSuggestion = async (message: Message, language: Language, sug
         .replace('%id%', String(suggestion.id));
     embed.color = parseInt(botCache.config.colors.red.slice(1), 16);
 
-    await msg.edit({ embed: embed });
+    await msg.edit({embed: embed});
 
     await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.REJECTED, suggestion.id]);
 }
@@ -157,7 +157,7 @@ export const considerSuggestion = async (message: Message, language: Language, s
         .replace('%id%', String(suggestion.id));
     embed.color = parseInt(botCache.config.colors.green.slice(1), 16);
 
-    await msg.edit({ embed: embed });
+    await msg.edit({embed: embed});
 
     await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.UNDER_CONSIDERATION, suggestion.id]);
 }

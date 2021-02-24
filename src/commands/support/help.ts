@@ -6,7 +6,7 @@ botCache.commands.set('help', {
     enabled: true,
     permission: Permission.DEFAULT,
     aliases: ['commands'],
-    exec: async (client, message, commandData, args: string[]) => {
+    exec: async (client, message, commandData) => {
         const helpEmbed = new MessageEmbed().setColor(botCache.config.colors.blue).setDescription(commandData.language.help.description);
         const helpFields = commandData.language.help.fields;
         for (let i = 0; i < helpFields.length; i++) {

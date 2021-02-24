@@ -5,7 +5,9 @@ import { readFile } from 'fs';
 // Main startup message
 Logger.printStartup();
 
+// Read the config file in order to obtain the token
 readFile('../config.json', async (err, res) => {
+    // Whenever there is an error just throw it
     if (err) throw err;
 
     // Instatiating the sharding manager

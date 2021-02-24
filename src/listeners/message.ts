@@ -33,9 +33,13 @@ export default async (client: Client, message: Message): Promise<void> => {
                 await sendPlainEmbed(message.channel, botCache.config.colors.red, language.additional.invalidStaffRole);
                 return;
             }
-            if (!message.member.roles.cache.has(cache.staff_role)) {
-                const roleName = message.guild.roles.cache.get(cache.staff_role).name;
-                await sendPlainEmbed(message.channel, botCache.config.colors.red, language.additional.roleRequired.replace('%role_name%', roleName));
+            const role = await message.guild.roles.fetch(cache.staff_role);
+            if (role == null) {
+                await sendPlainEmbed(message.channel, botCache.config.colors.red, language.additional.invalidStaffRole);
+                return;
+            }
+            if (!message.member.roles.cache.has(role.id)) {
+                await sendPlainEmbed(message.channel, botCache.config.colors.red, language.additional.roleRequired.replace('%role_name%', role.name));
                 return;
             }
         } else if (command.permission === Permission.ADMIN) {
@@ -45,7 +49,7 @@ export default async (client: Client, message: Message): Promise<void> => {
             }
         }
 
-        command.exec(client, message, {prefix: cache.prefix, language: language}, args);
+        command.exec(client, message, {prefix: cache.prefix, language: language});
     }
 
 }
