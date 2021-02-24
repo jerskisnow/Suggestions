@@ -67,8 +67,6 @@ export const resolveReport = async (message: Message, language: Language, report
         return;
     }
 
-    await PostgreSQL.runQuery('UPDATE reports SET status = $1::int WHERE id = $2::int', [ReportStatus.RESOLVED, report.id]);
-
     const embed = msg.embeds[0];
     embed.description = language.report.reportDescription
         .replace('%description%', report.context)
@@ -76,7 +74,9 @@ export const resolveReport = async (message: Message, language: Language, report
         .replace('%id%', String(report.id));
     embed.color = parseInt(botCache.config.colors.green.slice(1), 16);
 
-    await msg.edit({embed: embed});
+    await msg.edit({ embed: embed });
+
+    await PostgreSQL.runQuery('UPDATE reports SET status = $1::int WHERE id = $2::int', [ReportStatus.RESOLVED, report.id]);
 }
 
 export const moveReport = async (message: Message, language: Language, report: ReportData, newChannel: MessageableChannel) => {
