@@ -52,7 +52,7 @@ export const handleSuggestionCreation = async (message: Message, language: Langu
     await sendPrivateMessage(message.author, new MessageEmbed().setColor(botCache.config.colors.green).setDescription(
         language.suggest.suggestionSent.replace('%guild_name%', message.guild.name).replace('%message_url%', sMessage.url)
     ));
-    await log(message.guild, language.logs.suggestionCreated.replace('%user_tag%', message.author.tag).replace('%mesage_url%', sMessage.url));
+    await log(message.guild, language.logs.suggestionCreated.replace('%user_tag%', message.author.tag).replace('%message_url%', sMessage.url));
 }
 
 export const approveSuggestion = async (message: Message, language: Language, suggestion: SuggestionData, reason?: string) => {
