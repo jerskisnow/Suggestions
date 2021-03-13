@@ -80,12 +80,12 @@
     "reportSent": "You're report in %guild_name% was successfully created."
   },
   "resolve": {
-    "helpDescription": "**Please use:** %prefix%approve <ID/MessageID> [Reason]",
+    "helpDescription": "**Please use:** %prefix%resolve <ID/MessageID> [Reason]",
     "invalidReport": "I can't resolve that report because it doesn't exist",
     "statusUpdated": "Successfully updated the status of that report."
   },
   "approve": {
-    "helpDescription": "**Please use:** %prefix%resolve <ID/MessageID> [Reason]",
+    "helpDescription": "**Please use:** %prefix%approve <ID/MessageID> [Reason]",
     "invalidSuggestion": "I can't approve that suggestion because it doesn't exist",
     "statusUpdated": "Successfully updated the status of that suggestion."
   },

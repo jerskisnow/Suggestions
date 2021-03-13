@@ -118,13 +118,30 @@ const handleLogChannel = async (message: Message, language: Language, value: str
 }
 
 const handleApproveEmoji = async (message: Message, language: Language, value: string): Promise<void> => {
-    await setConfigValue(message.guild.id, 'approve_emoji', value);
+    if (value.startsWith("<:")) {
+        const emojiID = value.replace(/\D/g,'');
+        const emoji = await message.guild.emojis.fetch(emojiID);
+        value = emoji.name;
+
+        await setConfigValue(message.guild.id, 'approve_emoji', emojiID);
+    } else {
+        await setConfigValue(message.guild.id, 'approve_emoji', value);
+    }
+
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.approveEmojiUpdated.replace('%new_emoji%', value));
     await log(message.guild, language.logs.approveEmojiUpdated.replace('%user_tag%', message.author.tag).replace('%new_emoji%', value));
 }
 
 const handleRejectEmoji = async (message: Message, language: Language, value: string): Promise<void> => {
-    await setConfigValue(message.guild.id, 'reject_emoji', value);
+    if (value.startsWith("<:")) {
+        const emojiID = value.replace(/\D/g,'');
+        const emoji = await message.guild.emojis.fetch(emojiID);
+        value = emoji.name;
+
+        await setConfigValue(message.guild.id, 'reject_emoji', emojiID);
+    } else {
+        await setConfigValue(message.guild.id, 'reject_emoji', value);
+    }
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.rejectEmojiUpdated.replace('%new_emoji%', value));
     await log(message.guild, language.logs.rejectEmojiUpdated.replace('%user_tag%', message.author.tag).replace('%new_emoji%', value));
 }
