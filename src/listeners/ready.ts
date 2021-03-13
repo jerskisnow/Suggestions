@@ -45,8 +45,8 @@ export default async (client: Client): Promise<void> => {
     }
     // ----------------
 
-    setTimeout(async () => await setPresence(client), 12500);
-    setInterval(async () => await setPresence(client), 850000);
+    setTimeout(async () => await setPresence(client), 18500);
+    setInterval(async () => await setPresence(client), 825000);
 
     Logger.log('Successfully enabled the client.', LogType.INFO);
 }
