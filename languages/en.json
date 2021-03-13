@@ -106,7 +106,7 @@
     "invalidSuggestion": "I can't move that suggestion because it doesn't exist.",
     "invalidChannel": "I can't move the suggestion because I couldn't find that channel.",
     "invalidMessage": "I can't move that suggestion because I wasn't able to find the original message.",
-    "locationUpdated": "Successfully moved the report to %new_channel%."
+    "locationUpdated": "Successfully moved the suggestion to %new_channel%."
   },
   "reject": {
     "helpDescription": "**Please use:** %prefix%reject <ID/MessageID> [Reason]",
