@@ -9,7 +9,7 @@ botCache.commands.set('config', {
     enabled: true,
     permission: Permission.ADMIN,
     aliases: ['setup', 'configure', 'configuration', 'settings'],
-    exec: async (client, message, commandData, args: string[]) => {
+    exec: async (_client, message, commandData, args: string[]) => {
         /*
          * config prefix <Prefix>
          * config language <Language>
@@ -131,7 +131,7 @@ const handleRejectEmoji = async (message: Message, language: Language, value: st
 
 const handleAutoApprove = async (message: Message, language: Language, value: string): Promise<void> => {
     const number = parseInt(value);
-    if (isNaN(number) || number < -1) {
+    if (isNaN(number) || number < 0) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidNumberOption);
         return;
     }
@@ -142,7 +142,7 @@ const handleAutoApprove = async (message: Message, language: Language, value: st
 
 const handleAutoReject = async (message: Message, language: Language, value: string): Promise<void> => {
     const number = parseInt(value);
-    if (isNaN(number) || number < -1) {
+    if (isNaN(number) || number < 0) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidNumberOption);
         return;
     }

@@ -59,7 +59,7 @@ export const resolveReport = async (message: Message, language: Language, report
         msg = await channel.messages.fetch(report.message);
     } catch (ex) {
         if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
-            console.error('An error occured', ex);
+            console.error(ex);
         }
     }
     if (!msg || msg.deleted) {
@@ -74,7 +74,7 @@ export const resolveReport = async (message: Message, language: Language, report
         .replace('%id%', String(report.id));
     embed.color = parseInt(botCache.config.colors.green.slice(1), 16);
 
-    await msg.edit({embed: embed});
+    await msg.edit({embed: embed}).catch(console.error);
 
     await PostgreSQL.runQuery('UPDATE reports SET status = $1::int WHERE id = $2::int', [ReportStatus.RESOLVED, report.id]);
 }
@@ -92,7 +92,7 @@ export const moveReport = async (message: Message, language: Language, report: R
         msg = await oldChannel.messages.fetch(report.message);
     } catch (ex) {
         if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
-            console.error('An error occured', ex);
+            console.error(ex);
         }
     }
     if (!msg || msg.deleted) {

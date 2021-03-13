@@ -45,17 +45,17 @@ export default async (client: Client): Promise<void> => {
     }
     // ----------------
 
-    // setTimeout(async () => await setPresence(client), 25000);
-    // setInterval(async () => await setPresence(client), 3000000);
+    setTimeout(async () => await setPresence(client), 12500);
+    setInterval(async () => await setPresence(client), 850000);
 
     Logger.log('Successfully enabled the client.', LogType.INFO);
 }
 
-// const setPresence = async (client: Client) => {
-//     const guilds_result = await client.shard.fetchClientValues('guilds.cache.size');
-//     const guildCount = guilds_result.reduce((prev, count) => prev + count, 0);
-//
-//     await client.user.setActivity(`${guildCount} guilds on ${client.shard.count} shards.`, {
-//         type: 'WATCHING'
-//     });
-// }
+const setPresence = async (client: Client) => {
+    const guilds_result = await client.shard.fetchClientValues('guilds.cache.size');
+    const guildCount = guilds_result.reduce((prev, count) => prev + count, 0);
+
+    await client.user.setActivity(`${guildCount} guilds on ${client.shard.count} shards.`, {
+        type: 'WATCHING'
+    });
+}
