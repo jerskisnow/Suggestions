@@ -15,13 +15,3 @@ CREATE TABLE servers (
     suggestion_blacklist TEXT,
     report_blacklist TEXT
 );
-
-ALTER TABLE servers
-ALTER COLUMN id TYPE TEXT,
-ALTER COLUMN prefix TYPE TEXT,
-ALTER COLUMN staff_role TYPE TEXT,
-ALTER COLUMN suggestion_channel TYPE TEXT,
-ALTER COLUMN report_channel TYPE TEXT,
-ALTER COLUMN log_channel TYPE TEXT,
-ALTER COLUMN approve_emoji TYPE TEXT,
-ALTER COLUMN reject_emoji TYPE TEXT;

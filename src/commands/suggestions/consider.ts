@@ -6,7 +6,7 @@ import { log } from '../../structures/Logging';
 botCache.commands.set('consider', {
     enabled: true,
     permission: Permission.STAFF,
-    exec: async (client, message, commandData, args: string[]) => {
+    exec: async (message, commandData, args: string[]) => {
         if (args.length === 0) {
             await sendPlainEmbed(message.channel, botCache.config.colors.red, commandData.language.consider.helpDescription.replace('%prefix%', commandData.prefix));
             return;

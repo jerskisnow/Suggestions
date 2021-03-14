@@ -16,10 +16,7 @@ export default class Redis {
 
 interface AsyncRedisClient extends RedisClient {
     getAsync(identifier: string): Promise<any>,
-
     setAsync(identifier: string, value: any, option: string, optionValue: any): Promise<any>,
-
     delAsync(identifier: string): Promise<any>,
-
     existsAsync(identifier: string): Promise<any>
 }

@@ -1,5 +1,4 @@
 import {
-    Client,
     Constants,
     DMChannel,
     Guild,
@@ -122,7 +121,7 @@ export interface ICommand {
     enabled: boolean,
     permission: Permission,
     aliases?: string[],
-    exec: (client: Client, message: Message, commandData: CommandData, args?: string[]) => unknown
+    exec: (message: Message, commandData: CommandData, args?: string[]) => unknown
 }
 
 interface CommandData {

@@ -1,10 +1,10 @@
 import { Client, MessageReaction } from 'discord.js-light';
 import botCache from '../structures/BotCache';
-import { cacheGuild, getConfigValue, getConfigValues } from '../managers/ServerData';
+import { cacheGuild, getConfigValues } from '../managers/ServerData';
 import { approveSuggestion, getSuggestionData, rejectSuggestion } from '../managers/Suggestions';
 import { log } from '../structures/Logging';
 
-export default async (client: Client, reaction: MessageReaction): Promise<void> => {
+export default async (_client: Client, reaction: MessageReaction): Promise<void> => {
     if (reaction.partial) {
         try {
             await reaction.fetch();
@@ -27,8 +27,8 @@ export default async (client: Client, reaction: MessageReaction): Promise<void> 
     if (reaction.emoji.name !== approveEmoji && reaction.emoji.name !== rejectEmoji) return;
     if (!reaction.message.reactions.cache.get(approveEmoji) || !reaction.message.reactions.cache.get(rejectEmoji)) return;
 
-    const approveCount = reaction.message.reactions.cache.get(cache.approve_emoji).count - 1;
-    const rejectCount = reaction.message.reactions.cache.get(cache.reject_emoji).count - 1;
+    const approveCount = reaction.message.reactions.cache.get(approveEmoji).count - 1;
+    const rejectCount = reaction.message.reactions.cache.get(rejectEmoji).count - 1;
 
     const suggestion = await getSuggestionData(reaction.message.id);
     const language = botCache.languages.get(cache.language);

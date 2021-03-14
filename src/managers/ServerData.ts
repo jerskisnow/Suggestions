@@ -105,7 +105,7 @@ export const getConfigValues = async function (guild_id: string, guild_settings:
             }
         }
 
-        if (toFetch.length > 0) {
+        if (toFetch.length !== 0) {
             // Add all values from toFetch to the injection string
             let inj = toFetch[0];
             for (let i = 1; i < toFetch.length; i++) {

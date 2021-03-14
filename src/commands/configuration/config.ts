@@ -9,7 +9,7 @@ botCache.commands.set('config', {
     enabled: true,
     permission: Permission.ADMIN,
     aliases: ['setup', 'configure', 'configuration', 'settings'],
-    exec: async (_client, message, commandData, args: string[]) => {
+    exec: async (message, commandData, args: string[]) => {
         /*
          * config prefix <Prefix>
          * config language <Language>
@@ -118,7 +118,7 @@ const handleLogChannel = async (message: Message, language: Language, value: str
 }
 
 const handleApproveEmoji = async (message: Message, language: Language, value: string): Promise<void> => {
-    if (value.startsWith("<:")) {
+    if (value.startsWith('<:')) {
         const emojiID = value.replace(/\D/g,'');
         const emoji = await message.guild.emojis.fetch(emojiID);
         value = emoji.name;
@@ -133,7 +133,7 @@ const handleApproveEmoji = async (message: Message, language: Language, value: s
 }
 
 const handleRejectEmoji = async (message: Message, language: Language, value: string): Promise<void> => {
-    if (value.startsWith("<:")) {
+    if (value.startsWith('<:')) {
         const emojiID = value.replace(/\D/g,'');
         const emoji = await message.guild.emojis.fetch(emojiID);
         value = emoji.name;

@@ -221,19 +221,21 @@ export const handleSuggestionList = async (message: Message, language: Language)
 }
 
 export const getSuggestionData = async (resolvable: string): Promise<SuggestionData> => {
-    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM suggestions WHERE message = $1::text', [resolvable]);
-    if (!result.rows.length) {
-        result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM suggestions WHERE id = $1::int', [parseInt(resolvable)]);
-        if (!result.rows.length) {
-            result = null;
-        }
-    }
-    return result == null ? null : result.rows[0];
+    const messageResult = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM suggestions WHERE message = $1::text', [resolvable]);
+    if (messageResult.rowCount !== 0) return messageResult.rows[0];
+
+    const id = parseInt(resolvable);
+    if (id > Number.MAX_SAFE_INTEGER) return null;
+
+    const idResult = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message, status FROM suggestions WHERE id = $1::int', [parseInt(resolvable)]);
+    if (idResult.rowCount !== 0) return idResult.rows[0];
+
+    return null;
 }
 
 export const getLatestSuggestions = async (guild_id: string, limit: number): Promise<SuggestionData[]> => {
-    let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::int LIMIT $3::int', [guild_id, SuggestionStatus.OPEN, limit]);
-    return result.rows;
+    const result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::int LIMIT $3::int', [guild_id, SuggestionStatus.OPEN, limit]);
+    return result.rowCount === 0 ? null : result.rows;
 }
 
 interface SuggestionData {

@@ -33,7 +33,7 @@ export default class Server {
     }
 
     private globalRoutes = (app: Express) => {
-        app.get('/guilds/count', async (req, res) => {
+        app.get('/guilds/count', async (_req, res) => {
             res.send({
                 count: await getServerCount(this.client)
             }).status(200);
@@ -133,7 +133,7 @@ export default class Server {
             }
         });
 
-        app.post('/configs/update/:guild_id', async (req, res) => {
+        app.post('/configs/update/:guild_id', async (req, _res) => {
             const {guild_id} = req.params;
             const json = await req.body.json();
 

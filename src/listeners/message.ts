@@ -49,7 +49,7 @@ export default async (client: Client, message: Message): Promise<void> => {
             }
         }
 
-        command.exec(client, message, {prefix: cache.prefix, language: language}, args);
+        command.exec(message, {prefix: cache.prefix, language: language}, args);
     }
 
 }

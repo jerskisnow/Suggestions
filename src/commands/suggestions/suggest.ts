@@ -6,7 +6,7 @@ botCache.commands.set('suggest', {
     enabled: true,
     permission: Permission.DEFAULT,
     aliases: ['requestfeature'],
-    exec: async (client, message, commandData, args: string[]) => {
+    exec: async (message, commandData, args: string[]) => {
         await message.delete();
         if (args.length === 0) {
             const msg = await sendPlainEmbed(message.channel, botCache.config.colors.red, commandData.language.suggest.helpDescription);

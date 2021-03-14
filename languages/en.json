@@ -48,10 +48,10 @@
       }
     ],
     "prefixUpdated": "Successfully changed the prefix to `%new_prefix%`.",
-    "invalidLanguage": "That language is not supported. You can find a list with support languages [here](%language_list_link%).",
+    "invalidLanguage": "That language is not supported. You can find a list with supported languages [here](%language_list_link%).",
     "languageUpdated": "Successfully changed the language to `%new_language_name% (%new_language_country%)`.",
     "invalidRole": "I couldn't find that role.",
-    "roleUpdated": "Successfully changed the prefix to `%role_name%`.",
+    "roleUpdated": "Successfully changed the role to `%role_name%`.",
     "invalidChannel": "I couldn't find that channel.",
     "suggestionChannelUpdated": "Successfully changed the suggestion channel to %new_channel%.",
     "reportChannelUpdated": "Successfully changed the report channel to %new_channel%.",
@@ -62,8 +62,8 @@
     "autoApproveUpdated": "Open suggestions will now be approved after `%new_amount%` human upvote reactions.",
     "autoRejectUpdated": "Open suggestions will now be rejected after `%new_amount%` human downvote reactions.",
     "invalidToggleOption": "You can only choose between `On` and `Off`.",
-    "deleteApprovedUpdated": "Automatic deletion of approved suggetions is not turned `%new_value%`.",
-    "deleteRejectedUpdated": "Automatic deletion of rejected suggetions is not turned `%new_value%`."
+    "deleteApprovedUpdated": "Automatic deletion of approved suggetions is now turned `%new_value%`.",
+    "deleteRejectedUpdated": "Automatic deletion of rejected suggetions is now turned `%new_value%`."
   },
   "movereport": {
     "helpDescription": "**Please use:** %prefix%movereport <ID/MessageID> <#channel>",
@@ -128,7 +128,7 @@
     "fields": [
       {
         "title": "User",
-        "description": "%prefix%suggest <Description>\n%prefix%report <Description>\n%prefix%list [Suggestions]\n%prefix%donate\n%prefix%invite\n%prefix%vote\n%prefix%help"
+        "description": "%prefix%suggest <Description>\n%prefix%report <Description>\n%prefix%list [Suggestions]\n%prefix%donate\n%prefix%invite\n%prefix%vote\n%prefix%allowdm <On/Off>\n%prefix%help"
       },
       {
         "title": "Staff",
@@ -145,6 +145,10 @@
   },
   "vote": {
     "description": "Voting for Suggestions make it appear higher in the discordbot list, you can vote [here](%vote_link%)."
+  },
+  "allowdm": {
+      "invalidToggleOption": "You can only choose between `On` and `Off`.",
+      "allowDMUpdated": "AllowDM preference updated. DMs are now turned `%new_value%`"
   },
   "logs": {
     "blacklistLogs": {
@@ -184,7 +188,7 @@
     "autoRejected": "The status of suggesiton `%suggestion_id%` was automatically updated to rejected."
   },
   "additional": {
-    "invalidStaffRole": "Please make sure that the owner of the server configured the staff role properly",
+    "invalidStaffRole": "Please make sure that the owner of the server configured the staff role properly.",
     "roleRequired": "You need to have the `%role_name%` role in order to use that command.",
     "permRequired": "You need to have the `%perm_name% in order to use that command.`",
     "openStatus": "Open",

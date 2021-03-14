@@ -61,8 +61,8 @@ const client = new Client({
         )
     }
 
-    await PostgreSQL.setupPool();
-    await Redis.setupClient();
+    PostgreSQL.setupPool();
+    Redis.setupClient();
 
     (await fs.readdir('./listeners/')).forEach((file: any) =>
         client.on(file.split('.')[0], require(`./listeners/${file}`).default.bind(null, client))
