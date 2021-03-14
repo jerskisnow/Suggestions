@@ -61,15 +61,21 @@ const handlePrefix = async (message: Message, language: Language, value: string)
 }
 
 const handleLanguage = async (message: Message, language: Language, value: string): Promise<void> => {
-    if (!botCache.languages.has(value)) {
+    let newLanguage: Language = null;
+    for (let [key, lang] of botCache.languages) {
+        if (key.toLowerCase() === value) {
+            newLanguage = lang;
+            continue;
+        }
+    }
+    if (newLanguage === null) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidLanguage.replace('%language_list_link%', botCache.config.links.languageListLink));
         return;
     }
-    await setConfigValue(message.guild.id, 'language', value);
+    await setConfigValue(message.guild.id, 'language', newLanguage.name);
 
-    const newLanguage = botCache.languages.get(value);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, newLanguage.config.languageUpdated.replace('%new_language_name%', newLanguage.name).replace('%new_language_country%', newLanguage.country));
-    await log(message.guild, newLanguage.logs.languageUpdated.replace('%user_tag%', message.author.tag).replace('%new_language_name%', value));
+    await log(message.guild, newLanguage.logs.languageUpdated.replace('%user_tag%', message.author.tag).replace('%new_language_name%', newLanguage.name));
 }
 
 const handleStaffrole = async (message: Message, language: Language, value: string): Promise<void> => {

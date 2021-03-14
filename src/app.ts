@@ -58,7 +58,7 @@ const client = new Client({
         botCache.languages.set(
             lObject.name,
             JSON.parse((await fs.readFile(`../languages/${lFiles[i]}`)).toString())
-        )
+        );
     }
 
     PostgreSQL.setupPool();
