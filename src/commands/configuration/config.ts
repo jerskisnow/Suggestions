@@ -9,7 +9,7 @@ botCache.commands.set('config', {
     enabled: true,
     permission: Permission.ADMIN,
     aliases: ['setup', 'configure', 'configuration', 'settings'],
-    exec: async (client, message, commandData, args: string[]) => {
+    exec: async (message, commandData, args: string[]) => {
         /*
          * config prefix <Prefix>
          * config language <Language>
@@ -61,15 +61,21 @@ const handlePrefix = async (message: Message, language: Language, value: string)
 }
 
 const handleLanguage = async (message: Message, language: Language, value: string): Promise<void> => {
-    if (!botCache.languages.has(value)) {
+    let newLanguage: Language = null;
+    for (let [key, lang] of botCache.languages) {
+        if (key.toLowerCase() === value) {
+            newLanguage = lang;
+            continue;
+        }
+    }
+    if (newLanguage === null) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidLanguage.replace('%language_list_link%', botCache.config.links.languageListLink));
         return;
     }
-    await setConfigValue(message.guild.id, 'language', value);
+    await setConfigValue(message.guild.id, 'language', newLanguage.name);
 
-    const newLanguage = botCache.languages.get(value);
     await sendPlainEmbed(message.channel, botCache.config.colors.green, newLanguage.config.languageUpdated.replace('%new_language_name%', newLanguage.name).replace('%new_language_country%', newLanguage.country));
-    await log(message.guild, newLanguage.logs.languageUpdated.replace('%user_tag%', message.author.tag).replace('%new_language_name%', value));
+    await log(message.guild, newLanguage.logs.languageUpdated.replace('%user_tag%', message.author.tag).replace('%new_language_name%', newLanguage.name));
 }
 
 const handleStaffrole = async (message: Message, language: Language, value: string): Promise<void> => {
@@ -118,20 +124,37 @@ const handleLogChannel = async (message: Message, language: Language, value: str
 }
 
 const handleApproveEmoji = async (message: Message, language: Language, value: string): Promise<void> => {
-    await setConfigValue(message.guild.id, 'approve_emoji', value);
+    if (value.startsWith('<:')) {
+        const emojiID = value.replace(/\D/g,'');
+        const emoji = await message.guild.emojis.fetch(emojiID);
+        value = emoji.name;
+
+        await setConfigValue(message.guild.id, 'approve_emoji', emojiID);
+    } else {
+        await setConfigValue(message.guild.id, 'approve_emoji', value);
+    }
+
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.approveEmojiUpdated.replace('%new_emoji%', value));
     await log(message.guild, language.logs.approveEmojiUpdated.replace('%user_tag%', message.author.tag).replace('%new_emoji%', value));
 }
 
 const handleRejectEmoji = async (message: Message, language: Language, value: string): Promise<void> => {
-    await setConfigValue(message.guild.id, 'reject_emoji', value);
+    if (value.startsWith('<:')) {
+        const emojiID = value.replace(/\D/g,'');
+        const emoji = await message.guild.emojis.fetch(emojiID);
+        value = emoji.name;
+
+        await setConfigValue(message.guild.id, 'reject_emoji', emojiID);
+    } else {
+        await setConfigValue(message.guild.id, 'reject_emoji', value);
+    }
     await sendPlainEmbed(message.channel, botCache.config.colors.green, language.config.rejectEmojiUpdated.replace('%new_emoji%', value));
     await log(message.guild, language.logs.rejectEmojiUpdated.replace('%user_tag%', message.author.tag).replace('%new_emoji%', value));
 }
 
 const handleAutoApprove = async (message: Message, language: Language, value: string): Promise<void> => {
     const number = parseInt(value);
-    if (isNaN(number) || number < -1) {
+    if (isNaN(number) || number < 0) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidNumberOption);
         return;
     }
@@ -142,7 +165,7 @@ const handleAutoApprove = async (message: Message, language: Language, value: st
 
 const handleAutoReject = async (message: Message, language: Language, value: string): Promise<void> => {
     const number = parseInt(value);
-    if (isNaN(number) || number < -1) {
+    if (isNaN(number) || number < 0) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidNumberOption);
         return;
     }

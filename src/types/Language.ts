@@ -130,6 +130,11 @@ interface Vote {
     description: string;
 }
 
+interface AllowDM {
+    invalidToggleOption: string,
+    allowDMUpdated: string
+}
+
 interface BlacklistLogs {
     addedToSuggestion: string;
     removedFromSuggestion: string;
@@ -200,6 +205,7 @@ export default interface Language {
     help: Help;
     invite: Invite;
     vote: Vote;
+    allowdm: AllowDM;
     logs: Logs;
     additional: Additional;
 }

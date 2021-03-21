@@ -58,11 +58,11 @@ const client = new Client({
         botCache.languages.set(
             lObject.name,
             JSON.parse((await fs.readFile(`../languages/${lFiles[i]}`)).toString())
-        )
+        );
     }
 
-    await PostgreSQL.setupPool();
-    await Redis.setupClient();
+    PostgreSQL.setupPool();
+    Redis.setupClient();
 
     (await fs.readdir('./listeners/')).forEach((file: any) =>
         client.on(file.split('.')[0], require(`./listeners/${file}`).default.bind(null, client))

@@ -7,7 +7,7 @@ import { handleBlacklistAdd, handleBlacklistRemove, handleClearBlacklist } from 
 botCache.commands.set('blacklist', {
     enabled: true,
     permission: Permission.ADMIN,
-    exec: async (client, message, commandData, args: string[]) => {
+    exec: async (message, commandData, args: string[]) => {
         if (args.length !== 2 && args.length !== 3) {
             await sendHelp(message, commandData);
             return;

@@ -9,28 +9,26 @@ import { Client, Guild } from 'discord.js-light';
  */
 export const cacheGuild = async function (guild_id: string): Promise<GuildSettingOptions> {
     let result = await PostgreSQL.runQuery('SELECT prefix, language, staff_role, auto_approve, auto_reject, approve_emoji, reject_emoji FROM servers WHERE id = $1::text', [guild_id]);
+    // Server does not exist in the database
     if (!result.rows.length) {
-        // ---------
+        // Write to the database
         await PostgreSQL.runQuery('INSERT INTO servers (id, prefix, language) VALUES ($1::text, $2::text, $3::text)', [guild_id, botCache.config.prefix, botCache.config.language]);
+        // Manipulate the result and set it to the default data
         result.rows = [{
             prefix: botCache.config.prefix,
             language: botCache.config.language,
-            staff_role: null,
-            auto_approve: -1,
-            auto_reject: -1,
-            approve_emoji: botCache.config.emojis.approve,
-            reject_emoji: botCache.config.emojis.reject
+            staff_role: null
         }];
-        // ---------
     }
+    // The actual cache object, there are some aditional checks here to set default data
     const cacheObject = {
         prefix: result.rows[0].prefix,
         language: result.rows[0].language,
         staff_role: result.rows[0].staff_role,
-        auto_approve: result.rows[0].auto_approve == null ? -1 : result.rows[0].auto_approve,
-        auto_reject: result.rows[0].auto_reject == null ? -1 : result.rows[0].auto_reject,
-        approve_emoji: result.rows[0].approve_emoji == null ? botCache.config.emojis.approve : result.rows[0].approve_emoji,
-        reject_emoji: result.rows[0].reject_emoji == null ? botCache.config.emojis.reject : result.rows[0].reject_emoji
+        auto_approve: result.rows[0].auto_approve === undefined ? null : result.rows[0].auto_approve,
+        auto_reject: result.rows[0].auto_reject === undefined ? null : result.rows[0].auto_reject,
+        approve_emoji: result.rows[0].approve_emoji === undefined ? null : result.rows[0].approve_emoji,
+        reject_emoji: result.rows[0].reject_emoji === undefined ? null : result.rows[0].reject_emoji
     }
     await Redis.getClient().setAsync(guild_id, JSON.stringify(cacheObject), 'EX', 18000 /* 5 hours */);
     return cacheObject;
@@ -107,7 +105,7 @@ export const getConfigValues = async function (guild_id: string, guild_settings:
             }
         }
 
-        if (toFetch.length > 0) {
+        if (toFetch.length !== 0) {
             // Add all values from toFetch to the injection string
             let inj = toFetch[0];
             for (let i = 1; i < toFetch.length; i++) {
@@ -133,9 +131,6 @@ export const getConfigValues = async function (guild_id: string, guild_settings:
     for (let i = 1; i < guild_settings.length; i++) {
         inj += `, ${guild_settings[i]}`;
     }
-
-    console.log('DEBUG INJ: ' + `SELECT ${inj} FROM servers WHERE id = $1::text`);
-    console.log('DEBUG GUILD_ID: ' + guild_id);
 
     // I'm so sorry for this injection but there is not other way, also all the identifiers are set by the bot anyway and are not user input.
     const result = await PostgreSQL.runQuery(`SELECT ${inj} FROM servers WHERE id = $1::text`, [guild_id]);

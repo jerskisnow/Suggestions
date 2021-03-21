@@ -6,7 +6,7 @@ import { getReportData, moveReport, ReportStatus } from '../../managers/Reports'
 botCache.commands.set('movereport', {
     enabled: true,
     permission: Permission.STAFF,
-    exec: async (client, message, commandData, args) => {
+    exec: async (message, commandData, args) => {
         if (args.length !== 2) {
             await sendPlainEmbed(message.channel, botCache.config.colors.red, commandData.language.movereport.helpDescription.replace('%prefix%', commandData.prefix));
             return;

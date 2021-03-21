@@ -19,8 +19,14 @@ export default class PostgreSQL {
 
     public static async runQuery(query: string, params?: any[]) {
         const client = await this.pool.connect();
-        const result = !params ? await client.query(query) : await client.query(query, params);
-        client.release();
+        let result;
+        try {
+            result = !params ? await client.query(query) : await client.query(query, params);
+        } catch (ex) {
+            console.error(ex)
+        } finally {
+            client.release();
+        }
         return result;
     }
 }
