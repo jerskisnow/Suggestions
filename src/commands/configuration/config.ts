@@ -154,7 +154,7 @@ const handleRejectEmoji = async (message: Message, language: Language, value: st
 
 const handleAutoApprove = async (message: Message, language: Language, value: string): Promise<void> => {
     const number = parseInt(value);
-    if (isNaN(number) || number < 0) {
+    if (isNaN(number) || number < -1) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidNumberOption);
         return;
     }
@@ -165,7 +165,7 @@ const handleAutoApprove = async (message: Message, language: Language, value: st
 
 const handleAutoReject = async (message: Message, language: Language, value: string): Promise<void> => {
     const number = parseInt(value);
-    if (isNaN(number) || number < 0) {
+    if (isNaN(number) || number < -1) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.config.invalidNumberOption);
         return;
     }

@@ -16,7 +16,7 @@
         "description": "%prefix%blacklist remove <User> <Suggestion/Report/All>"
       },
       {
-        "title": "Chiaro",
+        "title": "Ripulisci",
         "description": "%prefix%blacklist clear <Suggestion/Report/All>"
       }
     ],
@@ -51,18 +51,18 @@
     "invalidLanguage": "Quella lingua non è supportata. Puoi trovare una lista delle lingue supportate [quà](%language_list_link%).",
     "languageUpdated": "Lingua cambiata con successo a `%new_language_name% (%new_language_country%)`.",
     "invalidRole": "Non ho trovato il ruolo in questione",
-    "roleUpdated": "Ruolo cambiato con successo a `%role_name%`.",
+    "roleUpdated": "Ruolo dello staff cambiato con successo a `%role_name%`.",
     "invalidChannel": "Non ho trovato il canale in questione.",
     "suggestionChannelUpdated": "Canale delle suggestions cambiato con successo a %new_channel%.",
     "reportChannelUpdated": "Canale dei report cambiato con successo a %new_channel%.",
     "logChannelUpdated": "Canale delle log cambiato con successo a %new_channel%.",
-    "approveEmojiUpdated": "L'approve emoji è stata con successo cambiata a %new_emoji%.",
-    "rejectEmojiUpdated": "La reject emoji è stata con successo cambiata a %new_emoji%.",
-    "invalidNumberOption": "puoi scrivere soltanto -1 (per disabilitare) o un numero più alto (per abilitare).",
+    "approveEmojiUpdated": "L'approve emoji è stata cambiata con successo a %new_emoji%.",
+    "rejectEmojiUpdated": "La reject emoji è stata cambiata con successo  a %new_emoji%.",
+    "invalidNumberOption": "Puoi scrivere soltanto -1 (per disabilitare) o un numero più alto (per abilitare).",
     "autoApproveUpdated": "Lo stato delle suggestions aperte da ora sarà impostato ad approved dopo `%new_amount%` reaction al voto positivo.",
     "autoRejectUpdated": "Lo stato delle suggestions aperte da ora sarà impostato a rejected dopo `%new_amount%` reaction al voto negativo.",
     "invalidToggleOption": "Puoi scegliere soltanto tra `On` e `Off`.",
-    "deleteApprovedUpdated": "L'eliminazione automatica delle approved suggestions è ora impostata su `%new_value%`.",
+    "deleteApprovedUpdated": "L'eliminazione automatica delle suggestions approvate è ora impostata su `%new_value%`.",
     "deleteRejectedUpdated": "L'eliminazione automatica delle rejected suggestions è ora impostata su `%new_value%`."
   },
   "movereport": {
@@ -74,7 +74,7 @@
   },
   "report": {
     "helpDescription": "**Per piacere usa:** %prefix%report <Descrizione>",
-    "onBlacklist": "Sei stato/a messo nella lista nera dall'Amministrazione di questo server. Di conseguenza, non puoi creare reports.",
+    "onBlacklist": "Sei stato/a messo/a nella lista nera dall'Amministrazione di questo server. Di conseguenza, non puoi creare reports.",
     "invalidChannel": "Per piacere, accertarsi che l'Owner di questo server abbia impostato il canale dei report nel modo corretto.",
     "reportDescription": "**Descrizione:** %description%\n\n**Status:** %status%\n**ID:** %id%",
     "reportSent": "Il tuo report in %guild_name% è stato creato con successo."
@@ -96,10 +96,10 @@
   },
   "list": {
     "helpDescription": "**Per piacere usa:** %prefix%list [Suggestions/Reports]",
-    "noSuggestionsFound": "ci sono `0` Suggestions aperte.",
-    "noReportsFound": "ci sono `0` Reports aperti.",
-    "suggestionListDescription": "ci sono `%amount%` suggestions aperte. Sto mostrando le ultime 8.",
-    "reportListDescription": "ci sono `%amount%` reports aperti. Sto mostrando gli ultimi 8."
+    "noSuggestionsFound": "Ci sono `0` suggestions aperte.",
+    "noReportsFound": "Ci sono `0` Reports aperti.",
+    "suggestionListDescription": "Ci sono `%amount%` suggestions aperte. Sto mostrando le ultime 8.",
+    "reportListDescription": "Ci sono `%amount%` reports aperti. Sto mostrando gli ultimi 8."
   },
   "movesuggestion": {
     "helpDescription": "**Per piacere usa:** %prefix%movesuggestion <ID/MessageID> <#canale>",
@@ -115,16 +115,16 @@
   },
   "suggest": {
     "helpDescription": "**Per piacere usa:** %prefix%suggest <Descrizione>",
-    "onBlacklist": "Sei stato messo nella lista nera dall'Amministrazione di questo server. Di conseguenza, non potrai creare suggestion.",
+    "onBlacklist": "Sei stato/a messo/a nella lista nera dall'Amministrazione di questo server. Di conseguenza, non potrai creare suggestions.",
     "invalidChannel": "Per piacere, accertarsi che l'Owner di questo server abbia impostato il canale delle suggestion nel modo corretto.",
     "suggestionDescription": "**Descrizione:** %description%\n\n**Stato:** %status%\n**ID:** %id%",
-    "suggestionSent": "La tua suggestion in %guild_name% é stata creata con successo, la puoi trovare [quà](%message_url%)."
+    "suggestionSent": "La tua suggestion in %guild_name% é stata creata con successo, la puoi trovare [cliccando quà](%message_url%)."
   },
   "donate": {
-    "description": "Non sentirti obbligato a donare! Non è un requisito, ma ci aiuta a mantenere i nostri progetti in vita incluso suggestion.\n\nSe hai deciso di votare, contatta `jerskisnow#8214` nel caso tu voglia ricevere un premium rank, basato sulla cifra donata, nel server discord ufficiale CodedSnow! Quando avrai ricevuto il premium rank, otterrai anche alcuni perks extra e sarai ringraziato con grande riconoscenza!\n\nPoi trovare le informazioni aggiuntive inclusi i dettagli di pagamento [quà](%donate_link%)."
+    "description": "Non sentirti obbligato a donare! Non è un requisito, ma ci aiuta a mantenere i nostri progetti in vita incluso suggestion.\n\nSe hai deciso di votare, contatta `jerskisnow#8214` nel caso tu voglia ricevere un premium rank, basato sulla cifra donata, nel server discord ufficiale CodedSnow! Quando avrai ricevuto il premium rank, otterrai anche alcuni perks extra e sarai ringraziato con grande riconoscenza!\n\nPer informazioni aggiuntive inclusi i dettagli di pagamento [clicca quà](%donate_link%)."
   },
   "help": {
-    "description": "Tutti I comandi per gli utenti, Quelli per i membri dello Staff e l'/gli admin possono essere trovati al di sotto.",
+    "description": "Questi sono tutti i comandi per gli utenti. Quelli per i membri dello Staff e l'/gli admin possono essere trovati al di sotto.",
     "fields": [
       {
         "title": "Utente",
@@ -141,14 +141,14 @@
     ]
   },
   "invite": {
-    "description": "Se stai cercando di invitare Suggestions nel tuo server, [clicca quà](%bot_invite%). Se, invece, stai cercando il server di supporto per il bot o hai voglia di parlare con gli altri utenti di Suggestion, [clicca quà](%server_invite%)."
+    "description": "Se stai cercando di invitare Suggestions nel tuo server [clicca quà](%bot_invite%). Se, invece, stai cercando il server di supporto per il bot o hai voglia di parlare con gli altri utenti di Suggestion [clicca quà](%server_invite%)."
   },
   "vote": {
-    "description": "Votare per Suggestions farà apparire il bot più in alto nella lista dei discordbot, puoi votare [quà](%vote_link%)."
+    "description": "Votare per Suggestions farà apparire il bot più in alto nella classifica dei discordbots. Per votare [clicca quà](%vote_link%)."
   },
   "allowdm": {
       "invalidToggleOption": "Puoi scegliere soltanto tra `On` e `Off`.",
-      "allowDMUpdated": "Aggiornata la preferenza AllowDM. I DM sono ora trasformati in `%new_value%`."
+      "allowDMUpdated": "Preferenze di AllowDM aggiornate. I DM sono ora impostati su `%new_value%`."
   },
   "logs": {
     "blacklistLogs": {
