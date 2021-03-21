@@ -9,7 +9,7 @@ botCache.commands.set('suggest', {
     exec: async (message, commandData, args: string[]) => {
         await message.delete();
         if (args.length === 0) {
-            const msg = await sendPlainEmbed(message.channel, botCache.config.colors.red, commandData.language.suggest.helpDescription);
+            const msg = await sendPlainEmbed(message.channel, botCache.config.colors.red, commandData.language.suggest.helpDescription.replace('%prefix%', commandData.prefix));
             await msg.delete({timeout: 8000});
             return;
         }

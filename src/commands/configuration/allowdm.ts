@@ -29,6 +29,6 @@ botCache.commands.set('allowdm', {
             await setUserValue(message.author.id, 'receive_dm', value);
         }
 
-        await sendPlainEmbed(message.channel, botCache.config.colors.green, commandData.language.allowdm.allowDMUpdated);
+        await sendPlainEmbed(message.channel, botCache.config.colors.green, commandData.language.allowdm.allowDMUpdated.replace('%new_value%', value ? 'On' : 'Off'));
     }
 });
