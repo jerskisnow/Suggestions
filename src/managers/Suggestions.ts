@@ -56,8 +56,8 @@ export const handleSuggestionCreation = async (message: Message, language: Langu
 }
 
 export const approveSuggestion = async (message: Message, language: Language, suggestion: SuggestionData, reason?: string) => {
-    const channel = message.guild.channels.cache.get(suggestion.channel) as TextChannel;
-    if (!channel) {
+    const channel = await message.guild.channels.fetch(suggestion.channel) as TextChannel;
+    if (channel == null) {
         await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
         return;
     }
@@ -94,8 +94,8 @@ export const approveSuggestion = async (message: Message, language: Language, su
 }
 
 export const rejectSuggestion = async (message: Message, language: Language, suggestion: SuggestionData, reason?: string) => {
-    const channel = message.guild.channels.cache.get(suggestion.channel) as TextChannel;
-    if (!channel) {
+    const channel = await message.guild.channels.fetch(suggestion.channel) as TextChannel;
+    if (channel == null) {
         await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
         return;
     }
@@ -131,8 +131,8 @@ export const rejectSuggestion = async (message: Message, language: Language, sug
 }
 
 export const considerSuggestion = async (message: Message, language: Language, suggestion: SuggestionData, reason?: string) => {
-    const channel = message.guild.channels.cache.get(suggestion.channel) as TextChannel;
-    if (!channel) {
+    const channel = await message.guild.channels.fetch(suggestion.channel) as TextChannel;
+    if (channel == null) {
         await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
         return;
     }
@@ -164,7 +164,7 @@ export const considerSuggestion = async (message: Message, language: Language, s
 
 export const moveSuggestion = async (message: Message, language: Language, suggestion: SuggestionData, newChannel: MessageableChannel) => {
     const oldChannel = await message.guild.channels.fetch(suggestion.channel) as TextChannel;
-    if (!oldChannel) {
+    if (oldChannel == null) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.movesuggestion.invalidMessage)
         await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
         return;
@@ -193,8 +193,8 @@ export const moveSuggestion = async (message: Message, language: Language, sugge
 }
 
 export const reopenSuggestion = async (message: Message, language: Language, suggestion: SuggestionData) => {
-    const channel = message.guild.channels.cache.get(suggestion.channel) as TextChannel;
-    if (!channel) {
+    const channel = await message.guild.channels.fetch(suggestion.channel) as TextChannel;
+    if (channel == null) {
         await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
         return;
     }

@@ -48,8 +48,8 @@ export const handleReportCreation = async (message: Message, language: Language,
 }
 
 export const resolveReport = async (message: Message, language: Language, report: ReportData, reason?: string) => {
-    const channel = message.guild.channels.cache.get(report.channel) as TextChannel;
-    if (!channel) {
+    const channel = await message.guild.channels.fetch(report.channel) as TextChannel;
+    if (channel == null) {
         await PostgreSQL.runQuery('UPDATE reports SET status = $1::int WHERE id = $2::int', [ReportStatus.DELETED, report.id]);
         return;
     }
@@ -81,7 +81,7 @@ export const resolveReport = async (message: Message, language: Language, report
 
 export const moveReport = async (message: Message, language: Language, report: ReportData, newChannel: MessageableChannel) => {
     const oldChannel = await message.guild.channels.fetch(report.channel) as TextChannel;
-    if (!oldChannel) {
+    if (oldChannel == null) {
         await sendPlainEmbed(message.channel, botCache.config.colors.red, language.movereport.invalidMessage)
         await PostgreSQL.runQuery('UPDATE reports SET status = $1::int WHERE id = $2::int', [ReportStatus.DELETED, report.id]);
         return;
