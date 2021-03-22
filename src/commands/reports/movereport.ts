@@ -5,6 +5,7 @@ import { getReportData, moveReport, ReportStatus } from '../../managers/Reports'
 
 botCache.commands.set('movereport', {
     enabled: true,
+    aliases: ['moverep'],
     permission: Permission.STAFF,
     exec: async (message, commandData, args) => {
         if (args.length !== 2) {

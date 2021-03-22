@@ -5,6 +5,7 @@ import { getSuggestionData, moveSuggestion, SuggestionStatus } from '../../manag
 
 botCache.commands.set('movesuggestion', {
     enabled: true,
+    aliases: ['movesug'],
     permission: Permission.STAFF,
     exec: async (message, commandData, args) => {
         if (args.length !== 2) {

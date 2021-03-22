@@ -192,6 +192,44 @@ export const moveSuggestion = async (message: Message, language: Language, sugge
     await PostgreSQL.runQuery('UPDATE suggestions SET channel = $1::text, message = $2::text WHERE id = $3::int', [newChannel.id, newMsg.id, suggestion.id]);
 }
 
+export const reopenSuggestion = async (message: Message, language: Language, suggestion: SuggestionData) => {
+    const channel = message.guild.channels.cache.get(suggestion.channel) as TextChannel;
+    if (!channel) {
+        await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
+        return;
+    }
+
+    let msg;
+    try {
+        msg = await channel.messages.fetch(suggestion.message);
+    } catch (ex) {
+        if (ex.code !== Constants.APIErrors.UNKNOWN_MESSAGE) {
+            console.error(ex);
+        }
+    }
+    if (msg == null || msg.deleted) {
+        await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
+        return;
+    }
+
+    if (await getConfigValue(message.guild.id, 'delete_approved') as boolean) {
+        await msg.delete();
+        await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.DELETED, suggestion.id]);
+        return;
+    }
+
+    const embed = msg.embeds[0];
+    embed.description = language.suggest.suggestionDescription
+        .replace('%description%', suggestion.context)
+        .replace('%status%', language.additional.openStatus)
+        .replace('%id%', String(suggestion.id));
+    embed.color = parseInt(botCache.config.colors.blue.slice(1), 16);
+
+    await msg.edit({embed: embed}).catch(console.error);
+
+    await PostgreSQL.runQuery('UPDATE suggestions SET status = $1::int WHERE id = $2::int', [SuggestionStatus.OPEN, suggestion.id]);
+}
+
 export const handleSuggestionList = async (message: Message, language: Language) => {
     let result = await PostgreSQL.runQuery('SELECT id, context, author, guild, channel, message FROM suggestions WHERE guild = $1::text AND status = $2::int ORDER BY id DESC', [message.guild.id, SuggestionStatus.OPEN]);
 

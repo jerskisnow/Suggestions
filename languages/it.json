@@ -86,13 +86,19 @@
   },
   "approve": {
     "helpDescription": "**Per piacere usa:** %prefix%approve <ID/MessageID> [Motivo]",
-    "invalidSuggestion": "Non posso approvare la suggestion perché non esiste",
+    "invalidSuggestion": "Non posso approvare la suggestion perché non esiste.",
     "statusUpdated": "Status della suggestion aggiornato con successo."
   },
   "consider": {
     "helpDescription": "**Per piacere usa:** %prefix%consider <ID/MessageID> [Motivo]",
-    "invalidSuggestion": "Non posso considerare quella suggestion perché non esiste",
+    "invalidSuggestion": "Non posso considerare quella suggestion perché non esiste.",
     "statusUpdated": "Stato della suggestion aggiornato con successo."
+  },
+  "reopen": {
+    "helpDescription": "**Per piacere usa:** %prefix%reopen <ID/MessageID>",
+    "invalidSuggestion": "Non posso approvare la suggestion perché non esiste.",
+    "alreadyOpen": "That suggestion is already open.",
+    "statusUpdated": "Status della suggestion aggiornato con successo."
   },
   "list": {
     "helpDescription": "**Per piacere usa:** %prefix%list [Suggestions/Reports]",
@@ -124,21 +130,43 @@
     "description": "Non sentirti obbligato a donare! Non è un requisito, ma ci aiuta a mantenere i nostri progetti in vita incluso suggestion.\n\nSe hai deciso di votare, contatta `jerskisnow#8214` nel caso tu voglia ricevere un premium rank, basato sulla cifra donata, nel server discord ufficiale CodedSnow! Quando avrai ricevuto il premium rank, otterrai anche alcuni perks extra e sarai ringraziato con grande riconoscenza!\n\nPer informazioni aggiuntive inclusi i dettagli di pagamento [clicca quà](%donate_link%)."
   },
   "help": {
-    "description": "Questi sono tutti i comandi per gli utenti. Quelli per i membri dello Staff e l'/gli admin possono essere trovati al di sotto.",
-    "fields": [
-      {
-        "title": "Utente",
-        "description": "%prefix%suggest <Descrizione>\n%prefix%report <Descrizione>\n%prefix%list [Suggestions]\n%prefix%donate\n%prefix%invite\n%prefix%vote\n%prefix%allowdm <On/Off>\n%prefix%help"
-      },
-      {
-        "title": "Staff",
-        "description": "%prefix%approve <SuggestionID/MessageID> [Motivo]\n%prefix%reject <SuggestionID/MessageID> [Motivo]\n%prefix%resolve <Report/MessageID> [Motivo]\n%prefix%list [Suggestions/Reports]\n%prefix%movesuggestion <SuggestionID/MessageID> <#canale>\n%prefix%movereport <ReportID/MessageID> <#canale>"
-      },
-      {
-        "title": "Admin",
-        "description": "%prefix%config <Opzione> <Valore> (Per maggiori informazioni, usa solo il comando senza arguments)\n%prefix%blacklist <Opzione> [UserValue] <ValoreBlacklist> (Per maggiori informazioni, usa solo il comando senza arguments)"
-      }
-    ]
+    "title": "Commands",
+    "description": "Use %prefix%help <Command> for a detailed explanation.",
+    "fields": {
+        "user": {
+            "title": "User",
+            "descriptions": {
+                "suggest": "Create a suggestion for this server.",
+                "report": "Create a report related to this server.",
+                "list": "Obtain the list of all the open suggestions.",
+                "donate": "Obtain information about donating to our bot.",
+                "invite": "Get the invite link of the bot.",
+                "vote": "Get the vote link of the bot.",
+                "allowdm": "Update your preferences regarding DM messages.",
+                "help": "Shows this particular help message."
+            }
+        },
+        "staff": {
+            "title": "Staff",
+            "descriptions": {
+                "approve": "Approve a community made suggestion for your server.",
+                "reject": "Reject a community made suggestion for your server.",
+                "consider": "Consider a community made suggestion for your server.",
+                "reopen": "Reopen a community made suggestion for your server.",
+                "resolve": "Resolve a report for your server.",
+                "list": "Obtain a list of all open suggestions or reports.",
+                "movesuggestion": "Move a suggestion message to another channel.",
+                "movereport": "Move a report message to another channel."
+            }
+        },
+        "admin": {
+            "title": "Admin",
+            "descriptions": {
+                "config": "Modify the configuration for your server.",
+                "blacklist": "Prevent someone from creating suggestions and/or reports."
+            }
+        }
+    }
   },
   "invite": {
     "description": "Se stai cercando di invitare Suggestions nel tuo server [clicca quà](%bot_invite%). Se, invece, stai cercando il server di supporto per il bot o hai voglia di parlare con gli altri utenti di Suggestion [clicca quà](%server_invite%)."
@@ -182,6 +210,7 @@
     "suggestionApproved": "`%user_tag%` Cambiato lo status della suggestion `%suggestion_id%` ad Approved.",
     "suggestionUnderConsideration": "`%user_tag%` Cambiato lo status della suggestion `%suggestion_id%` a In considerazione.",
     "suggestionRejected": "`%user_tag%` Cambiato lo stato della suggestion `%suggestion_id%` a Rejected.",
+    "suggestionReopened": "`%user_tag%` Cambiato lo status della suggestion `%suggestion_id%` ad Open.",
     "suggestionCreated": "`%user_tag%` È stata creata una nuova suggestion, la puoi trovare [quà](%message_url%).",
     "suggestionMoved": "`%user_tag%` La suggestion `%suggestion_id%` è stata spostata nel canale %new_channel%.",
     "autoApproved": "Lo stato della suggestion `%suggestion_id%` è stato automaticamente aggiornato ad Approved.",
@@ -195,6 +224,7 @@
     "considerstatus": "In considerazione",
     "approvedStatus": "Approved",
     "rejectedStatus": "Rejected",
-    "resolvedStatus": "Resolved"
+    "resolvedStatus": "Resolved",
+    "underConstruction": "This feature is under construction and may not be used, yet."
   }
 }

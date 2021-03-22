@@ -94,6 +94,12 @@
     "invalidSuggestion": "Ik kan die suggestie niet overwegen omdat het niet bestaat.",
     "statusUpdated": "Met succes de status van die suggestie bijgewerkt."
   },
+  "reopen": {
+    "helpDescription": "**Gebruik:** %prefix%reopen <ID/MessageID>",
+    "invalidSuggestion": "Ik kan die suggestie niet goedkeuren omdat hij niet bestaat.",
+    "alreadyOpen": "De status van die suggestie staat al op open.",
+    "statusUpdated": "Met succes de status van die suggestie bijgewerkt."
+  },
   "list": {
     "helpDescription": "**Gebruik:** %prefix%list [Suggestions/Reports]",
     "noSuggestionsFound": "Er zijn `0` open suggesties.",
@@ -124,21 +130,43 @@
     "description": "Voel je niet verplicht om te doneren! Het is geen verplichting, maar het helpt ons om onze projecten te onderhouden, inclusief Suggesties.\nAls je hebt besloten om te doneren neem dan contact op met `jerskisnow#8214` als je een premium rank wilt ontvangen, gebaseerd op het bedrag dat je hebt gedoneerd, op de officiële CodedSnow discord server! Als je een premium rank hebt ontvangen, ontvang je een aantal extra perks en zul je dankbaar worden bedankt! Je kunt meer informatie inclusief betalingsgegevens [hier](%donate_link%) vinden."
   },
   "help": {
-    "description": "Alle commando's voor gebruikers, personeelsleden en admins vind je hieronder.",
-    "fields": [
-      {
-        "title": "Gebruker",
-        "description": "%prefix%suggest <Beschrijving>\n%prefix%report <Beschrijving>\n%prefix%list [Suggestions]\n%prefix%donate\n%prefix%invite\n%prefix%vote\n%prefix%allowdm <On/Off>\n%prefix%help"
-      },
-      {
-        "title": "Staff",
-        "description": "%prefix%approve <SuggestionID/MessageID> [Reden]\n%prefix%reject <SuggestionID/MessageID> [Reden]\n%prefix%resolve <Report/MessageID> [Reden]\n%prefix%list [Suggestions/Reports]\n%prefix%movesuggestion <SuggestionID/MessageID> <#kanaal>\n%prefix%movereport <ReportID/MessageID> <#kanaal>"
-      },
-      {
-        "title": "Admin",
-        "description": "%prefix%config <Optie> <Waarde> (Gebruik zonder argumenten voor meer informatie)\n%prefix%blacklist <Optie> [GebruikerWaarde] <BlacklistWaarde> (Gebruik zonder argumenten voor meer informatien)"
-      }
-    ]
+    "title": "Commands",
+    "description": "Use %prefix%help <Command> for a detailed explanation.",
+    "fields": {
+        "user": {
+            "title": "User",
+            "descriptions": {
+                "suggest": "Create a suggestion for this server.",
+                "report": "Create a report related to this server.",
+                "list": "Obtain the list of all the open suggestions.",
+                "donate": "Obtain information about donating to our bot.",
+                "invite": "Get the invite link of the bot.",
+                "vote": "Get the vote link of the bot.",
+                "allowdm": "Update your preferences regarding DM messages.",
+                "help": "Shows this particular help message."
+            }
+        },
+        "staff": {
+            "title": "Staff",
+            "descriptions": {
+                "approve": "Approve a community made suggestion for your server.",
+                "reject": "Reject a community made suggestion for your server.",
+                "consider": "Consider a community made suggestion for your server.",
+                "reopen": "Reopen a community made suggestion for your server.",
+                "resolve": "Resolve a report for your server.",
+                "list": "Obtain a list of all open suggestions or reports.",
+                "movesuggestion": "Move a suggestion message to another channel.",
+                "movereport": "Move a report message to another channel."
+            }
+        },
+        "admin": {
+            "title": "Admin",
+            "descriptions": {
+                "config": "Modify the configuration for your server.",
+                "blacklist": "Prevent someone from creating suggestions and/or reports."
+            }
+        }
+    }
   },
   "invite": {
     "description": "Als u suggesties wilt uitnodigen voor uw eigen server, [klik hier](%bot_invite%). Als u op zoek bent naar de ondersteuningsserver of als u wilt rondhangen met andere gebruikers, [klik hier](%server_invite%)."
@@ -182,6 +210,7 @@
     "suggestionApproved": "`%user_tag%` wijzigde de status van suggestie `%suggestion_id%` in goedgekeurd.",
     "suggestionUnderConsideration": "`%user_tag%` wijzigde de status van suggestie `%suggestion_id%` naar in overweging.",
     "suggestionRejected": "`%user_tag%` wijzigde de status van suggestie `%suggestion_id%` in afgewezen.",
+    "suggestionReopened": "`%user_tag%` wijzigde de status van suggestie `%suggestion_id%` in open.",
     "suggestionCreated": "`%user_tag%` heeft een nieuwe suggestie aangemaakt, u kunt hem [hier](%message_url%) vinden.",
     "suggestionMoved": "`%user_tag%` verplaatste suggestie `%suggestion_id%` naar %new_channel%.",
     "autoApproved": "De status van suggestiton `%suggestion_id%` is automatisch bijgewerkt naar goedgekeurd.",
@@ -195,6 +224,7 @@
     "considerstatus": "In overweging",
     "approvedStatus": "Goedgekeurd",
     "rejectedStatus": "Afgewezen",
-    "resolvedStatus": "Opgelost"
+    "resolvedStatus": "Opgelost",
+    "underConstruction": "Deze functie is in ontwikkeling en kan nog niet worden gebruikt."
   }
 }
