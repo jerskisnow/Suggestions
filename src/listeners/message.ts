@@ -52,7 +52,7 @@ export default async (client: Client, message: Message): Promise<void> => {
         command.exec(message, {prefix: cache.prefix, language: language}, args);
         return;
     }
-    if (message.mentions.has(client.user)) {
+    if (message.content.startsWith(`<@!${client.user.id}>`)) {
         const role = cache.staff_role == null ? null : await message.guild.roles.fetch(cache.staff_role);
         const guilds_result = await client.shard.fetchClientValues('guilds.cache.size');
         const guildCount = guilds_result.reduce((prev, count) => prev + count, 0);
