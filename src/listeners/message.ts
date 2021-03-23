@@ -79,7 +79,7 @@ export default async (client: Client, message: Message): Promise<void> => {
 • Uptime      :: ${uptime}
 • Library     :: discord.js
 • NodeJS      :: v${process.versions.node}
-\`\`\``);
+\`\`\``).catch(console.error);
     }
 
 }

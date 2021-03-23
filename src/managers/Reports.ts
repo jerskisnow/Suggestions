@@ -101,9 +101,12 @@ export const moveReport = async (message: Message, language: Language, report: R
     }
 
     await msg.delete();
-    const newMsg = await newChannel.send({
-        embed: msg.embeds[0]
-    });
+    let newMsg = null;
+    try {
+        newMsg = await newChannel.send({ embed: msg.embeds[0] })
+    } catch (ex) {
+        console.error(ex);
+    }
 
     await PostgreSQL.runQuery('UPDATE reports SET channel = $1::text, message = $2::text WHERE id = $3::int', [newChannel.id, newMsg.id, report.id]);
 }
@@ -133,7 +136,7 @@ export const handleReportList = async (message: Message, language: Language) => 
         if (i === 7) break;
     }
 
-    await message.channel.send({embed: embed});
+    await message.channel.send({embed: embed}).catch(console.error);
 }
 
 export const getReportData = async (resolvable: string): Promise<ReportData> => {

@@ -24,7 +24,7 @@ export default async (client: Client): Promise<void> => {
                 headers: {'Content-Type': 'application/json', 'Authorization': botCache.config.apis.dbggToken}
             });
         } catch (ex) {
-            console.log('Couldn\'t send a request to TopGG.');
+            Logger.log('Couldn\'t send a request to TopGG.', LogType.WARNING);
         }
     }, 1800000);
 
@@ -39,7 +39,7 @@ export default async (client: Client): Promise<void> => {
                     headers: {'Content-Type': 'application/json', 'Authorization': botCache.config.apis.bfdToken}
                 });
             } catch (ex) {
-                console.log('Couldn\'t send a request to BotsForDiscord.');
+                Logger.log('Couldn\'t send a request to BotsForDiscord.', LogType.WARNING);
             }
         }, 1800000);
     }

@@ -55,6 +55,6 @@ const sendHelp = async (message: Message, commandData: { prefix: string, languag
     for (let i = 0; i < helpFields.length; i++) {
         helpEmbed.addField(helpFields[i].title, helpFields[i].description.replace(/%prefix%/g, commandData.prefix), false);
     }
-    await message.channel.send({embed: helpEmbed});
+    await message.channel.send({embed: helpEmbed}).catch(console.error);
     return;
 }

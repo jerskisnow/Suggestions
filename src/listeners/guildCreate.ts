@@ -22,6 +22,6 @@ export default async (client: Client, guild: Guild): Promise<void> => {
         )
         .addField("OwnerInfo", `**Name:** ${guildOwner.user.tag}\n**ID:** ${guild.id}`, false)
 
-    await client.channels.forge(botCache.config.channels.devLogs).send({embed: embed});
+    await client.channels.forge(botCache.config.channels.devLogs).send({embed: embed}).catch(console.error);
 
 }

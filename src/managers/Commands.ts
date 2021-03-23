@@ -107,14 +107,20 @@ export const sendPrivateMessage = async (user: User | GuildMember, embed: Messag
         msg = await user.send({embed: embed});
     } catch (ex) {
         if (ex.code !== Constants.APIErrors.CANNOT_MESSAGE_USER) {
-            console.error('An error occured', ex);
+            console.error(ex);
         }
     }
     return msg;
 }
 
 export const sendPlainEmbed = async (channel: MessageableChannel | DMChannel, color: string, description: string): Promise<Message> => {
-    return await channel.send({embed: new MessageEmbed().setColor(color).setDescription(description)});
+    let msg = null;
+    try {
+        msg = await channel.send({embed: new MessageEmbed().setColor(color).setDescription(description)});
+    } catch (ex) {
+        console.error(ex);
+    }
+    return msg;
 }
 
 export interface ICommand {

@@ -35,7 +35,7 @@ ${commandData.prefix}moverep   :: ${commandData.language.help.fields.staff.descr
 = ${commandData.language.help.fields.admin.title} =
 ${commandData.prefix}config    :: ${commandData.language.help.fields.admin.descriptions.config}
 ${commandData.prefix}blist     :: ${commandData.language.help.fields.admin.descriptions.blacklist}
-\`\`\``);
+\`\`\``).catch(console.error);
         } else {
             await sendPlainEmbed(message.channel, botCache.config.colors.blue, commandData.language.additional.underConstruction);
         }

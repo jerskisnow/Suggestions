@@ -5,6 +5,7 @@ import PostgreSQL from '../structures/PostgreSQL';
 import { MessageableChannel, sendPlainEmbed, sendPrivateMessage } from './Commands';
 import botCache from '../structures/BotCache';
 import { log } from '../structures/Logging';
+import Logger, { LogType } from '../structures/CliLogger';
 
 export const handleSuggestionCreation = async (message: Message, language: Language, description: string) => {
     const guildData = await getConfigValues(message.guild.id, ['suggestion_blacklist', 'suggestion_channel', 'approve_emoji', 'reject_emoji'], false);
@@ -40,11 +41,11 @@ export const handleSuggestionCreation = async (message: Message, language: Langu
     });
 
     await sMessage.react(guildData.approve_emoji == null ? botCache.config.emojis.approve : guildData.approve_emoji).catch(() => {
-        console.log('Couldn\'t react to the Suggestion message with the approve emoji, emoji debug: ' + guildData.approve_emoji)
+        Logger.log('Couldn\'t react to the Suggestion message with the approve emoji, emoji debug: ' + guildData.approve_emoji, LogType.WARNING)
     });
 
     await sMessage.react(guildData.reject_emoji == null ? botCache.config.emojis.reject : guildData.reject_emoji).catch(() => {
-        console.log('Couldn\'t react to the Suggestion message with the approve emoji, emoji debug: ' + guildData.reject_emoji)
+        Logger.log('Couldn\'t react to the Suggestion message with the reject emoji, emoji debug: ' + guildData.approve_emoji, LogType.WARNING)
     });
 
     await PostgreSQL.runQuery('INSERT INTO suggestions (context, author, guild, channel, message, status) VALUES ($1::text, $2::text, $3::text, $4::text, $5::text, $6::int)', [description, message.author.id, message.guild.id, channel.id, sMessage.id, SuggestionStatus.OPEN]);
@@ -185,9 +186,12 @@ export const moveSuggestion = async (message: Message, language: Language, sugge
     }
 
     await msg.delete();
-    const newMsg = await newChannel.send({
-        embed: msg.embeds[0]
-    });
+    let newMsg = null;
+    try {
+        newMsg = await newChannel.send({ embed: msg.embeds[0] })
+    } catch (ex) {
+        console.error(ex);
+    }
 
     await PostgreSQL.runQuery('UPDATE suggestions SET channel = $1::text, message = $2::text WHERE id = $3::int', [newChannel.id, newMsg.id, suggestion.id]);
 }
@@ -255,7 +259,7 @@ export const handleSuggestionList = async (message: Message, language: Language)
         if (i === 7) break;
     }
 
-    await message.channel.send({embed: embed});
+    await message.channel.send({embed: embed}).catch(console.error);
 }
 
 export const getSuggestionData = async (resolvable: string): Promise<SuggestionData> => {
