@@ -1,4 +1,0 @@
-CREATE TABLE users (
-    id TEXT PRIMARY KEY NOT NULL,
-    receive_dm BOOLEAN NOT NULL
-);
