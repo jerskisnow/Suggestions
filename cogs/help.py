@@ -8,7 +8,7 @@ class Help(commands.Cog):
 
     @cog_ext.cog_slash(name="help", description="Obtain information about the commands.",
                        guild_ids=[535089248785924107])
-    async def _suggest(self, ctx: SlashContext):
+    async def help(self, ctx: SlashContext):
         await ctx.send(content="```asciidoc\n== Commands ==\n[Use /<command> for a more detailed explanation of that particular command.]"
                                "\n\n= User ="
                                "\n/suggest    :: Create a suggestion for this server."

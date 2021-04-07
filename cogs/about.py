@@ -9,7 +9,7 @@ class About(commands.Cog):
 
     @cog_ext.cog_slash(name="about", description="Obtain general information about the bot.",
                        guild_ids=[535089248785924107])
-    async def _suggest(self, ctx: SlashContext):
+    async def about(self, ctx: SlashContext):
         embed = discord.Embed(description="", color=0x55aaee)
         embed.add_field(name="Project - Suggestions",
                         value="Suggestions is a discord bot, created by CodedSnow, that allows for perfect collaboration between members and staff members. "

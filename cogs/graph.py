@@ -5,6 +5,7 @@ import discord
 import datetime
 import pandas as pd
 import numpy as np
+import os
 
 
 class Graph(commands.Cog):
@@ -13,7 +14,7 @@ class Graph(commands.Cog):
 
     @cog_ext.cog_slash(name="graph", description="Obtain a graph related to the amount of suggestions in this server.",
                        guild_ids=[535089248785924107])
-    async def _suggest(self, ctx: SlashContext):
+    async def graph(self, ctx: SlashContext):
         msg = await ctx.send('Loading graph...')
 
         date_list = [datetime.datetime.now() - datetime.timedelta(days=x) for x in range(0, 10)]
@@ -67,6 +68,8 @@ class Graph(commands.Cog):
         embed.set_image(url="attachment://{guild_id}.png".format(guild_id=ctx.guild_id))
         await ctx.channel.send(file=file, embed=embed)
         await msg.edit(content="Graph loaded.")
+
+        os.remove("graphs/{guild_id}.png".format(guild_id=ctx.guild_id))
 
 
 def setup(client):

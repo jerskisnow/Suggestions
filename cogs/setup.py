@@ -10,7 +10,7 @@ class Setup(commands.Cog):
 
     @cog_ext.cog_slash(name="setup", description="Set Suggestions up by answering a few simple questions.",
                        guild_ids=[535089248785924107])
-    async def _suggest(self, ctx: SlashContext):
+    async def setup(self, ctx: SlashContext):
         # little intro part
         await ctx.send(embed=discord.Embed(description="Hi there, you just started the setup phase of the bot. "
                                                        "This will ask you a few question about how the bot should behave in your server. "

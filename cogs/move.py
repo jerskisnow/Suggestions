@@ -9,9 +9,9 @@ class Move(commands.Cog):
 
     @cog_ext.cog_slash(name="Move", description="Move a suggestion or report.", options=[
         create_option(option_type=3, name="id", description="The ID of the suggestion or report.",
-                      required=False)
+                      required=True)
     ], guild_ids=[535089248785924107])
-    async def _report(self, ctx: SlashContext):
+    async def move(self, ctx: SlashContext):
         await ctx.send(content="This command is coming soon!")
 
 

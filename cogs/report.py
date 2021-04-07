@@ -9,9 +9,9 @@ class Report(commands.Cog):
 
     @cog_ext.cog_slash(name="Report", description="Create a report for this server.", options=[
         create_option(option_type=3, name="description", description="A detailed description of your report.",
-                      required=False)
+                      required=True)
     ], guild_ids=[535089248785924107])
-    async def _report(self, ctx: SlashContext):
+    async def report(self, ctx: SlashContext):
         await ctx.send(content="This command is coming soon!")
 
 
