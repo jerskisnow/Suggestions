@@ -7,17 +7,22 @@ class Config(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @cog_ext.cog_slash(name="Config", description="Modify the bot's configuration for your server.",
-                       guild_ids=[535089248785924107])
-    async def config(self, ctx: SlashContext):
+    @cog_ext.cog_subcommand(base="config", name="sug-channel", description="Configure the suggestion channel.",
+                            options=[create_option(option_type=3, name="channel", description="The channel where suggestions should appear.",
+                                                   required=True)], guild_ids=[535089248785924107])
+    async def sugchannel_config(self, ctx: SlashContext, channel):
         await ctx.send(content="This command is coming soon!")
 
-    @cog_ext.cog_subcommand(base="Config", name="Suggestion Channel", description="Configure the suggestion channel.",
-                            options=[
-                                create_option(option_type=3, name="Channel",
-                                              description="The channel where suggestions should appear.", required=True)
-                            ], guild_ids=[535089248785924107])
-    async def sugchannel_config(self, ctx: SlashContext):
+    @cog_ext.cog_subcommand(base="config", name="rep-channel", description="Configure the report channel.",
+                            options=[create_option(option_type=3, name="channel", description="The channel where reports should appear.",
+                                                   required=True)], guild_ids=[535089248785924107])
+    async def repchannel_config(self, ctx: SlashContext, channel):
+        await ctx.send(content="This command is coming soon!")
+
+    @cog_ext.cog_subcommand(base="config", name="log-channel", description="Configure the log channel.",
+                            options=[create_option(option_type=3, name="channel", description="The channel where logs should appear.",
+                                                   required=True)], guild_ids=[535089248785924107])
+    async def logchannel_config(self, ctx: SlashContext, channel):
         await ctx.send(content="This command is coming soon!")
 
 

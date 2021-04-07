@@ -24,8 +24,9 @@ class Report:
         :return: The report associated with the given ID
         :rtype: Report
         """
-        # TODO: ...
-        return Report('131')
+        if Report.exists(report_id) is None:
+            return None
+        return Report(report_id)
 
     @staticmethod
     def get_by_message_id(message_id):
@@ -38,14 +39,15 @@ class Report:
         # TODO: ...
         return Report('awdawdwad2ed2131')
 
-    def exists(self):
+    @classmethod
+    def exists(cls, report_id):
         """
         :return: True if report exists, False otherwise
         :rtype: bool
         """
         try:
             with getcursor() as cur:
-                cur.execute('SELECT id FROM reports WHERE id = %', self.report_id)
+                cur.execute('SELECT id FROM reports WHERE id = %', report_id)
                 return cur.fetchone() is not None
         except Exception as e:
             print("error in executing with exception: ", e)

@@ -94,3 +94,9 @@ class Guild:
                     "suggestion_channel": guild_data.suggestion_channel,
                     "report_channel": guild_data.report_channel
                 })
+
+    async def add_to_blacklist(self, user_id, blacklist):
+        print('todo')
+
+    async def remove_from_blacklist(self, user_id, blacklist):
+        print('todo')

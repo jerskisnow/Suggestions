@@ -24,8 +24,9 @@ class Suggestion:
         :return: The suggestion associated with the given ID
         :rtype: Suggestion
         """
-        # TODO: ...
-        return Suggestion('131')
+        if Suggestion.exists(suggestion_id) is None:
+            return None
+        return Suggestion(suggestion_id)
 
     @staticmethod
     def get_by_message_id(message_id):
@@ -38,14 +39,15 @@ class Suggestion:
         # TODO: ...
         return Suggestion('awdawdwad2ed2131')
 
-    def exists(self):
+    @classmethod
+    def exists(cls, suggestion_id):
         """
         :return: True if suggestion exists, False otherwise
         :rtype: bool
         """
         try:
             with getcursor() as cur:
-                cur.execute('SELECT id FROM suggestions WHERE id = %', self.suggestion_id)
+                cur.execute('SELECT id FROM suggestions WHERE id = %', suggestion_id)
                 return cur.fetchone() is not None
         except Exception as e:
             print("error in executing with exception: ", e)
