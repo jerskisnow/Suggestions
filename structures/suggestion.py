@@ -4,6 +4,7 @@ import secrets
 import string
 
 from structures.postgresql import getcursor
+from datetime import datetime
 
 
 class Suggestion:
@@ -72,8 +73,8 @@ class Suggestion:
 
         try:
             with getcursor() as cur:
-                cur.execute("INSERT INTO suggestions (id, message, guild, channel, author, context, status) "
-                            "VALUES (%, %, %, %, %, %, %)", (suggestion_id, msg.id, guild_id, context, SuggestionStatus.OPEN))
+                cur.execute("INSERT INTO suggestions (id, message, guild, channel, author, context, status, creation_date) "
+                            "VALUES (%, %, %, %, %, %, %, %)", (suggestion_id, msg.id, guild_id, context, SuggestionStatus.OPEN, datetime.now()))
         except Exception as e:
             print("error in executing with exception: ", e)
 

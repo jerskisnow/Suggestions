@@ -4,6 +4,7 @@ import secrets
 import string
 
 from structures.postgresql import getcursor
+from datetime import datetime
 
 
 class Report:
@@ -72,8 +73,8 @@ class Report:
 
         try:
             with getcursor() as cur:
-                cur.execute("INSERT INTO reports (id, message, guild, channel, author, context, status) "
-                            "VALUES (%, %, %, %, %, %, %)", (report_id, msg.id, guild_id, context, ReportStatus.OPEN))
+                cur.execute("INSERT INTO reports (id, message, guild, channel, author, context, status, creation_date) "
+                            "VALUES (%, %, %, %, %, %, %, %)", (report_id, msg.id, guild_id, context, ReportStatus.OPEN, datetime.now()))
         except Exception as e:
             print("error in executing with exception: ", e)
 

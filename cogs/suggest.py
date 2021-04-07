@@ -12,7 +12,6 @@ class Suggest(commands.Cog):
                       required=False)
     ], guild_ids=[535089248785924107])
     async def _suggest(self, ctx: SlashContext):
-        ctx.author.ava
         await ctx.send(content="This command is coming soon!")
 
 

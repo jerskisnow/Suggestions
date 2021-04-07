@@ -5,5 +5,6 @@ CREATE TABLE suggestions (
     guild BIGINT NOT NULL,
     channel BIGINT NOT NULL,
     message BIGINT NOT NULL,
-    status INT NOT NULL
+    status INT NOT NULL,
+    creation_date TIMESTAMP
 );

@@ -5,5 +5,6 @@ CREATE TABLE reports (
     guild BIGINT NOT NULL,
     channel BIGINT NULL,
     message BIGINT NOT NULL,
-    status INT NOT NULL
+    status INT NOT NULL,
+    creation_date TIMESTAMP
 );
