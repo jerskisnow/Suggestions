@@ -1,5 +1,5 @@
-import cache
-from postgresql import getcursor
+from structures.cache import cache
+from structures.postgresql import getcursor
 
 
 class Guild:
@@ -9,7 +9,7 @@ class Guild:
         """
         self.guild_id = guild_id
 
-    def get_setting(self, setting):
+    async def get_setting(self, setting):
         """
         :param setting: The setting of the guild
         :type setting: str
@@ -45,7 +45,7 @@ class Guild:
                 # might not be correct so try this out
                 return guild_data[setting]
 
-    def set_setting(self, setting, value):
+    async def set_setting(self, setting, value):
         """
         :param setting: The setting of the guild
         :type setting: str
