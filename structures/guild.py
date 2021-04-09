@@ -13,7 +13,7 @@ class Guild:
         """
         :param setting: The setting of the guild
         :type setting: str
-        :return: The value of the given setting
+        :return: The value of the given setting or None when setting is not set
         """
         if cache.exists_in_cache(self.guild_id):
             return cache.get_from_cache(self.guild_id)[setting]
@@ -25,24 +25,20 @@ class Guild:
             except Exception as e:
                 print("error in executing with exception: ", e)
             if guild_data is None:
-                new_data = {"staff_role": None, "suggestion_channel": None, "report_channel": None}
                 try:
                     with getcursor() as cur:
-                        cur.execute(
-                            'INSERT INTO guilds (id, staff_role, suggestion_channel, report_channel) VALUES (%, %, %, %)',
-                            (
-                                self.guild_id, None, None, None
-                            )
-                        )
+                        cur.execute('INSERT INTO guilds (id) VALUES (%)', self.guild_id)
                 except Exception as e:
                     print("error in executing with exception: ", e)
-                cache.set_in_cache(self.guild_id, new_data)
-                return new_data[setting]
+                return None
             else:
-                cache.set_in_cache(self.guild_id, {"staff_role": guild_data.staff_role,
-                                                   "suggestion_channel": guild_data.suggestion_channel,
-                                                   "report_channel": guild_data.report_channel})
-                # might not be correct so try this out
+                data = {}
+                for s in guild_data:
+                    data[s] = guild_data[s]
+                # Cache all data we could fetch to reduce pressure
+                cache.set_in_cache(self.guild_id, data)
+
+                # return the value that we actually needed
                 return guild_data[setting]
 
     async def set_setting(self, setting, value):
@@ -69,31 +65,27 @@ class Guild:
             except Exception as e:
                 print("error in executing with exception: ", e)
             if guild_data is None:
-                new_data = {"staff_role": None, "suggestion_channel": None, "report_channel": None, setting: value}
                 try:
                     with getcursor() as cur:
-                        cur.execute(
-                            'INSERT INTO guilds (id, staff_role, suggestion_channel, report_channel) VALUES (%, %, %, %)',
-                            (
-                                self.guild_id, new_data["staff_role"], new_data["suggestion_channel"],
-                                new_data["report_channel"]
-                            )
-                        )
+                        cur.execute('INSERT INTO guilds (id, {table_name}) VALUES (%, %)'.format(table_name=setting),
+                                    (self.guild_id, value))
                 except Exception as e:
                     print("error in executing with exception: ", e)
-                cache.set_in_cache(self.guild_id, new_data)
+                # No actual data exists so just add the value we set in the cache
+                cache.set_in_cache(self.guild_id, {setting: value})
             else:
                 try:
                     with getcursor() as cur:
+                        # Update the value in the database
                         cur.execute('UPDATE guilds SET {table_name} = % WHERE id = %'.format(table_name=setting),
                                     (value, self.guild_id))
                 except Exception as e:
                     print("error in executing with exception: ", e)
-                cache.set_in_cache(self.guild_id, {
-                    "staff_role": guild_data.staff_role,
-                    "suggestion_channel": guild_data.suggestion_channel,
-                    "report_channel": guild_data.report_channel
-                })
+                data = {}
+                for s in guild_data:
+                    data[s] = guild_data[s]
+                # Cache all data we could fetch
+                cache.set_in_cache(self.guild_id, data)
 
     async def add_to_blacklist(self, user_id, blacklist):
         print('todo')

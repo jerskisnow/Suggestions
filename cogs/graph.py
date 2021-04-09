@@ -17,6 +17,7 @@ class Graph(commands.Cog):
     async def graph(self, ctx: SlashContext):
         msg = await ctx.send('Loading graph...')
 
+        # TODO: Makes sure this uses real data
         date_list = [datetime.datetime.now() - datetime.timedelta(days=x) for x in range(0, 10)]
         score_list = list(np.random.randint(low=1, high=25, size=10))
 
