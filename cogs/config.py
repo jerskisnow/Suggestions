@@ -41,6 +41,15 @@ class Config(commands.Cog):
     async def ticketmessage_config(self, ctx: SlashContext, message_id):
         await ctx.send(content="This command is coming soon!")
 
+    @cog_ext.cog_subcommand(base="config", name="ticket-category",
+                            description="Configure the category where tickets should appear. (Admin)",
+                            options=[create_option(option_type=3, name="category-id",
+                                                   description="The ID of a category where ticket-channels should be created.",
+                                                   required=True)], guild_ids=allowed_guilds)
+    @commands.has_permissions(administrator=True)
+    async def ticketcategory_config(self, ctx: SlashContext, message_id):
+        await ctx.send(content="This command is coming soon!")
+
     @cog_ext.cog_subcommand(base="config", name="approve-emoji",
                             description="Configure the approve emoticon that should be used. (Admin)",
                             options=[create_option(option_type=3, name="emoji",
@@ -78,6 +87,7 @@ class Config(commands.Cog):
     @sugchannel_config.error
     @repchannel_config.error
     @logchannel_config.error
+    @ticketmessage_config.error
     @ticketmessage_config.error
     @approvemoji_config.error
     @rejectmoji_config.error
