@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
+from main import allowed_guilds
 
 
 class About(commands.Cog):
@@ -8,7 +9,7 @@ class About(commands.Cog):
         self.client = client
 
     @cog_ext.cog_slash(name="about", description="Obtain general information about the bot.",
-                       guild_ids=[535089248785924107])
+                       guild_ids=allowed_guilds)
     async def about(self, ctx: SlashContext):
         embed = discord.Embed(description="", color=0x55aaee)
         embed.add_field(name="Project - Suggestions",

@@ -38,7 +38,7 @@ class Guild:
                 # Cache all data we could fetch to reduce pressure
                 cache.set_in_cache(self.guild_id, data)
 
-                # return the value that we actually needed
+                # return the value that we actually needed (this could still be None if the value we needed is not set)
                 return guild_data[setting]
 
     async def set_setting(self, setting, value):

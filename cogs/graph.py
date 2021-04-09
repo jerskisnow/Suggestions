@@ -6,6 +6,7 @@ import datetime
 import pandas as pd
 import numpy as np
 import os
+from main import allowed_guilds
 
 
 class Graph(commands.Cog):
@@ -13,7 +14,7 @@ class Graph(commands.Cog):
         self.client = client
 
     @cog_ext.cog_slash(name="graph", description="Obtain a graph related to the amount of suggestions in this server.",
-                       guild_ids=[535089248785924107])
+                       guild_ids=allowed_guilds)
     async def graph(self, ctx: SlashContext):
         msg = await ctx.send('Loading graph...')
 

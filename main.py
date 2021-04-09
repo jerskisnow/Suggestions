@@ -9,6 +9,11 @@ from discord_slash import SlashCommand
 from dotenv import load_dotenv
 
 
+allowed_guilds = [
+    535089248785924107
+]
+
+
 def load_cogs(bot):
     for cog in [file.split(".")[0] for file in os.listdir("cogs") if file.endswith(".py")]:
         try:

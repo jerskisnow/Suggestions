@@ -2,6 +2,8 @@ from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 import asyncio
 import discord
+from structures.guild import Guild
+from main import allowed_guilds
 
 
 class Setup(commands.Cog):
@@ -9,7 +11,8 @@ class Setup(commands.Cog):
         self.client = client
 
     @cog_ext.cog_slash(name="setup", description="Set Suggestions up by answering a few simple questions.",
-                       guild_ids=[535089248785924107])
+                       guild_ids=allowed_guilds)
+    @commands.has_permissions(administrator=True)
     async def setup(self, ctx: SlashContext):
         # little intro part
         await ctx.send(embed=discord.Embed(description="Hi there, you just started the setup phase of the bot. "
@@ -67,11 +70,16 @@ class Setup(commands.Cog):
                                                                                  staff_role=role.name), color=0x55aaee)
         await ctx.channel.send(embed=embed)
 
-        # guild = Guild(ctx.guild_id)
+        guild = Guild(ctx.guild_id)
 
         # TODO: Create support for multiple updates in one request but for now use two
-        # await guild.set_setting('suggestion_channel', channel.id)
-        # await guild.set_setting('staff_role', role.id)
+        await guild.set_setting('suggestion_channel', channel.id)
+        await guild.set_setting('staff_role', role.id)
+
+    @setup.error
+    async def setup_error(self, ctx: SlashContext, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send("You do not have permission to do that, I'm sorry.")
 
 
 def setup(client):

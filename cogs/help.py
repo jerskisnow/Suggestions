@@ -1,5 +1,6 @@
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
+from main import allowed_guilds
 
 
 class Help(commands.Cog):
@@ -7,7 +8,7 @@ class Help(commands.Cog):
         self.client = client
 
     @cog_ext.cog_slash(name="help", description="Obtain information about the commands.",
-                       guild_ids=[535089248785924107])
+                       guild_ids=allowed_guilds)
     async def help(self, ctx: SlashContext):
         await ctx.send(content="```asciidoc\n== Commands ==\n[Use /<command> for a more detailed explanation of that particular command.]"
                                "\n\n= User ="
