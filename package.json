@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "ms": "^2.1.2",
     "pg": "^8.5.1",
-    "redis": "^3.0.2"
+    "redis": "^3.1.1"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.32",
