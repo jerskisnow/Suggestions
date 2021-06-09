@@ -22,14 +22,19 @@ async function bindListeners() {
 
 bindListeners()
 
-async function updateBotCache() {
+async function prepareCache() {
+    // Add the latest suggestion id to the botcache
     const sugRes = await runQuery('SELECT id FROM suggestions ORDER BY id DESC LIMIT 1');
     botCache.lstSugId = !sugRes.rowCount ? 1 : 1 + sugRes.rows[0].id;
 
+    // Add the latest report id to the botcache
     const repRes = await runQuery('SELECT id FROM reports ORDER BY id DESC LIMIT 1');
     botCache.lstRepId = !repRes.rowCount ? 1 : 1 + repRes.rows[0].id;
+
+    // Cache the application, we'll use this for getting application owner id later on
+    await client.application?.fetch()
 }
 
-updateBotCache()
+prepareCache()
 
 client.login(config.botToken);

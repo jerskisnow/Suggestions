@@ -2,7 +2,6 @@ const { removeFromCache, setInCache, getFromCache } = require('../structures/cac
 const { runQuery } = require('../structures/database')
 
 module.exports = async function (client, message) {
-    if (!client.application?.owner) await client.application?.fetch()
     if (message.author.id !== client.application?.owner.id) return
 
     if (!message.content.startsWith('^^&')) return
