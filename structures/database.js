@@ -40,7 +40,7 @@ const pool = new Pool({
  *  - Timestamp          - Timestamp
  */
 
-module.exports.runQuery = async function (query) {
+module.exports.runQuery = async function (query, params) {
     const client = await pool.connect()
     let result;
     try {

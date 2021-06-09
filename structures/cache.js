@@ -15,21 +15,21 @@ const redisClient = redis.createClient()
 module.exports.redisClient = redisClient
 
 async function cacheGuild (guildId) {
-    let result = runQuery('SELECT staffrole, approve_emoji, reject_emoji, auto_approve, auto_reject, premium FROM servers WHERE id = $1::text', [guildId])
+    let result = await runQuery('SELECT staff_role, approve_emoji, reject_emoji, auto_approve, auto_reject, premium FROM servers WHERE id = $1::text', [guildId])
 
     if (!result.rowCount) {
         // Register guild in database if it doesn't already exist
         await runQuery('INSERT INTO servers (id, premium) VALUES ($1::text, $2::bool)', [guildId, false])
-        result = [{ premium: false }]
+        result.rows = [{ premium: false }]
     }
 
     const data = {
-        staffRole: result[0].staff_role,
-        approveEmoji: result[0].approve_emoji || '⬆️',
-        rejectEmoji: result[0].reject_emoji || '⬇️',
-        autoApprove: result[0].auto_approve || -1,
-        autoReject: result[0].auto_reject || -1,
-        isPremium: result[0].premium
+        staffRole: result.rows[0].staff_role,
+        approveEmoji: result.rows[0].approve_emoji || '⬆️',
+        rejectEmoji: result.rows[0].reject_emoji || '⬇️',
+        autoApprove: result.rows[0].auto_approve || -1,
+        autoReject: result.rows[0].auto_reject || -1,
+        isPremium: result.rows[0].premium
     }
 
     await redisClient.setAsync(guildId, JSON.stringify(data), 'EX', 60 * 60 * config.cacheExpireTime)
@@ -38,10 +38,10 @@ async function cacheGuild (guildId) {
 
 module.exports.getFromCache = async function (guildId) {
     if (await redisClient.existsAsync(guildId)) {
-        return await redisClient.getAsync(guildId)
+        return JSON.parse(await redisClient.getAsync(guildId))
     }
 
-    return JSON.parse(await cacheGuild(guildId))
+    return await cacheGuild(guildId)
 }
 
 module.exports.setInCache = async function (guildId, newData) {

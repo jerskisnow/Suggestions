@@ -8,7 +8,7 @@ module.exports = async function(client, interaction) {
         const obj = botCache.commands.get(interaction.commandName)
 
         if (obj.isPremium) {
-            const data = getFromCache(interaction.guildID)
+            const data = await getFromCache(interaction.guildID)
             if (!data.isPremium) {
                 interaction.reply('That command is for premium servers only.')
                 return
