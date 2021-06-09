@@ -24,10 +24,10 @@ bindListeners()
 
 async function updateBotCache() {
     const sugRes = await runQuery('SELECT id FROM suggestions ORDER BY id DESC LIMIT 1');
-    botCache.lstSugId = !idResult.rows.length ? 1 : 1 + idResult.rows[0].id;
+    botCache.lstSugId = !sugRes.rows.length ? 1 : 1 + sugRes.rows[0].id;
 
     const repRes = await runQuery('SELECT id FROM reports ORDER BY id DESC LIMIT 1');
-    botCache.lstRepId = !idResult.rows.length ? 1 : 1 + idResult.rows[0].id;
+    botCache.lstRepId = !repRes.rows.length ? 1 : 1 + repRes.rows[0].id;
 }
 
 updateBotCache()
