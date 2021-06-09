@@ -1,12 +1,14 @@
 {
-  "name": "cs_suggestions",
+  "name": "suggestions",
   "version": "v5.0.0",
   "main": "index.js",
   "repository": "https://github.com/jerskisnow/Suggestions",
-  "author": "Jerry Blaauw",
+  "author": "Jerry Blaauw (jerskisnow)",
   "license": "GNU General Public License v3.0",
   "dependencies": {
+    "bluebird": "^3.7.2",
     "discord.js": "^13.0.0-dev.e980948de55e91e59c9e3293ac76bc645a058a53",
-    "pg": "^8.6.0"
+    "pg": "^8.6.0",
+    "redis": "^3.1.2"
   }
 }
