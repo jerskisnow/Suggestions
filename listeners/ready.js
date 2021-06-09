@@ -5,23 +5,23 @@ const config = require('../config')
 module.exports = async function (client) {
     // TODO: Botlist Apis
 
-    setInterval(async function() {
+    setInterval(async function () {
         const guilds_result = await client.shard.fetchClientValues('guilds.cache.size')
         const guildCount = guilds_result.reduce((prev, count) => prev + count, 0)
-    
+
         await client.user.setActivity(`${guildCount} guilds on ${client.shard.count} shards.`, {
             type: 'WATCHING'
         })
     }, 15 * 60 * 1000)
-    
+
     await registerCommands(client)
 
     console.log('Fully started.')
 }
 
 async function registerCommands(client) {
-    if (!client.application?.owner) await client.application?.fetch();
-    (await promises.readdir('./commands')).forEach(file => require(`../commands/${file}`))
+    if (!client.application?.owner) await client.application?.fetch()
+        (await promises.readdir('./commands')).forEach(file => require(`../commands/${file}`))
 
     const list = []
     for (let [key, value] of botCache.commands) {

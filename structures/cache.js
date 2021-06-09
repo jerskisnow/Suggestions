@@ -14,7 +14,7 @@ bluebird.promisifyAll(redis)
 const redisClient = redis.createClient()
 module.exports.redisClient = redisClient
 
-async function cacheGuild (guildId) {
+async function cacheGuild(guildId) {
     let result = await runQuery('SELECT staff_role, approve_emoji, reject_emoji, auto_approve, auto_reject, premium FROM servers WHERE id = $1::text', [guildId])
 
     if (!result.rowCount) {

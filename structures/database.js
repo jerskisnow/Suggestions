@@ -42,7 +42,7 @@ const pool = new Pool({
 
 module.exports.runQuery = async function (query, params) {
     const client = await pool.connect()
-    let result;
+    let result
     try {
         result = !params ? await client.query(query) : await client.query(query, params)
     } catch (ex) {

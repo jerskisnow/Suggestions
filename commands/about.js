@@ -27,8 +27,8 @@ botCache.commands.set('about', {
         embed.setColor(config.embedColor.b)
         embed.setTitle('About Suggestions')
         embed.setDescription("Suggestions is a discord bot, created by CodedSnow (jerskisnow), that allows for perfect collaboration between members and staff members." +
-        " Members can submit their ideas, a staff member can then approve, consider or reject them." +
-        " Suggestions also offers support for reports, polls and a lot more!\n\nConsider taking a look at the buttons below this message for more information and how to support us.")
+            " Members can submit their ideas, a staff member can then approve, consider or reject them." +
+            " Suggestions also offers support for reports, polls and a lot more!\n\nConsider taking a look at the buttons below this message for more information and how to support us.")
 
         await interaction.reply({ embeds: [embed], components: [row] })
     }

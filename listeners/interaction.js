@@ -117,7 +117,7 @@ module.exports = async function (client, interaction) {
 
                 await interaction.update({ embeds: [embed], components: [] })
 
-                const msgAwait = await interaction.message.channel.awaitMessages(filter,  { max: 1, time: 20000, errors: ['time'] })
+                const msgAwait = await interaction.message.channel.awaitMessages(filter, { max: 1, time: 20000, errors: ['time'] })
                 // Delete the user input message
                 await msgAwait.first().delete()
 
@@ -126,7 +126,7 @@ module.exports = async function (client, interaction) {
                 embed.setDescription(`Okay, setting the suggestion channel to: <#${channelId}>`)
                 embed.setColor(config.embedColor.g)
                 await interaction.message.edit({ embed: embed })
-                
+
                 // TODO: Actually update the channel
             } else if (arr[1] === 'conf_rep_channel') {
                 embed.setTitle('Config - Report Channel')
@@ -134,7 +134,7 @@ module.exports = async function (client, interaction) {
 
                 await interaction.update({ embeds: [embed], components: [] })
 
-                const msgAwait = await interaction.message.channel.awaitMessages(filter,  { max: 1, time: 20000, errors: ['time'] })
+                const msgAwait = await interaction.message.channel.awaitMessages(filter, { max: 1, time: 20000, errors: ['time'] })
                 // Delete the user input message
                 await msgAwait.first().delete()
 
@@ -151,7 +151,7 @@ module.exports = async function (client, interaction) {
 
                 await interaction.update({ embeds: [embed], components: [] })
 
-                const msgAwait = await interaction.message.channel.awaitMessages(filter,  { max: 1, time: 20000, errors: ['time'] })
+                const msgAwait = await interaction.message.channel.awaitMessages(filter, { max: 1, time: 20000, errors: ['time'] })
                 // Delete the user input message
                 await msgAwait.first().delete()
 
@@ -163,7 +163,7 @@ module.exports = async function (client, interaction) {
 
                 // TODO: Actually update the channel
             }
-            
+
             // ============ Config Roles Part ============
             else if (arr[1] === 'conf_create_role') {
                 await interaction.update('Coming Soon!', { components: [] })
@@ -174,7 +174,7 @@ module.exports = async function (client, interaction) {
             } else if (arr[1] === 'conf_setstatus_role') {
                 await interaction.update('Coming Soon!', { components: [] })
             }
-    
+
             // ============ Config Misc Part ============
             else if (arr[1] === 'conf_delete_approved') {
                 await interaction.update('Coming Soon!', { components: [] })
