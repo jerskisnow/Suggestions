@@ -1,5 +1,2 @@
-.idea/
-__pycache__
-graphs/
-venv/
-.env
+node_modules/
+config.js

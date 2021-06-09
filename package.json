@@ -1,0 +1,12 @@
+{
+  "name": "cs_suggestions",
+  "version": "v5.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jerskisnow/Suggestions",
+  "author": "Jerry Blaauw",
+  "license": "GNU General Public License v3.0",
+  "dependencies": {
+    "discord.js": "^13.0.0-dev.e980948de55e91e59c9e3293ac76bc645a058a53",
+    "pg": "^8.6.0"
+  }
+}
