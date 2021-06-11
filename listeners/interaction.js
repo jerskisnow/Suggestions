@@ -1,7 +1,8 @@
-const { botCache } = require('../structures/cache')
+const { botCache, setInCache } = require('../structures/cache')
 const { getFromCache } = require('../structures/cache')
 const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js')
 const config = require('../config')
+const { runQuery } = require('../structures/database')
 
 module.exports = async function (client, interaction) {
     if (interaction.isCommand()) {
@@ -127,7 +128,7 @@ module.exports = async function (client, interaction) {
                 embed.setColor(config.embedColor.g)
                 await interaction.message.edit({ embed: embed })
 
-                // TODO: Actually update the channel
+                await runQuery('UPDATE servers SET suggestion_channel = $1::text WHERE id = $2::text', [channelId, interaction.guildID])
             } else if (arr[1] === 'conf_rep_channel') {
                 embed.setTitle('Config - Report Channel')
                 embed.setDescription('In which channel should reports show up? (Type: #channel)')
@@ -144,7 +145,7 @@ module.exports = async function (client, interaction) {
                 embed.setColor(config.embedColor.g)
                 await interaction.message.edit({ embed: embed })
 
-                // TODO: Actually update the channel
+                await runQuery('UPDATE servers SET report_channel = $1::text WHERE id = $2::text', [channelId, interaction.guildID])
             } else if (arr[1] === 'conf_log_channel') {
                 embed.setTitle('Config - Logs Channel')
                 embed.setDescription('In which channel should logs show up? (Type: #channel)')
@@ -161,7 +162,7 @@ module.exports = async function (client, interaction) {
                 embed.setColor(config.embedColor.g)
                 await interaction.message.edit({ embed: embed })
 
-                // TODO: Actually update the channel
+                await runQuery('UPDATE servers SET log_channel = $1::text WHERE id = $2::text', [channelId, interaction.guildID])
             }
 
             // ============ Config Roles Part ============
@@ -193,4 +194,10 @@ module.exports = async function (client, interaction) {
         }
 
     }
+}
+
+async function updateCache(guildId, key, value) {
+    var obj = await getFromCache(guildId)
+    obj[key] = value
+    await setInCache(guildId, obj)
 }

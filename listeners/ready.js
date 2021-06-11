@@ -3,8 +3,6 @@ const { botCache } = require('../structures/cache')
 const config = require('../config')
 
 module.exports = async function (client) {
-    // TODO: Botlist Apis
-
     setInterval(async function () {
         const guilds_result = await client.shard.fetchClientValues('guilds.cache.size')
         const guildCount = guilds_result.reduce((prev, count) => prev + count, 0)
