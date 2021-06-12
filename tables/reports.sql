@@ -1,8 +1,7 @@
 CREATE TABLE suggestions (
-    id INT GENERATED ALWAYS AS IDENTITY,
+    id TEXT PRIMARY KEY NOT NULL, -- r_abc45
     context TEXT NOT NULL,
     author TEXT NOT NULL,
-    guild TEXT NOT NULL,
     channel TEXT NOT NULL,
     message TEXT NOT NULL,
     status INT NOT NULL,

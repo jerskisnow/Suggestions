@@ -1,7 +1,6 @@
 CREATE TABLE polls (
-    id INT GENERATED ALWAYS AS IDENTITY,
+    id TEXT PRIMARY KEY NOT NULL, -- p_abc45
     context TEXT NOT NULL,
-    guild TEXT NOT NULL,
     channel TEXT NOT NULL,
     message TEXT NOT NULL,
     timestamp TIMESTAMP NOT NULL
