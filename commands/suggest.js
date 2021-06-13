@@ -1,4 +1,5 @@
 const { botCache } = require('../structures/cache')
+const { createId } = require('../utils')
 
 botCache.commands.set('suggest', {
     desc: 'Create a suggestion',
@@ -12,5 +13,7 @@ botCache.commands.set('suggest', {
     ],
     exec: async function (client, interaction) {
         await interaction.reply('Coming soon!')
+
+        const sugId = createId('s_')
     }
 })

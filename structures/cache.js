@@ -5,9 +5,7 @@ const config = require('../config')
 const { runQuery, registerGuild } = require('../structures/database')
 
 module.exports.botCache = {
-    commands: new Map(),
-    lstSugId: 0,
-    lstRepId: 0
+    commands: new Map()
 }
 
 bluebird.promisifyAll(redis)

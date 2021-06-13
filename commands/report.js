@@ -1,4 +1,5 @@
 const { botCache } = require('../structures/cache')
+const { createId } = require('../utils')
 
 botCache.commands.set('report', {
     desc: 'Create a report',
@@ -12,5 +13,7 @@ botCache.commands.set('report', {
     ],
     exec: async function (client, interaction) {
         await interaction.reply('Coming soon!')
+
+        const repId = createId('r_')
     }
 })
