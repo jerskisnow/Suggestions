@@ -3,7 +3,6 @@ CREATE TABLE servers (
     staff_role TEXT,
     suggestion_channel TEXT,
     report_channel TEXT,
-    log_channel TEXT,
     auto_approve INT,
     auto_reject INT,
     approve_emoji TEXT,

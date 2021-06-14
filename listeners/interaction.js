@@ -52,11 +52,7 @@ module.exports = async function (client, interaction) {
                     new MessageButton()
                         .setCustomID('config:conf_rep_channel')
                         .setLabel('Report Channel')
-                        .setStyle('SUCCESS'),
-                    new MessageButton()
-                        .setCustomID('config:conf_log_channel')
-                        .setLabel('Log Channel')
-                        .setStyle('DANGER'),
+                        .setStyle('SUCCESS')
                 )
 
                 await interaction.update({ embeds: [embed], components: [row] })
@@ -145,29 +141,6 @@ module.exports = async function (client, interaction) {
                 await interaction.message.edit({ embeds: [embed] })
 
                 await runQuery('UPDATE servers SET report_channel = $1::text WHERE id = $2::text', [channelId, interaction.guildID])
-            } else if (arr[1] === 'conf_log_channel') {
-                embed.setTitle('Config - Logs Channel')
-                embed.setDescription('In which channel should logs show up? (Type: #channel)')
-
-                await interaction.update({ embeds: [embed], components: [] })
-
-                const msgAwait = await interaction.message.channel.awaitMessages(filter, { max: 1, time: 20000, errors: ['time'] })
-                // Delete the user input message
-                await msgAwait.first().delete()
-
-                const channelId = msgAwait.first().content.replace('<#', '').replace('>', '')
-                if (interaction.guild.channels.cache.get(channelId) == null) {
-                    embed.setDescription('That\'s not a valid channel, please run the command again.')
-                    embed.setColor(config.embedColor.r)
-                    await interaction.message.edit({ embeds: [embed] })
-                    return
-                }
-
-                embed.setDescription(`Okay, setting the logs channel to: <#${channelId}>`)
-                embed.setColor(config.embedColor.g)
-                await interaction.message.edit({ embeds: [embed] })
-
-                await runQuery('UPDATE servers SET log_channel = $1::text WHERE id = $2::text', [channelId, interaction.guildID])
             }
 
             // ============ Config Roles Part ============
