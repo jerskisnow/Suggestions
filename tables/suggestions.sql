@@ -1,4 +1,4 @@
-CREATE TABLE suggestions (
+CREATE TABLE IF NOT EXISTS suggestions (
     id TEXT PRIMARY KEY NOT NULL, -- s_abc45
     context TEXT NOT NULL,
     author TEXT NOT NULL,
