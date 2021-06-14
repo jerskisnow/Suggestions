@@ -18,8 +18,11 @@ module.exports = async function (client) {
 }
 
 async function registerCommands(client) {
-    if (!client.application?.owner) await client.application?.fetch()
-        (await promises.readdir('./commands')).forEach(file => require(`../commands/${file}`))
+    if (client.application.owner == null) {
+        await client.application.fetch()
+    }
+
+    (await promises.readdir('./commands')).forEach(file => require(`../commands/${file}`))
 
     const list = []
     for (let [key, value] of botCache.commands) {
@@ -32,7 +35,6 @@ async function registerCommands(client) {
         list.push(data)
     }
 
-    // TODO: Set right permissions for the commands here
     if (config.devBuild) await client.guilds.cache.get(config.devGuild)?.commands.set(list)
     else await client.application?.commands.set(list)
 }

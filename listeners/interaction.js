@@ -1,5 +1,4 @@
-const { botCache, setInCache } = require('../structures/cache')
-const { getFromCache } = require('../structures/cache')
+const { botCache, getFromCache, setInCache } = require('../structures/cache')
 const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js')
 const config = require('../config')
 const { runQuery } = require('../structures/database')
@@ -67,21 +66,9 @@ module.exports = async function (client, interaction) {
 
                 const row = new MessageActionRow().addComponents(
                     new MessageButton()
-                        .setCustomID('config:conf_setstatus_role')
-                        .setLabel('Setstatus Role (/setstatus)')
-                        .setStyle('PRIMARY'),
-                    new MessageButton()
-                        .setCustomID('config:conf_poll_role')
-                        .setLabel('Poll Role (/setstatus)')
-                        .setStyle('SUCCESS'),
-                    new MessageButton()
-                        .setCustomID('config:conf_setstatus_role')
-                        .setLabel('Log Channel')
-                        .setStyle('DANGER'),
-                    new MessageButton()
-                        .setCustomID('config:conf_create_role')
-                        .setLabel('Create Role (/suggest & /report)')
-                        .setStyle('SECONDARY')
+                        .setCustomID('config:conf_staff_role')
+                        .setLabel('Staff Role')
+                        .setStyle('PRIMARY')
                 )
 
                 await interaction.update({ embeds: [embed], components: [row] })
@@ -123,10 +110,16 @@ module.exports = async function (client, interaction) {
                 await msgAwait.first().delete()
 
                 const channelId = msgAwait.first().content.replace('<#', '').replace('>', '')
+                if (interaction.guild.channels.cache.get(channelId) == null) {
+                    embed.setDescription('That\'s not a valid channel, please run the command again.')
+                    embed.setColor(config.embedColor.r)
+                    await interaction.message.edit({ embeds: [embed] })
+                    return
+                }
 
                 embed.setDescription(`Okay, setting the suggestion channel to: <#${channelId}>`)
                 embed.setColor(config.embedColor.g)
-                await interaction.message.edit({ embed: embed })
+                await interaction.message.edit({ embeds: [embed] })
 
                 await runQuery('UPDATE servers SET suggestion_channel = $1::text WHERE id = $2::text', [channelId, interaction.guildID])
             } else if (arr[1] === 'conf_rep_channel') {
@@ -140,10 +133,16 @@ module.exports = async function (client, interaction) {
                 await msgAwait.first().delete()
 
                 const channelId = msgAwait.first().content.replace('<#', '').replace('>', '')
+                if (interaction.guild.channels.cache.get(channelId) == null) {
+                    embed.setDescription('That\'s not a valid channel, please run the command again.')
+                    embed.setColor(config.embedColor.r)
+                    await interaction.message.edit({ embeds: [embed] })
+                    return
+                }
 
                 embed.setDescription(`Okay, setting the report channel to: <#${channelId}>`)
                 embed.setColor(config.embedColor.g)
-                await interaction.message.edit({ embed: embed })
+                await interaction.message.edit({ embeds: [embed] })
 
                 await runQuery('UPDATE servers SET report_channel = $1::text WHERE id = $2::text', [channelId, interaction.guildID])
             } else if (arr[1] === 'conf_log_channel') {
@@ -157,23 +156,48 @@ module.exports = async function (client, interaction) {
                 await msgAwait.first().delete()
 
                 const channelId = msgAwait.first().content.replace('<#', '').replace('>', '')
+                if (interaction.guild.channels.cache.get(channelId) == null) {
+                    embed.setDescription('That\'s not a valid channel, please run the command again.')
+                    embed.setColor(config.embedColor.r)
+                    await interaction.message.edit({ embeds: [embed] })
+                    return
+                }
 
                 embed.setDescription(`Okay, setting the logs channel to: <#${channelId}>`)
                 embed.setColor(config.embedColor.g)
-                await interaction.message.edit({ embed: embed })
+                await interaction.message.edit({ embeds: [embed] })
 
                 await runQuery('UPDATE servers SET log_channel = $1::text WHERE id = $2::text', [channelId, interaction.guildID])
             }
 
             // ============ Config Roles Part ============
-            else if (arr[1] === 'conf_create_role') {
-                await interaction.update('Coming Soon!', { components: [] })
-            } else if (arr[1] === 'conf_setstatus_role') {
-                await interaction.update('Coming Soon!', { components: [] })
-            } else if (arr[1] === 'conf_poll_role') {
-                await interaction.update('Coming Soon!', { components: [] })
-            } else if (arr[1] === 'conf_setstatus_role') {
-                await interaction.update('Coming Soon!', { components: [] })
+            else if (arr[1] === 'conf_staff_role') {
+                embed.setTitle('Config - Staffrole')
+                embed.setDescription('Which role should be able to review suggestions and reports? (Type: @role)')
+
+                await interaction.update({ embeds: [embed], components: [] })
+
+                const msgAwait = await interaction.message.channel.awaitMessages(filter, { max: 1, time: 20000, errors: ['time'] })
+                await msgAwait.first().delete()
+
+                const roleId = msgAwait.first().content.replace('<@&', '').replace('>', '')
+                if (interaction.guild.roles.cache.get(roleId) == null) {
+                    embed.setDescription('That\'s not a valid role, please run the command again.')
+                    embed.setColor(config.embedColor.r)
+                    await interaction.message.edit({ embeds: [embed] })
+                    return
+                }
+
+                embed.setDescription(`Okay, setting the staffrole to: <@&${roleId}>`)
+                embed.setColor(config.embedColor.g)
+                await interaction.message.edit({ embeds: [embed] })
+
+                // Update cache
+                var obj = await getFromCache(interaction.guildID)
+                obj.staffRole = roleId
+                await setInCache(interaction.guildID, obj)
+                // Update database
+                await runQuery('UPDATE servers SET staff_role = $1::text WHERE id = $2::text', [roleId, interaction.guildID])
             }
 
             // ============ Config Misc Part ============
@@ -194,10 +218,4 @@ module.exports = async function (client, interaction) {
         }
 
     }
-}
-
-async function updateCache(guildId, key, value) {
-    var obj = await getFromCache(guildId)
-    obj[key] = value
-    await setInCache(guildId, obj)
 }

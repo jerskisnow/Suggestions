@@ -1,4 +1,4 @@
-const { botCache } = require('../structures/cache')
+const { botCache, getFromCache } = require('../structures/cache')
 const { createId } = require('../utils')
 
 botCache.commands.set('suggest', {

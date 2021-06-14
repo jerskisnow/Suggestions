@@ -6,7 +6,7 @@ botCache.commands.set('report', {
     options: [
         {
             name: 'description',
-            type: 'STRING',
+            type: 3,
             description: 'A detailed description of your report',
             required: true
         }
