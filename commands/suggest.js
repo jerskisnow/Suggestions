@@ -13,7 +13,6 @@ botCache.commands.set('suggest', {
     ],
     exec: async function (client, interaction) {
         await interaction.reply('Coming soon!')
-
         const sugId = createId('s_')
     }
 })

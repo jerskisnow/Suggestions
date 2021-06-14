@@ -3,8 +3,7 @@ const { Client } = require('discord.js')
 const config = require('./config')
 
 const client = new Client({
-    intents: ['GUILDS', 'GUILD_MESSAGES'],
-    partials: ['MESSAGE', 'REACTION']
+    intents: ['GUILDS', 'GUILD_MESSAGES']
 })
 
 async function bindListeners() {
@@ -19,14 +18,5 @@ async function bindListeners() {
 }
 
 bindListeners()
-
-async function prepareCache() {
-    // ...
-
-    // Cache the application, we'll use this for getting application owner id later on
-    await client.application?.fetch()
-}
-
-prepareCache()
 
 client.login(config.botToken)

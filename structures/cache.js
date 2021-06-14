@@ -2,7 +2,7 @@ const redis = require('redis')
 const bluebird = require('bluebird')
 const config = require('../config')
 
-const { runQuery, registerGuild } = require('../structures/database')
+const { runQuery } = require('../structures/database')
 
 module.exports.botCache = {
     commands: new Map()

@@ -6,7 +6,6 @@ botCache.commands.set('poll', {
     isPremium: true,
     exec: async function (client, interaction) {
         await interaction.reply('Coming soon!')
-
         const pollId = createId('p_')
     }
 })

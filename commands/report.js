@@ -13,7 +13,6 @@ botCache.commands.set('report', {
     ],
     exec: async function (client, interaction) {
         await interaction.reply('Coming soon!')
-
         const repId = createId('r_')
     }
 })
