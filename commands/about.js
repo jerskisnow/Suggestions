@@ -21,6 +21,11 @@ botCache.commands.set('about', {
                 .setLabel('Vote')
                 .setEmoji('📰')
                 .setStyle('LINK'),
+            new MessageButton()
+                .setURL('https://discord.gg/3SYg3M5')
+                .setLabel('Discord')
+                .setEmoji('👥')
+                .setStyle('LINK'),
         )
 
         const embed = new MessageEmbed()
