@@ -25,7 +25,7 @@ botCache.commands.set('about', {
                 .setURL('https://discord.gg/3SYg3M5')
                 .setLabel('Discord')
                 .setEmoji('👥')
-                .setStyle('LINK'),
+                .setStyle('LINK')
         )
 
         const embed = new MessageEmbed()
